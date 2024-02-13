@@ -4,12 +4,12 @@ to run:
 
 linux:
 
-cd table21 Site/ourSite/
+cd 'table21 Site'/ourSite/
 python manage.py runserver
 
 windows:
 
-cd table21 Site\urSite\
+cd 'table21 Site'\urSite\
 py manage.py runserver
 
 open:
