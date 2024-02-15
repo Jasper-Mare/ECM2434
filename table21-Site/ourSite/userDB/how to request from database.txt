@@ -1,0 +1,20 @@
+http://127.0.0.1:8000/userDB/getUserById?id=1
+ - get the json for a user by requesting with their id
+
+http://127.0.0.1:8000/userDB/getUserByName?name=bob
+ - get a user by their name
+
+http://127.0.0.1:8000/userDB/getUsersByScore?number_of_players=1
+ - get the top n users by score
+
+http://127.0.0.1:8000/userDB/createUser?name=alice&password_hash=abcd&access_level=USER&recovery_email=alice@exeter.ac.uk
+ - create a user and get the json of their info, all parameters are nessesary!
+
+http://127.0.0.1:8000/userDB/updateUser?id=1&name=alice&password_hash=abcd&access_level=USER&recovery_email=alice@exeter.ac.uk&score=10
+ - update a user's info and return the updated json, id is nessesary, all other parameters are optional
+
+http://127.0.0.1:8000/userDB/deleteUser?id=1
+ - delete a user, returns json true or false
+
+
+Access Levels can be: USER, GAME_KEEPER or, DEVELOPER
