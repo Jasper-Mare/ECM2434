@@ -2,12 +2,14 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.http import HttpResponse
 from django.http import HttpResponseBadRequest
+from django.template import Context, loader
 
 from . import databaseInteractions;
 
 # Create your views here.
 def index(request):
-    return HttpResponse("Welcome to the User Database API")
+    template = loader.get_template("userDB/instructions.txt")
+    return HttpResponse(template.render(), content_type='text/plain')
 
 
 def getUserById(request):

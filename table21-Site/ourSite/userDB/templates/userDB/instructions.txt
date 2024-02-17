@@ -1,3 +1,5 @@
+Welcome to the User Database API
+
 http://127.0.0.1:8000/userDB/getUserById?id=1
  - get the json for a user by requesting with their id
 
