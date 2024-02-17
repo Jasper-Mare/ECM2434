@@ -16,7 +16,7 @@ http://127.0.0.1:8000/userDB/updateUser?id=1&name=alice&password_hash=abcd&acces
  - update a user's info and return the updated json, id is nessesary, all other parameters are optional
 
 http://127.0.0.1:8000/userDB/deleteUser?id=1
- - delete a user, returns json true or false
+ - delete a user, returns json dictionary, where successful is true or false
 
 
 Access Levels can be: USER, GAME_KEEPER or, DEVELOPER

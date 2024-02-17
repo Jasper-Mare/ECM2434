@@ -80,7 +80,7 @@ def updateUser(request):
 
     newUserInfo = databaseInteractions.updateUser(userId, userName, userPwordHash, userAccessLevel, userRecoveryEmail, userScore)
 
-    return newUserInfo
+    return JsonResponse(newUserInfo)
 
 def deleteUser(request):
     userId:int = request.GET.get('id', -1)

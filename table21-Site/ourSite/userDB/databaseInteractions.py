@@ -41,4 +41,4 @@ def updateUser(id:int, new_name:str, new_password_hash:str, new_access_level:str
 
 def deleteUser(id:int):
     
-    return True
+    return {"successful" : True}
