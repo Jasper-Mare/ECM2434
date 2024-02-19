@@ -13,10 +13,10 @@ def index(request):
 
 
 def getUserById(request):
-    userId:int = request.GET.get('id', -1)
+    userId:int = int(request.GET.get('id', -1))
 
     if (userId == -1):
-        return HttpResponseBadRequest("id parameter is missing!")
+        return makeError("parameter missing", "id parameter is missing!")
 
     user = databaseInteractions.getUserById(userId)
 
@@ -27,7 +27,7 @@ def getUserByName(request):
     userName:str = request.GET.get('name', "")
 
     if (userName == ""):
-        return HttpResponseBadRequest("name parameter is missing!")
+        return makeError("parameter missing", "name parameter is missing!")
 
     user = databaseInteractions.getUserByName(userName)
 
@@ -35,10 +35,10 @@ def getUserByName(request):
 
 
 def getUsersByScore(request):
-    numPlayers = request.GET.get('number_of_players', -1)
+    numPlayers:int = int(request.GET.get('number_of_players', -1))
 
     if (numPlayers == -1):
-        return HttpResponseBadRequest("number_of_players parameter is missing!")
+        return makeError("parameter missing", "number_of_players parameter is missing!")
 
     usersList = databaseInteractions.getUsersByScore(numPlayers)
 
@@ -51,13 +51,13 @@ def createUser(request):
     userRecoveryEmail = request.GET.get('recovery_email', "")
 
     if (userName == ""):
-        return HttpResponseBadRequest("name parameter is missing!")
+        return makeError("parameter missing", "name parameter is missing!")
     if (userPwordHash == ""):
-            return HttpResponseBadRequest("password_hash parameter is missing!")
+        return makeError("parameter missing", "password_hash parameter is missing!")
     if (userAccessLevel == ""):
-            return HttpResponseBadRequest("access_level parameter is missing!")
+        return makeError("parameter missing", "access_level parameter is missing!")
     if (userRecoveryEmail == ""):
-            return HttpResponseBadRequest("recovery_email parameter is missing!")
+        return makeError("parameter missing", "recovery_email parameter is missing!")
 
     user = databaseInteractions.createUser(userName, userPwordHash, userAccessLevel, userRecoveryEmail)
 
@@ -67,7 +67,7 @@ def updateUser(request):
     userId:int = request.GET.get('id', -1)
 
     if (userId == -1):
-        return HttpResponseBadRequest("id parameter is missing!")
+        return makeError("parameter missing", "id parameter is missing!")
 
     oldUserInfo = databaseInteractions.getUserById(userId)
     
@@ -86,8 +86,11 @@ def deleteUser(request):
     userId:int = request.GET.get('id', -1)
 
     if (userId == -1):
-        return HttpResponseBadRequest("id parameter is missing!")
+        return makeError("parameter missing", "id parameter is missing!")
 
     successfulDelete = databaseInteractions.deleteUser(userId)
 
     return JsonResponse(successfulDelete)
+
+def makeError(type, errorMsg):
+    return JsonResponse({"error":type,"details":errorMsg})
