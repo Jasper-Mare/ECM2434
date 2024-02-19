@@ -1,44 +1,74 @@
 from django.core import serializers
+from .models import User
 
 AccessLevels = ["USER", "GAME_KEEPER", "DEVELOPER"]
 
-def makeUserStruct(id:int, name:str, password_hash:str, accessLevel:str, recovery_email:str, score:int):
+def makeUserStruct(id:int, name:str, password_hash:str, access_level:str, recovery_email:str, score:int):
     return {
-        "id" : id, 
+        "id" : int(id), 
         "name" : name, 
         "password_hash" : password_hash, 
-        "access_level" : accessLevel, 
+        "access_level" : access_level, 
         "recovery_email": recovery_email,
-        "score" : score,
+        "score" : int(score),
     }
 
 def getUserById(id:int):
-    
-    return makeUserStruct(id, "dummyName", "1234", AccessLevels[0], "dummyEmail@exeter.ac.uk", 0)
+    try:
+        user:User = User.objects.get(id=id)
+    except (User.DoesNotExist):
+        return {"error":"DoesNotExist", "details":f"id: {id} does not exist"}
+
+    return makeUserStruct(user.id, user.name, user.password_hash, user.access_level, user.recovery_email, user.score)
 
 
 def getUserByName(name:str):
-    
-    return makeUserStruct(0, name, "1234", AccessLevels[0], "dummyEmail@exeter.ac.uk", 0)
+    try:
+        user:User = User.objects.get(name=name)
+    except (User.DoesNotExist):
+        return {"error":"DoesNotExist", "details":f"name: {name} does not exist"}
+
+    return makeUserStruct(user.id, user.name, user.password_hash, user.access_level, user.recovery_email, user.score)
 
 
 def getUsersByScore(numPlayers:int):
-    user1 = makeUserStruct(0, "dummyName", "1234", AccessLevels[0], "dummyEmail@exeter.ac.uk", 0)
-    user2 = makeUserStruct(1, "dummyName", "1234", AccessLevels[0], "dummyEmail@exeter.ac.uk", 0)
-    userArray = [user1, user2]
+    userQueryResults = User.objects.order_by("-score")[:numPlayers].values()
+    userArray = []
+
+    for result in userQueryResults:
+        userArray.append(makeUserStruct(result["id"], result["name"], result["password_hash"], result["access_level"], result["recovery_email"], result["score"]))
+
     return {"users": userArray}
 
 
 def createUser(name:str, password_hash:str, access_level:str, recovery_email:str):
+    user:User = User(name=name, password_hash=password_hash, access_level=access_level, recovery_email=recovery_email, score=0)
+    user.save()
 
-    return makeUserStruct(0, name, password_hash, access_level, recovery_email, 0)
+    return getUserById(user.id)
 
 
 def updateUser(id:int, new_name:str, new_password_hash:str, new_access_level:str, new_email:str, new_score:int):
+    try:
+        user:User = User.objects.get(id=id)
+    except (User.DoesNotExist):
+        return {"error":"DoesNotExist", "details":f"id: {id} does not exist"}
+
+    user.name = new_name
+    user.password_hash = new_password_hash
+    user.access_level = new_access_level
+    user.recovery_email = new_email
+    user.score = new_score
+
+    user.save()
 
     return makeUserStruct(id, new_name, new_password_hash, new_access_level, new_email, new_score)
 
-
 def deleteUser(id:int):
+    try:
+        user:User = User.objects.get(id=id)
+    except (User.DoesNotExist):
+        return {"error":"DoesNotExist", "details":f"id: {id} does not exist"}
     
+    user.delete()
     return {"successful" : True}
