@@ -67,14 +67,14 @@ def getNearbyLocations(request):
 
 
 def createLocation(request):
-    locationName = request.GET.get('location_name', "")
+    locationName = request.GET.get('name', "")
     gpsLat:float = float(request.GET.get('gps_lat', nan))
     gpsLong:float = float(request.GET.get('gps_long', nan))
     info = request.GET.get('info', "")
     radius:float = float(request.GET.get('radius', -1))
 
     if (locationName == ""):
-        return makeError("parameter missing", "location_name parameter is missing!")
+        return makeError("parameter missing", "name parameter is missing!")
     if (isnan(gpsLat)):
         return makeError("parameter missing", "gps_lat parameter is missing!")
     if (isnan(gpsLong)):
@@ -128,7 +128,7 @@ def updateLocation(request):
     oldLocationInfo = databaseInteractions.getLocationById(locationId)
     
     # get parameters, with the old versions as the defaults
-    locationName = request.GET.get('location_name', oldLocationInfo["location_name"])
+    locationName = request.GET.get('name', oldLocationInfo["name"])
     gpsLat:float = float(request.GET.get('gps_lat', oldLocationInfo["gps_lat"]))
     gpsLong:float = float(request.GET.get('gps_long', oldLocationInfo["gps_long"]))
     info = request.GET.get('info', oldLocationInfo["info"])
