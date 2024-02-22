@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'map.apps.MapConfig',
     'userDB.apps.userDBConfig',
+    'contentDB.apps.contentDBConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
