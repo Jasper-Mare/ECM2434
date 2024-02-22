@@ -1,4 +1,3 @@
-from django.core import serializers
 from .models import User
 
 AccessLevels = ["USER", "GAME_KEEPER", "DEVELOPER"]
