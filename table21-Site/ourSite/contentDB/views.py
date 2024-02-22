@@ -120,10 +120,10 @@ def createQuiz(request):
 
 
 def updateLocation(request):
-    locationId:int = request.GET.get('location_id', -1)
+    locationId:int = request.GET.get('id', -1)
 
     if (locationId == -1):
-        return makeError("parameter missing", "location_id parameter is missing!")
+        return makeError("parameter missing", "id parameter is missing!")
 
     oldLocationInfo = databaseInteractions.getLocationById(locationId)
     
@@ -161,10 +161,10 @@ def updateQuiz(request):
 
 
 def deleteLocation(request):
-    locationId:int = request.GET.get('location_id', -1)
+    locationId:int = request.GET.get('id', -1)
 
     if (locationId == -1):
-        return makeError("parameter missing", "location_id parameter is missing!")
+        return makeError("parameter missing", "id parameter is missing!")
 
     successfulLocationDelete = databaseInteractions.deleteLocation(locationId)
 
@@ -172,10 +172,10 @@ def deleteLocation(request):
 
 
 def deleteQuiz(request):
-    quizId:int = request.GET.get('quiz_id', -1)
+    quizId:int = request.GET.get('id', -1)
 
     if (quizId == -1):
-        return makeError("parameter missing", "quiz_id parameter is missing!")
+        return makeError("parameter missing", "id parameter is missing!")
 
     successfulQuizDelete = databaseInteractions.deleteQuiz(quizId)
 
