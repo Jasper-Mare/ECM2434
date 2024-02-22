@@ -20,6 +20,7 @@ urlpatterns = [
     path("home/", include("homePage.urls")),
     path("quiz/", include("quizPage.urls")),
     path("userDB/", include("userDB.urls")),
+    path("contentDB/", include("contentDB.urls")),
     path("admin/", admin.site.urls),
     path("map/", include("map.urls")),
 ]
