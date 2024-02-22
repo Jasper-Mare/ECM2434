@@ -20,7 +20,7 @@ def makeLocationStruct(id, name, lat, long, info, radius):
         "gps_lat" : float(lat), 
         "gps_long" : float(long), 
         "info": info,
-        "radius" : int(radius),
+        "radius" : float(radius),
     }
 
 
