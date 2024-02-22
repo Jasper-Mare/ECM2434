@@ -20,7 +20,7 @@ def getQuizById(request):
     if (quizId == -1):
         return makeError("parameter missing", "id parameter is missing!")
 
-    quiz = databaseInteractions.getQuizByID(quizId)
+    quiz = databaseInteractions.getQuizById(quizId)
 
     return JsonResponse(quiz)
 
