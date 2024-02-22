@@ -15,10 +15,10 @@ def index(request):
 
 
 def getQuizById(request):
-    quizId:int = int(request.GET.get('quiz_Id', -1))
+    quizId:int = int(request.GET.get('id', -1))
 
     if (quizId == -1):
-        return makeError("parameter missing", "quiz_id parameter is missing!")
+        return makeError("parameter missing", "id parameter is missing!")
 
     quiz = databaseInteractions.getQuizByID(quizId)
 
@@ -26,10 +26,10 @@ def getQuizById(request):
 
 
 def getQuizzesByLocation(request):
-    locationID:int = int(request.GET.get('location_id', -1))
+    locationID:int = int(request.GET.get('id', -1))
 
     if (locationID == -1):
-        return makeError("parameter missing", "location_id parameter is missing!")
+        return makeError("parameter missing", "id parameter is missing!")
 
     quizzesList = databaseInteractions.getQuizzesByLocation(locationID)
 
@@ -37,10 +37,10 @@ def getQuizzesByLocation(request):
 
 
 def getLocationById(request):
-    locationId:int = int(request.GET.get('location_id', -1))
+    locationId:int = int(request.GET.get('id', -1))
 
     if (locationId == -1):
-        return makeError("parameter missing", "location_id parameter is missing!")
+        return makeError("parameter missing", "id parameter is missing!")
 
     location = databaseInteractions.getLocationById(locationId)
 
@@ -95,7 +95,7 @@ def createQuiz(request):
     answer0 = request.GET.get('answer0', "")
     answer1 = request.GET.get('answer1', "")
     answer2 = request.GET.get('answer2', "")
-    correctAnswer = request.GET.get('correct_answer', "")
+    correctAnswer:int = int(request.GET.get('correct_answer', ""))
     points:int = int(request.GET.get('points', -1))
     locationId:int = int(request.GET.get('location_id', -1))
 
@@ -139,10 +139,10 @@ def updateLocation(request):
     return JsonResponse(newLocationInfo)
 
 def updateQuiz(request):
-    quizId:int = request.GET.get('quiz_id', -1)
+    quizId:int = request.GET.get('id', -1)
 
     if (quizId == -1):
-        return makeError("parameter missing", "quiz_id parameter is missing!")
+        return makeError("parameter missing", "id parameter is missing!")
 
     oldQuizInfo = databaseInteractions.getQuizById(quizId)
     
@@ -153,8 +153,9 @@ def updateQuiz(request):
     answer2 = request.GET.get('answer2', oldQuizInfo["answer2"])
     correct_answer = request.GET.get('answer0', oldQuizInfo["answer0"])
     points:int = int(request.GET.get('points', oldQuizInfo["points"]))
+    locationId:int = int(request.GET.get('location_id', oldQuizInfo["location_id"]))
 
-    newQuizInfo = databaseInteractions.updateQuiz(question, answer0, answer1, answer2, correct_answer, points)
+    newQuizInfo = databaseInteractions.updateQuiz(question, answer0, answer1, answer2, correct_answer, points, locationId)
 
     return JsonResponse(newQuizInfo)
 
