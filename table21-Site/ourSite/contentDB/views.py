@@ -5,6 +5,8 @@ from django.http import HttpResponseBadRequest
 from django.template import Context, loader
 from math import isnan, nan
 
+from . import databaseInteractions
+
 # Create your views here.
 
 def index(request):
@@ -40,7 +42,7 @@ def getLocationById(request):
     if (locationId == -1):
         return makeError("parameter missing", "location_id parameter is missing!")
 
-    location = databaseInteractions.getLocationByID(locationId)
+    location = databaseInteractions.getLocationById(locationId)
 
     return JsonResponse(location)
 
@@ -60,7 +62,7 @@ def getNearbyLocations(request):
     if (isnan(long)):
         return makeError("parameter missing", "long parameter is missing!")
 
-    locations = databaseInteractions.getNearbyLocations()
+    locations = databaseInteractions.getNearbyLocations(lat, long)
     return JsonResponse(locations)
 
 
@@ -83,7 +85,7 @@ def createLocation(request):
         return makeError("parameter missing", "radius parameter is missing!")
     
 
-    location = databaseInteractions.createLocation(locationName, gpsLat,gpsLong, info, radius)
+    location = databaseInteractions.createLocation(gpsLat, gpsLong, locationName, info, radius)
 
     return JsonResponse(location)
 
@@ -95,6 +97,7 @@ def createQuiz(request):
     answer2 = request.GET.get('answer2', "")
     correctAnswer = request.GET.get('correct_answer', "")
     points:int = int(request.GET.get('points', -1))
+    locationId:int = int(request.GET.get('location_id', -1))
 
     if (question == ""):
         return makeError("parameter missing", "question parameter is missing!")
@@ -108,8 +111,10 @@ def createQuiz(request):
         return makeError("parameter missing", "correct_answer parameter is missing!")
     if (points == -1):
         return makeError("parameter missing", "points parameter is missing!")
+    if (locationId == -1):
+        return makeError("parameter missing", "location_id parameter is missing!")
     
-    quiz = databaseInteractions.createQuiz(question, answer0, answer1, answer2, correctAnswer,points)
+    quiz = databaseInteractions.createQuiz(question, answer0, answer1, answer2, correctAnswer, points, locationId)
 
     return JsonResponse(quiz)
 
@@ -129,7 +134,7 @@ def updateLocation(request):
     info = request.GET.get('info', oldLocationInfo["info"])
     radius:float = float(request.GET.get('radius', oldLocationInfo["gps_lat"]))
 
-    newLocationInfo = databaseInteractions.updateLocation(locationName, gpsLat, gpsLong, info, radius)
+    newLocationInfo = databaseInteractions.updateLocation(locationId, gpsLat, gpsLong, locationName, info, radius)
 
     return JsonResponse(newLocationInfo)
 
