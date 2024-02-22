@@ -53,14 +53,14 @@ def getAllLocations(request):
 
 
 def getNearbyLocations(request):
-    lat:float = float(request.GET.get('lat', nan))
-    long:float = float(request.GET.get('long', nan))
+    lat:float = float(request.GET.get('gps_lat', nan))
+    long:float = float(request.GET.get('gps_long', nan))
 
     if (isnan(lat)):
-        return makeError("parameter missing", "lat parameter is missing!")
+        return makeError("parameter missing", "gps_lat parameter is missing!")
     
     if (isnan(long)):
-        return makeError("parameter missing", "long parameter is missing!")
+        return makeError("parameter missing", "gps_long parameter is missing!")
 
     locations = databaseInteractions.getNearbyLocations(lat, long)
     return JsonResponse(locations)
@@ -69,7 +69,7 @@ def getNearbyLocations(request):
 def createLocation(request):
     locationName = request.GET.get('location_name', "")
     gpsLat:float = float(request.GET.get('gps_lat', nan))
-    gpsLong:float = float(request.GET.get('gps_ong', nan))
+    gpsLong:float = float(request.GET.get('gps_long', nan))
     info = request.GET.get('info', "")
     radius:float = float(request.GET.get('radius', -1))
 
