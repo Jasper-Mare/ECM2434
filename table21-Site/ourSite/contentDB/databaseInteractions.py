@@ -49,7 +49,7 @@ def getLocationById(id):
     except (Location.DoesNotExist):
         return {"error":"DoesNotExist", "details":f"id: {id} does not exist"}
     
-    return makeLocationStruct(id, location.name, location.gpsLat, location.gpsLon, location.info, location.radius)
+    return makeLocationStruct(id, location.name, location.gps_lat, location.gps_long, location.info, location.radius)
 
 
 def getAllLocations():
