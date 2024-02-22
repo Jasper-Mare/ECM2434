@@ -17,4 +17,5 @@ class Quiz(models.Model):
     answer2 = models.CharField(max_length=64)
     correct_answer =  models.SmallIntegerField()
     points = models.IntegerField()
-    location = models.ForeignKey(Location, on_delete=models.SET_DEFAULT, to_field='id', default=-1)
+    location = models.IntegerField() # The foreign key that points to the id of the related location
+     # models.ForeignKey(Location, on_delete=models.SET_DEFAULT, to_field='id', default=-1)

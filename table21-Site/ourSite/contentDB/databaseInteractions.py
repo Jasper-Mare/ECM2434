@@ -30,11 +30,11 @@ def getQuizById(id):
     except (Quiz.DoesNotExist):
         return {"error":"DoesNotExist", "details":f"id: {id} does not exist"}
     
-    return makeQuizStruct(id, quiz.question, quiz.answer0, quiz.answer1, quiz.answer2, quiz.correctAnswer, quiz.points, quiz.location)
+    return makeQuizStruct(id, quiz.question, quiz.answer0, quiz.answer1, quiz.answer2, quiz.correct_answer, quiz.points, quiz.location)
 
 
 def getQuizzesByLocation(id):
-    quizQueryResults = Location.objects.all().filter(location=id).values()
+    quizQueryResults = Quiz.objects.all().filter(location=id).values()
     quizArray = []
 
     for result in quizQueryResults:
@@ -61,6 +61,7 @@ def getAllLocations():
 
     return {"locations": locationArray}
 
+
 def getNearbyLocations(lat, long):
     locationQueryResults = Location.objects.all().values()
     locationArray = []
@@ -70,8 +71,8 @@ def getNearbyLocations(lat, long):
         # calculate the distance to the location, 
         # if the provided latitude and longitutde is in the radius of the location, add it to the list
 
-        rLat = result["GPS_lat"]
-        rLong = result["GPS_long"]
+        rLat = result["gps_lat"]
+        rLong = result["gps_long"]
         rRadius = result["radius"]
 
         deltaLat = lat - rLat
@@ -86,8 +87,8 @@ def getNearbyLocations(lat, long):
     return {"locations": locationArray}
 
 
-def createLocation(lat, long, name, info, radius):
-    location:Location = Location(name=name, info=info, gps_lat=lat, gps_long=long, radius=radius)
+def createLocation(lat, long, name, info, radius, location_id):
+    location:Location = Location(name=name, info=info, gps_lat=lat, gps_long=long, radius=radius, location=location_id)
     location.save()
 
     return getLocationById(location.id)
@@ -139,6 +140,13 @@ def deleteLocation(id):
     except (Location.DoesNotExist):
         return {"error":"DoesNotExist", "details":f"id: {id} does not exist"}
     
+    # mark linked quizzes as belonging to the null location (-1)
+
+    locationQuizzes =  getQuizzesByLocation(id)["quizzes"]
+    for quiz in locationQuizzes:
+        quiz["location"] = -1
+        quiz.save()
+
     location.delete()
     return {"successful" : True}
 

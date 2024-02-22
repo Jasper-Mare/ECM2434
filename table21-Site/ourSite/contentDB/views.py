@@ -132,7 +132,7 @@ def updateLocation(request):
     gpsLat:float = float(request.GET.get('gps_lat', oldLocationInfo["gps_lat"]))
     gpsLong:float = float(request.GET.get('gps_long', oldLocationInfo["gps_long"]))
     info = request.GET.get('info', oldLocationInfo["info"])
-    radius:float = float(request.GET.get('radius', oldLocationInfo["gps_lat"]))
+    radius:float = float(request.GET.get('radius', oldLocationInfo["radius"]))
 
     newLocationInfo = databaseInteractions.updateLocation(locationId, gpsLat, gpsLong, locationName, info, radius)
 
@@ -151,11 +151,11 @@ def updateQuiz(request):
     answer0 = request.GET.get('answer0', oldQuizInfo["answer0"])
     answer1 = request.GET.get('answer1', oldQuizInfo["answer1"])
     answer2 = request.GET.get('answer2', oldQuizInfo["answer2"])
-    correct_answer = request.GET.get('answer0', oldQuizInfo["answer0"])
+    correct_answer = request.GET.get('correct_answer', oldQuizInfo["correct_answer"])
     points:int = int(request.GET.get('points', oldQuizInfo["points"]))
-    locationId:int = int(request.GET.get('location_id', oldQuizInfo["location_id"]))
+    locationId:int = int(request.GET.get('location_id', oldQuizInfo["location"]))
 
-    newQuizInfo = databaseInteractions.updateQuiz(question, answer0, answer1, answer2, correct_answer, points, locationId)
+    newQuizInfo = databaseInteractions.updateQuiz(quizId, question, answer0, answer1, answer2, correct_answer, points, locationId)
 
     return JsonResponse(newQuizInfo)
 
