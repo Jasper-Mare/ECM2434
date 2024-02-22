@@ -53,3 +53,19 @@ function shuffle(list) {
   }
   return list;
 }
+
+addScore(1, 30);
+
+function addScore(id, score) {
+  const xhr = new XMLHttpRequest();
+  request = 'http://127.0.0.1:8000/userDB/updateUser?id='+String(id)+'&score='+String(score)
+  console.log(request);
+  xhr.open('GET', request, true);
+  xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+          const response = JSON.parse(xhr.responseText);
+          console.log(response);
+      }
+  };
+  xhr.send();
+}
