@@ -22,5 +22,6 @@ urlpatterns = [
     path("userDB/", include("userDB.urls")),
     path("contentDB/", include("contentDB.urls")),
     path("admin/", admin.site.urls),
-    path("map/", include("map.urls")),
+    path("map/",include("map.urls")),
+    path("login/", include("loginPage.urls")),
 ]
