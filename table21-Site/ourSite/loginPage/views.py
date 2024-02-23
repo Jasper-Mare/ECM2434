@@ -9,3 +9,6 @@ from django.template import Context, loader
 def index (request):
     template = loader.get_template("loginPage/Loginpage.html")
     return HttpResponse(template.render({}, request))
+
+def register(request):
+    return render(request, 'loginPage/Register.html')
