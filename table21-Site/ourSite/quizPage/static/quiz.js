@@ -1,5 +1,3 @@
-
-
 // get the elements
 question = document.getElementById("question");
 op1 = document.getElementById("op1");
@@ -44,6 +42,10 @@ function getQuestions(locationID) {
           return questions;
       }
   };
+}
+
+function getQuestions() {
+  
 }
 
 // update questions and score
