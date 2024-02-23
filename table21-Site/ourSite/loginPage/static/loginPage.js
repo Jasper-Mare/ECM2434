@@ -1,19 +1,22 @@
+a = document.getElementById("username");
+b = document.getElementById("passwd");
+
 function submitLogin() {
-    a = document.getElementById("username");
-    b = document.getElementById("passwd");
-    checkIfEmpty(a);
-    checkIfEmpty(b);
-    alert(a.value);
-    alert(b.value);
+    if (checkIfEmpty(a) || checkIfEmpty(b)) {
+        alert("Please fill in all fields");
+        return;
+    }
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://127.0.0.1:8000/userDB/getUserByName?name=' + a.value, true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            const response = JSON.parse(xhr.responseText);
+            console.log(response);
+        }
+    };
 }
 
-
 function checkIfEmpty(value) {
-    if (!value) {
-        alert("is empty!");
-    }
-    else {
-        alert("not empty");
-    }
-
+    return (value == "");
 }
