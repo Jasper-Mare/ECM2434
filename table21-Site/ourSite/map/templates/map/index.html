@@ -141,6 +141,8 @@
             margin-right: auto;
             height: 75%;
         }
+
+
     </style>
     <div class="flex-container">
         <div class="text-box"
@@ -167,5 +169,55 @@
         </div>
         <div class="text-box">5. Bus Stop <br> 6. Centre for Resillience <br>in Environment, Water <br> and Waste <br> 7. Harrison Building <br> 8. Streatham Court  </div>
     </div>
+
+    <p>Click the button to get your coordinates.</p>
+
+    <button onclick="getLocation()">Try It</button>
+
+    <p id="demo"></p>
+
+    <script>
+    const x = document.getElementById("demo");
+
+    function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.watchPosition(showPosition);
+    } else { 
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+    }
+    
+        
+    function showPosition(position) {
+        fetch("http://127.0.0.1:8000/contentDB/getNearbyLocations?gps_lat="+ position.coords.latitude + "&gps_long="+position.coords.longitude, {method: "GET"})
+        .then((response) => response.json())
+        .then((json) => {writeLocationToSite(json); console.log(json)})
+        
+
+    }
+
+
+    function writeLocationToSite(results){
+        console.log(results);
+        console.log(results.locations);
+        console.log(results.locations.length);
+        if (results && results.locations && results.locations.length > 0) {
+            // Access the locations array safely
+            const firstLocation = results.locations[0];
+            x.innerHTML="You are near: " + firstLocation.name;
+            console.log("First location name:", firstLocation.name);
+            // Further processing...
+        } else {
+            console.log("No locations available or results is not defined.");
+        }
+        /*
+        var firstLocation = results.locations[0];
+    
+        x.innerHTML="You are near: " + firstLocation.name;
+        x.innerHTML += "Long" + position.coords.latitude + "<br>Longitude: " + position.coords.longitude;
+  */
+    }
+
+    </script>
 </body>
 </html>
