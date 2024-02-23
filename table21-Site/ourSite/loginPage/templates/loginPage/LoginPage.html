@@ -1,0 +1,48 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="{% static 'LoginPage.css' %}">
+    <script type="text/javascript" src="{% static 'loginPage.js' %}"></script>
+    <title>Login</title>
+</head>
+
+<body>
+
+    <div id="content" class="loginPage">
+        <div class="centre">
+
+
+
+            <h1>Login</h1>
+
+
+            <form id="loginForm">
+                <label for="username">Username:</label><br>
+                <input type="text" id="username" name="username"><br> <br>
+
+                <label for="passwd">Password:</label><br>
+                <input type="text" id="passwd" name="passwd"> <br> <br>
+
+                <input type="submit" onclick="submitLogin()" value="Submit"> <br> <br>
+            </form>
+
+            <div id="options">
+                <a href="Register.html">Haven't signed up yet? Click here to sign
+                    up</a><br>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+</body>
+
+</html>

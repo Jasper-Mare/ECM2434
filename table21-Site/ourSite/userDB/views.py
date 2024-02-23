@@ -76,7 +76,7 @@ def updateUser(request):
     userPwordHash = request.GET.get('password_hash', oldUserInfo["password_hash"])
     userAccessLevel = request.GET.get('access_level', oldUserInfo["access_level"])
     userRecoveryEmail = request.GET.get('recovery_email', oldUserInfo["recovery_email"])
-    userScore = request.GET.get('new_score', oldUserInfo["score"])
+    userScore = request.GET.get('score', oldUserInfo["score"])
 
     newUserInfo = databaseInteractions.updateUser(userId, userName, userPwordHash, userAccessLevel, userRecoveryEmail, userScore)
 

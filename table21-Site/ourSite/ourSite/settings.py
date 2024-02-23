@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'loginPage.apps.LoginpageConfig',
+    'homePage.apps.HomeConfig',
     'map.apps.MapConfig',
     'userDB.apps.userDBConfig',
     'contentDB.apps.contentDBConfig',
@@ -40,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'quizPage.apps.QuizPageConfig',
+    'leaderboard.apps.LeaderboardConfig',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,27 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1 id="topic"></h1>
+        <div class="top">
+            <h1 id="score"></h1>
+            <h1 id="questionNum"></h1>
+        </div>
+        <h1 class="smaller" id="question"></h1>
+        <ul>
+            <li class="option smaller"><label id="op1"></label></li>
+            <li class="option smaller"><label id="op2"></label></li>
+            <li class="option smaller"><label id="op3"></label></li>
+        </ul>
+    </div>
+    
+</body>
+
+<script src="{% static 'quiz.js' %}"></script>
+</html>
