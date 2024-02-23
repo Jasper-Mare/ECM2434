@@ -87,8 +87,8 @@ def getNearbyLocations(lat, long):
     return {"locations": locationArray}
 
 
-def createLocation(lat, long, name, info, radius, location_id):
-    location:Location = Location(name=name, info=info, gps_lat=lat, gps_long=long, radius=radius, location=location_id)
+def createLocation(lat, long, name, info, radius):
+    location:Location = Location(name=name, info=info, gps_lat=lat, gps_long=long, radius=radius)
     location.save()
 
     return getLocationById(location.id)
