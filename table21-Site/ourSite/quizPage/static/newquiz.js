@@ -11,7 +11,7 @@ s3 = document.getElementById("s3");
 function save(){
     toSave = [question.value, o1.value, o2.value, o3.value];
 
-    
+    // write to db
 
     question.value = "";
     o1.value = "";
