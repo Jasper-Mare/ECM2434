@@ -9,6 +9,9 @@ b2 = document.getElementById("s2");
 b3 = document.getElementById("s3");
 
 function save() {
+    alert("hiii")
+
+    /*
     correctAnswer = document.getElementByClass("correct")
     q = question.value
     ans1 = op1.value
@@ -16,22 +19,27 @@ function save() {
     ans3 = op3.value
     correctAns = correctAnswer.value
     toSave = [q, ans1, ans2, ans3, correctAns];
+    */
 
-    if (q == "" || ans1 == "" || ans2 == "" || ans3 == "" || correctAns == "") {
+    /*
+    if (!q || !ans1 || !ans2 || !ans3 || !correctAns) {
+        alert("something is empty!!!!!")
 
     }
+    */
 
     // check valid input
 
     // write to db
 
 
+    /*
 
     question.value = "";
     op1.value = "";
     op2.value = "";
     op3.value = "";
-
+*/
 
 }
 
