@@ -15,7 +15,6 @@ def index(request):
     else:
         target_url = '/login'
 
-
     return render(request, 'homePage/redirectPage.html', {'target_url': target_url})
 
 
