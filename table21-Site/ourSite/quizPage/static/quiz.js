@@ -1,10 +1,4 @@
-// list of questions in the form where the first one in each is the correct answer
-questions = [['what is the first char','a','b','c'],['what is the first char','d','e','f'],['what is the first char','g','h','i']];
-questions = shuffle(questions);
 
-
-questionNumber = 1;
-scorecount = 0;
 
 // get the elements
 question = document.getElementById("question");
@@ -16,8 +10,41 @@ score = document.getElementById("score");
 title = document.getElementById("topic");
 title.textContent = "Sustainability quiz";
 
+
+
+// list of questions in the form where the first one in each is the correct answer
+//questions = [['what is the first char','a','b','c'],['what is the first char','d','e','f'],['what is the first char','g','h','i']];
+questions = getQuestions(1);
+
+if (questions == undefined) {
+  alert("No questions!!!");
+}
+else {
+  questionNumber = 1;
+  scorecount = 0;
+  // load the page when its first created
+  nextquestion();
+  addScore(1, 30); // this gotta go bro
+}
+
+questionNumber = 1;
+scorecount = 0;
 // load the page when its first created
 nextquestion();
+addScore(1, 30); // this gotta go bro
+
+function getQuestions(locationID) {
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', 'http://127.0.0.1:8000/contentDB/getQuizzesByLocation?id=' + locationID, true);
+  xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+          const response = JSON.parse(xhr.responseText);
+          console.log(response);
+          questions = response;
+          return questions;
+      }
+  };
+}
 
 // update questions and score
 function nextquestion() {
@@ -54,7 +81,6 @@ function shuffle(list) {
   return list;
 }
 
-addScore(1, 30);
 
 function addScore(id, score) {
   const xhr = new XMLHttpRequest();
