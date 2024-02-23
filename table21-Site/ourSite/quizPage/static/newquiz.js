@@ -10,7 +10,6 @@ s3 = document.getElementById("s3");
 
 function save(){
     toSave = [question.value, o1.value, o2.value, o3.value];
-
     
 
     question.value = "";
@@ -20,8 +19,8 @@ function save(){
 }
 
 function select(id){
-    s1.classList = "choose"
-    s2.classList = "choose"
-    s3.classList = "choose"
-    document.getElementById(id).classList.add("correct")
+    s1.classList = "choose";
+    s2.classList = "choose";
+    s3.classList = "choose";
+    document.getElementById(id).classList.add("correct");
 }
