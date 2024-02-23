@@ -7,5 +7,5 @@ from django.template import Context, loader
 # Create your views here.
 
 def index (request):
-    template = loader.get_template("loginPage/Loginpage.html")
+    template = loader.get_template("loginPage/LoginPage.html")
     return HttpResponse(template.render({}, request))
