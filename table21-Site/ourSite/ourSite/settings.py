@@ -32,12 +32,16 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'map.apps.MapConfig',
+    'userDB.apps.userDBConfig',
+    'contentDB.apps.contentDBConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'quizPage.apps.QuizPageConfig',
+    'leaderboard.apps.LeaderboardConfig',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,27 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>New Quiz</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1 id="topic">New sustainability question</h1>
+        <div class="top">
+        </div>
+        <h1 class="smaller">Question: <input type="text"  id="question" placeholder="Question..."></h1>
+        <ul>
+            <li class="option smaller">Option 1: <input type="text" id="op1" placeholder="Option..."><button class="choose correct" id="s1" onclick="select(id)">✓</button></li>
+            <li class="option smaller">Option 2: <input type="text" id="op2" placeholder="Option..."><button class="choose" id="s2" onclick="select(id)">✓</button></li>
+            <li class="option smaller">Option 3: <input type="text" id="op3" placeholder="Option..."><button class="choose" id="s3" onclick="select(id)">✓</button></li>
+        </ul>
+        <button id="save" onclick="save()">Save</button>
+    </div>
+
+    
+</body>
+
+<script src="{% static 'newquiz.js' %}"></script>
+</html>
