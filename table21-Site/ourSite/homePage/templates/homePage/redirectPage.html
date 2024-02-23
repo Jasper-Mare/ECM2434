@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Redirection Page</title>
+
+    <script>
+
+        window.onload = () => {window.location.href = "{{ target_url }}" };  
+
+    </script>
+
+</head>
+<body>
+    <h1>You are being redirected...</h1>
+    <p>If you are not redirected in a few seconds, <a href="{{ target_url }}">click here</a>.</p>
+</body>
+</html>
