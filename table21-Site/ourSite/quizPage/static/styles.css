@@ -29,8 +29,20 @@ h1 {
     padding: 20px 0;
 }
 
+#question {
+    width: 400px;
+
+}
+
+
 .smaller {
     font-size: 1.2em;
+
+}
+
+.answerBox {
+    size: F50;
+    width: 200px;
 }
 
 .container {
@@ -41,8 +53,8 @@ h1 {
     font-weight: bold;
     background-color: antiquewhite;
     padding: 30px;
-        margin: 30px 120px;
-    }
+    margin: 30px 120px;
+}
 
 #save {
     margin: 20px 0;
