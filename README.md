@@ -17,6 +17,8 @@ http://127.0.0.1:8000/
 
 ### Folder Structure:
 
+```text
+
 | - ECM2434             : Root of the repositiory
  \ - 1.env-instructions : Information on using the python virtual environment
  | - Assets             : A folder holding the music by Henry
@@ -28,3 +30,4 @@ http://127.0.0.1:8000/
  |                        pushing to and fetching from the repo, for some 
  |                        reason it isn't working to ignore *.pyc files
 
+```
