@@ -5,6 +5,7 @@ op2 = document.getElementById("op2");
 op3 = document.getElementById("op3");
 QN = document.getElementById("questionNum");
 score = document.getElementById("score");
+exit = document.getElementById("save");
 title = document.getElementById("topic");
 title.textContent = "Sustainability quiz";
 
@@ -13,7 +14,7 @@ title.textContent = "Sustainability quiz";
 // list of questions in the form where the first one in each is the correct answer
 //questions = [['what is the first char','a','b','c'],['what is the first char','d','e','f'],['what is the first char','g','h','i']];
 
-DoQuiz(0);
+DoQuiz(1);
 
 function DoQuiz(locationID) {
   const xhr = new XMLHttpRequest();
@@ -27,6 +28,7 @@ function DoQuiz(locationID) {
 
           questionNumber = 1;
           scorecount = 0;
+          totalquestions = 1;
           // load the page when its first created
           nextquestion();
           addScore(1, 30); // this gotta go bro
@@ -40,11 +42,11 @@ function DoQuiz(locationID) {
 // update questions and score
 function nextquestion() {
   QN.textContent = "Q"+questionNumber;
-  score.textContent = scorecount+"/3";
+  score.textContent = scorecount+"/"+totalquestions;
   question.textContent = questions[0]["question"];
   correct = questions[0]["correct_answer"];
 
-  if (questions.length > 0) {
+  if (questionNumber <= totalquestions && questions.length > 0) {
     order = shuffle([0,1,2]);
     choices = {0: questions[0]["answer0"], 1: questions[0]["answer1"], 2: questions[0]["answer2"]};
 
@@ -53,7 +55,7 @@ function nextquestion() {
     op3.innerHTML = '<input type="radio" name="' + order[2] + '" onclick="choose(name)">' + choices[order[2]];
     questions.shift();
   } else {
-    alert("No more questions");
+    finish();
   }
 }
 
@@ -86,4 +88,12 @@ function addScore(id, score) {
       }
   };
   xhr.send();
+}
+
+function finish() {
+  question.textContent = "You scored " + scorecount + " out of " + totalquestions;
+  op1.style.display = "none";
+  op2.style.display = "none";
+  op3.style.display = "none";
+  exit.style.display = "block";
 }

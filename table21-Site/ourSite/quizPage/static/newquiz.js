@@ -17,10 +17,10 @@ function save() {
     ans2 = op2.value
     ans3 = op3.value
     toSave = [q, ans1, ans2, ans3, correctAnswer];
-    locationID = 1;
+    locationID = 0;
     console.log(toSave);
 
-    if (!q || !ans1 || !ans2 || !ans3) {
+    if (isempty(q) || isempty(ans1) || isempty(ans2) || isempty(ans3)) {
         alert("something is empty!!!!!")
     }
 
@@ -52,4 +52,9 @@ function select(id) {
     b3.classList = "choose"
     document.getElementById(id).classList.add("correct")
 
+}
+
+function isempty(string) {
+    hold = string.trim();
+    return (hold == null || hold == '');
 }
