@@ -214,7 +214,7 @@
         if (results && results.locations && results.locations.length > 0) {
             // Access the locations array safely
             const firstLocation = results.locations[0];
-            const quizPageUrl = "http://127.0.0.1:8000/quiz/"+firstLocation.id; 
+            const quizPageUrl = "http://127.0.0.1:8000/quiz/?id="+firstLocation.id; 
 
             x.innerHTML = "You are near: " + firstLocation.name + ". " +
                       "<a href='" + quizPageUrl + "' target='_blank'>Take the quiz!</a>";
