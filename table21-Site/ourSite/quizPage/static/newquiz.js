@@ -1,5 +1,7 @@
 topic = document.getElementById("topic");
 question = document.getElementById("question");
+location = document.getElementById("location");
+
 op1 = document.getElementById("op1");
 op2 = document.getElementById("op2");
 op3 = document.getElementById("op3");
@@ -42,19 +44,29 @@ function save() {
     op1.value = "";
     op2.value = "";
     op3.value = "";
-
-
 }
 
 function select(id) {
-    b1.classList = "choose"
-    b2.classList = "choose"
-    b3.classList = "choose"
-    document.getElementById(id).classList.add("correct")
-
+    b1.classList = "choose";
+    b2.classList = "choose";
+    b3.classList = "choose";
+    document.getElementById(id).classList.add("correct");
 }
 
 function isempty(string) {
     hold = string.trim();
     return (hold == null || hold == '');
+}
+
+function addlocations() {
+    const xhr = new XMLHttpRequest();
+    request = 'http://127.0.0.1:8000/contentDB/getAllLocations';
+    xhr.open('GET', request, true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            const response = JSON.parse(xhr.responseText);
+            console.log(response);
+        }
+    };
+    xhr.send();
 }
