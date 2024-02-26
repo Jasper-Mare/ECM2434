@@ -6,6 +6,7 @@
 <head>
     <link rel="stylesheet" href="{% static 'LoginPage.css' %}">
     <script type="text/javascript" src="{% static 'loginPage.js' %}"></script>
+    <script type="text/javascript" src="{% static 'cookies.js' %}"></script>
     <title>Login</title>
 </head>
 
@@ -24,13 +25,13 @@
                 <input type="text" id="username" name="username"><br> <br>
 
                 <label for="passwd">Password:</label><br>
-                <input type="text" id="passwd" name="passwd"> <br> <br>
+                <input type="password" id="passwd" name="passwd"> <br> <br>
 
                 <input type="submit" onclick="submitLogin()" value="Submit"> <br> <br>
             </form>
 
             <div id="options">
-                <a href="Register.html">Haven't signed up yet? Click here to sign
+                <a href="Register">Haven't signed up yet? Click here to sign
                     up</a><br>
 
 
@@ -41,6 +42,11 @@
 
     </div>
 
+    <script>
+
+        //starPasswords('passwd');
+
+    </script>
 
 
 </body>
