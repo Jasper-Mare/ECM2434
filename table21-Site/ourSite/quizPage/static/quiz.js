@@ -14,10 +14,16 @@ title.textContent = "Sustainability quiz";
 // list of questions in the form where the first one in each is the correct answer
 //questions = [['what is the first char','a','b','c'],['what is the first char','d','e','f'],['what is the first char','g','h','i']];
 
-const urlParams = new URLSearchParams(window.location.search);
-const locationID = urlParams.get('id');
-
-DoQuiz(locationID);
+try {
+  const urlParams = new URLSearchParams(window.location.search);
+  const locationID = urlParams.get('id');
+  if (locationID == null) {throw "no location id"}
+  DoQuiz(locationID);
+}
+catch {
+  alert("error: no location id")
+  window.location.href = "http://127.0.0.1:8000/map/"
+}
 
 function DoQuiz(locationID) {
   const xhr = new XMLHttpRequest();
@@ -40,16 +46,18 @@ function DoQuiz(locationID) {
   xhr.send();
 }
 
-
-
 // update questions and score
 function nextquestion() {
+  if (questionNumber > totalquestions) {
+    finish();
+    return;
+  }
   QN.textContent = "Q"+questionNumber;
   score.textContent = scorecount+"/"+totalquestions;
   question.textContent = questions[0]["question"];
   correct = questions[0]["correct_answer"];
 
-  if (questionNumber <= totalquestions && questions.length > 0) {
+  if (questions.length > 0) {
     order = shuffle([0,1,2]);
     choices = {0: questions[0]["answer0"], 1: questions[0]["answer1"], 2: questions[0]["answer2"]};
 

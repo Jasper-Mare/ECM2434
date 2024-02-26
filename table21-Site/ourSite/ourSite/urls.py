@@ -23,5 +23,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("map/",include("map.urls")),
     path("login/", include("loginPage.urls")),
+    path("leaderboard/", include("leaderboard.urls")),
     path("", include("homePage.urls")),
 ]
