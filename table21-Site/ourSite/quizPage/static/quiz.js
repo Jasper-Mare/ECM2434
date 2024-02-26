@@ -22,12 +22,12 @@ try {
 }
 catch {
   alert("error: no location id")
-  window.location.href = "http://127.0.0.1:8000/map/"
+  window.location.href = "/map/"
 }
 
 function DoQuiz(locationID) {
   const xhr = new XMLHttpRequest();
-  request = 'http://127.0.0.1:8000/contentDB/getQuizzesByLocation?id=' + locationID
+  request = '/contentDB/getQuizzesByLocation?id=' + locationID
   console.log(request);
   xhr.open('GET', request, true);
   xhr.onreadystatechange = function() {
@@ -89,7 +89,7 @@ function shuffle(list) {
 
 function addScore(id, score) {
   const xhr = new XMLHttpRequest();
-  request = 'http://127.0.0.1:8000/userDB/updateUser?id='+String(id)+'&score='+String(score)
+  request = '/userDB/updateUser?id='+String(id)+'&score='+String(score)
   console.log(request);
   xhr.open('GET', request, true);
   xhr.onreadystatechange = function() {
