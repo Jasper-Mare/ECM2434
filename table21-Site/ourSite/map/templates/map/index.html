@@ -118,6 +118,7 @@
         .map-image {
             flex: 2; /* You can adjust this value to give more space to the image relative to text */
             height: 65%; /* Adjust based on your preference */
+            height: 65%; /* Adjust based on your preference */
             margin: 0 20px; /* Adds horizontal margin for spacing */
         }
         .flex-container {
@@ -171,7 +172,7 @@
             <h2>The aim of the game</h2>
             <a class="close" href="#">&times;</a>
             <div class="content">
-                Travel to all the locations on the map and answer the sustainable questions to gain points and be top of the leaderboard.
+                Travel to all the locations on the map and answer the sustainable questions and quests to gain points and be top of the leaderboard.
             </div>
         </div>
     </div>
@@ -213,10 +214,7 @@
         if (results && results.locations && results.locations.length > 0) {
             // Access the locations array safely
             const firstLocation = results.locations[0];
-            const quizPageUrl = "http://127.0.0.1:8000/quiz/"; /* + firstLocation.name; depends on name of location*/
-
-            x.innerHTML = "You are near: " + firstLocation.name + ". " +
-                      "<a href='" + quizPageUrl + "' target='_blank'>Take the quiz!</a>";
+            x.innerHTML="You are near: " + firstLocation.name;
             console.log("First location name:", firstLocation.name);
             
             // quiz page link
