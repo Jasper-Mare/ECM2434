@@ -1,17 +1,19 @@
 # ECM2434 - Group Software Project
+## To Run:
 
-to run:
+### Linux:
 
-linux:
-
-cd 'table21 Site'/ourSite/
+cd table21-Site/ourSite/
 python manage.py runserver
 
-windows:
+### Windows:
 
-cd 'table21 Site'\urSite\
+cd table21-Site\ourSite\
 py manage.py runserver
 
-open:
+## To Open:
 
-http://127.0.0.1:8000/home
+http://127.0.0.1:8000/
+
+
+

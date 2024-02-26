@@ -8,6 +8,9 @@ from django.http import HttpResponse
 
 def index(request):
 
+    # redirect user to appropriate page depending on if there is a login cookie yet
+    # https://www.geeksforgeeks.org/django-redirects/
+
     isLoggedIn = False
 
     if (isLoggedIn):
@@ -16,7 +19,3 @@ def index(request):
         target_url = '/login'
 
     return render(request, 'homePage/redirectPage.html', {'target_url': target_url})
-
-
-# redirect user to appropriate page depending on if there is a login cookie yet
-# https://www.geeksforgeeks.org/django-redirects/
