@@ -12,19 +12,78 @@ function submitRegisteration() {
         return;
     }
 
+    checkIfUser(username);
     checkPasswordMatch(passwd, rpasswd);
 
-    setCookie("username", username, 1);
-    setCookie("email", email, 1);
+    //hash password
+    hashedPassword = password
 
-    alert("cookie is " + getCookie("username"));
-    alert("cookie is " + getCookie("email"));
-
+    setUserInDB(username, email, hashedPassword);
 
 }
 
 function checkIfEmpty(value) {
     return (value == null || value == "");
+}
+
+function setUserInDB(inputUsername, inputEmail, inputPassHash) {
+
+    const xhr = new XMLHttpRequest();
+    request = '/userDB/createUser?name=' + inputUsername
+        + '&password_hash=' + inputPassHash
+        + '&access_level=USER&recovery_email=' + inputEmail;
+    xhr.open('GET', request, true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            const response = JSON.parse(xhr.responseText);
+            console.log(response);
+
+            const stringResponse = xhr.responseText;
+            const dbUsername = response.name;
+
+
+        }
+    };
+    xhr.send();
+
+
+
+
+    //save new user in DB
+    //name
+    //passwordhash
+    //access level  = "USER"
+    //email
+
+}
+
+
+function checkIfUser(inputUsername) {
+
+    const xhr = new XMLHttpRequest();
+    request = '/userDB/getUserByName?name=' + username;
+    xhr.open('GET', request, true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            const response = JSON.parse(xhr.responseText);
+            console.log(response);
+
+            const stringResponse = xhr.responseText;
+            const dbUsername = response.name;
+
+            //check username and password matches ones in DB
+            if (dbUsername == inputUsername) {// && dbPassHash == inputPassHash) {
+                alert("There's already an account with this username. Please login, or register with a different username");
+            }
+            //doesn't match any details in system
+            else {
+                alert("Congrats, you can register with this username ");
+                setCookie("login", response.id, 1);
+            }
+
+        }
+    };
+    xhr.send();
 }
 
 

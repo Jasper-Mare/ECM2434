@@ -9,13 +9,10 @@ function submitLogin() {
         return;
     }
 
-    checkValidLogin(username);
+    //hash password
+    hashedPassword = password
 
-    setCookie("username", username, 1);
-    // Save password in cookie
-    setCookie("password", password, 1);
-    //alert("cookie is " + getCookie("username"));
-
+    checkValidLogin(username, hashedPassword);
 
 }
 
@@ -23,26 +20,36 @@ function checkIfEmpty(value) {
     return (value == null || value == '');
 }
 
-function checkValidLogin(inputUsername, inputPasswd) {
+function checkValidLogin(inputUsername, inputPassHash) {
 
     const xhr = new XMLHttpRequest();
-    request = 'http://127.0.0.1:8000/userDB/getUserByName?name=' + username;
+    request = '/userDB/getUserByName?name=' + username;
     xhr.open('GET', request, true);
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             const response = JSON.parse(xhr.responseText);
             console.log(response);
-            //alert(response);
+
             const stringResponse = xhr.responseText;
             const dbUsername = response.name;
+            const dbPassHash = response.password_hash;
+            alert(stringResponse);
+
+            alert(dbPassHash + "compared to " + inputPassHash);
+
 
             //check username and password matches ones in DB
-            if (dbUsername == inputUsername) {
+            if (dbUsername == inputUsername) {// && dbPassHash == inputPassHash) {
                 alert("they match!!!");
+
+                setCookie("login", response.id, 1);
+                window.location.replace("../../map/");
+                //move to map page
             }
             //doesn't match any details in system
             else {
-                alert("they don't");
+                alert("Username and password don't match any user on our system: Try again, or register");
+                //refresh login page
             }
 
         }
