@@ -1,4 +1,5 @@
-//functions from W3 schools
+//generic cookie functions from https://www.w3schools.com/js/js_cookies.asp
+
 
 function setCookie(cname, cvalue, exdays) {
 
