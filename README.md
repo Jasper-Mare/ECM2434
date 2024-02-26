@@ -8,11 +8,13 @@ From a terminal open in the folder ECM2434:
 ### Linux:
 
 cd table21-Site/ourSite/
+
 python manage.py runserver
 
 ### Windows:
 
 cd table21-Site\ourSite\
+
 py manage.py runserver
 
 ## To Open:
