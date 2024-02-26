@@ -1,6 +1,6 @@
 topic = document.getElementById("topic");
 question = document.getElementById("question");
-location = document.getElementById("location");
+locationtable = document.getElementById("locationtable");
 
 op1 = document.getElementById("op1");
 op2 = document.getElementById("op2");
@@ -11,6 +11,8 @@ b2 = document.getElementById("b2");
 b3 = document.getElementById("b3");
 value = 1;
 
+getLocations();
+
 function save() {
     correctAnswer = document.querySelector(".correct").id;
     correctAnswer = parseInt(correctAnswer[1])-1;
@@ -19,7 +21,7 @@ function save() {
     ans2 = op2.value
     ans3 = op3.value
     toSave = [q, ans1, ans2, ans3, correctAnswer];
-    locationID = 0;
+    locationID = locationtable.value;
     console.log(toSave);
 
     if (isempty(q) || isempty(ans1) || isempty(ans2) || isempty(ans3)) {
@@ -58,15 +60,19 @@ function isempty(string) {
     return (hold == null || hold == '');
 }
 
-function addlocations() {
+function getLocations() {
     const xhr = new XMLHttpRequest();
-    request = 'http://127.0.0.1:8000/contentDB/getAllLocations';
+    request = ' http://127.0.0.1:8000/contentDB/getAllLocations';
     xhr.open('GET', request, true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
             const response = JSON.parse(xhr.responseText);
-            console.log(response);
+            locations = response["locations"];
+            for (i = 0; i < locations.length; i++) {
+                locationtable.innerHTML += "<option value='" + locations[i]["id"] + "'>" + locations[i]["name"] + "</option>";
+            }
         }
     };
+
     xhr.send();
 }
