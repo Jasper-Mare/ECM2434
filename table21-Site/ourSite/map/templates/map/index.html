@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html>
 <body>
@@ -157,13 +158,13 @@
 
 
     </style>
-    <div class="flex-container">
+    <div id="container" class="flex-container">
         <div class="text-box"
             <h1>Welcome to EcoQuest Exeter!</h1>
         </div>
     </div>
     <div class="box">
-        <a class="button" href="#popup1">Click Here</a>
+        <a class="button" href="#popup1" onclick="playmusic()">Click Here</a>
     </div>
     
     <div id="popup1" class="overlay">
@@ -188,6 +189,20 @@
 
     <script>
     const x = document.getElementById("myButton");
+    const container = document.getElementById("container");
+
+    function playmusic() {
+        var funAudio;
+        if (funAudio == undefined) {
+            funAudio = document.createElement("audio");
+            funAudio.src = "{% static 'henrys jam.mp3' %}";
+            funAudio.loop = true;
+            funAudio.autoplay = true;
+            funAudio.volume = 0.2;
+            container.appendChild(funAudio);
+        }
+        funAudio.play();
+    }
 
     function getLocation() {
     if (navigator.geolocation) {
