@@ -14,7 +14,10 @@ title.textContent = "Sustainability quiz";
 // list of questions in the form where the first one in each is the correct answer
 //questions = [['what is the first char','a','b','c'],['what is the first char','d','e','f'],['what is the first char','g','h','i']];
 
-DoQuiz(1);
+const urlParams = new URLSearchParams(window.location.search);
+const locationID = urlParams.get('id');
+
+DoQuiz(locationID);
 
 function DoQuiz(locationID) {
   const xhr = new XMLHttpRequest();
