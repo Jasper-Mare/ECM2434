@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html>
 <body>
@@ -117,7 +118,8 @@
         }
         .map-image {
             flex: 2; /* You can adjust this value to give more space to the image relative to text */
-            height: 75%; /* Adjust based on your preference */
+            height: 65%; /* Adjust based on your preference */
+            height: 65%; /* Adjust based on your preference */
             margin: 0 20px; /* Adds horizontal margin for spacing */
         }
         .flex-container {
@@ -142,15 +144,64 @@
             height: 75%;
         }
 
+        .bottomLeftButton {
+            position: fixed; /* Position the button relative to the viewport */
+            bottom: 20px; /* Distance from the bottom of the viewport */
+            left: 20px; /* Distance from the left of the viewport */
+            padding: 20px; /* Padding inside the button */
+            background-color: #06D85F; /* Background color */
+            color: white; /* Text color */
+            border: none; /* No border */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Change cursor to pointer on hover */
+            font-size: 24px;
+        }
+    
+    .hidden{
+        visibility: hidden;
+    }
+
+        .topRightButton {
+            position: fixed; /* Fixed position */
+            top: 20px; /* Distance from the top */
+            right: 20px; /* Distance from the right */
+            z-index: 1000; /* Ensure it sits on top of other content */
+        }
+
+        /* Optional: Basic styling for the button */
+        .Button {
+            padding: 10px 20px;
+            background-color: #06D85F; /* Green background */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .topLeftButton {
+            position: fixed; /* Fixed position */
+            top: 20px; /* Distance from the top */
+            left: 20px; /* Distance from the right */
+            z-index: 1000; /* Ensure it sits on top of other content */
+                }
+
 
     </style>
-    <div class="flex-container">
-        <div class="text-box"
+    <div id="container" class="flex-container">
+        <div class="text-box">
             <h1>Welcome to EcoQuest Exeter!</h1>
         </div>
+        <a href="/leaderboard/" class="topRightButtonLink">
+            <button id="leaderboardButton" class="topRightButton button">Leaderboard</button>
+        </a>
+        <a href="/login/" class="topLeftButtonLink">
+            <button id="logoutButton" class="topLeftButton button">Log out</button>
+        </a>
+        <button class ="hidden" id="admin" onload="sethidden()" onclick="window.location.href='../../adminPage/'">admin</button>
+        
     </div>
     <div class="box">
-        <a class="button" href="#popup1">Click Here</a>
+        <a class="button" href="#popup1" onclick="playmusic()">Click Here</a>
     </div>
     
     <div id="popup1" class="overlay">
@@ -163,33 +214,70 @@
         </div>
     </div>
     <div class="flex-container">
-        <div class="text-box">1. DH2 <br> 2. Bus Stop <br> 3. Pond <br> 4. Student Health Centre  </div>
+        <div class="text-box">1. DH1 <br> 2. Bus Stop <br> 3. Pond <br> 4. Student Health Centre  </div>
         <div class="map-container">
             <img src="{% static 'Map.png' %}" class="center">
         </div>
         <div class="text-box">5. Bus Stop <br> 6. Centre for Resillience <br>in Environment, Water <br> and Waste <br> 7. Harrison Building <br> 8. Streatham Court  </div>
     </div>
 
-    <p>Click the button to get your coordinates.</p>
+    <button id = "myButton" class="bottomLeftButton" onclick="getLocation()">Click this button to find what location you are near.</button>
 
-    <button onclick="getLocation()">Try It</button>
-
-    <p id="demo"></p>
-
+    
+    
     <script>
-    const x = document.getElementById("demo");
+    userID = getCookie("login"); // get the userID from the cookie
+    if (userID == undefined || userID == "") { // if they are not logged in redirect them to the login page
+        alert("Please login");
+        window.location.href = "/login/";
+    }
+
+    const x = document.getElementById("myButton");
+    const container = document.getElementById("container");
+    var funAudio;
+    const adminLink = document.getElementById("admin");
+    userID = getCookie("login");
+
+    function playmusic() {
+        if (funAudio == undefined) {
+            funAudio = document.createElement("audio");
+            funAudio.src = "{% static 'henrys jam.mp3' %}";
+            funAudio.loop = true;
+            funAudio.autoplay = true;
+            funAudio.volume = 0.2;
+            container.appendChild(funAudio);
+        }
+        funAudio.play();
+    }
 
     function getLocation() {
     if (navigator.geolocation) {
-        navigator.geolocation.watchPosition(showPosition);
+        navigator.geolocation.getCurrentPosition(showPosition);
     } else { 
         x.innerHTML = "Geolocation is not supported by this browser.";
     }
     }
+
+    // function to get the cookie of a given name
+    function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+    }
     
         
     function showPosition(position) {
-        fetch("http://127.0.0.1:8000/contentDB/getNearbyLocations?gps_lat="+ position.coords.latitude + "&gps_long="+position.coords.longitude, {method: "GET"})
+        fetch("/contentDB/getNearbyLocations?gps_lat="+ position.coords.latitude + "&gps_long="+position.coords.longitude, {method: "GET"})
         .then((response) => response.json())
         .then((json) => {writeLocationToSite(json); console.log(json)})
         
@@ -199,15 +287,21 @@
 
     function writeLocationToSite(results){
         console.log(results);
-        console.log(results.locations);
+        console.log(results.locations); 
         console.log(results.locations.length);
         if (results && results.locations && results.locations.length > 0) {
             // Access the locations array safely
             const firstLocation = results.locations[0];
-            x.innerHTML="You are near: " + firstLocation.name;
+            const quizPageUrl = "/quiz/?id="+firstLocation.id; 
+
+            x.innerHTML = "You are near: " + firstLocation.name + ". " +
+                      "<a href='" + quizPageUrl + "'>Take the quiz!</a>";
+
             console.log("First location name:", firstLocation.name);
-            // Further processing...
+            
+            // quiz page link
         } else {
+            x.innerHTML="No locations available or results is not defined.";
             console.log("No locations available or results is not defined.");
         }
         /*
@@ -215,9 +309,44 @@
     
         x.innerHTML="You are near: " + firstLocation.name;
         x.innerHTML += "Long" + position.coords.latitude + "<br>Longitude: " + position.coords.longitude;
-  */
+*/
+
+    }
+    //Written by MF
+
+    function sethidden(){
+        const xhr = new XMLHttpRequest();
+        request = 'http://127.0.0.1:8000/userDB/getUserById?id='+String(userID)
+        xhr.open('GET', request, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                const access = response.access_level;
+                if(access == "GAME_KEEPER"){
+                    adminLink.classList.remove("hidden");
+                }
+            }
+        };
+        xhr.send();
     }
 
+    function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+    }
+    //https://www.w3schools.com/js/js_cookies.asp
+    
     </script>
 </body>
 </html>
