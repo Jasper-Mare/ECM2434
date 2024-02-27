@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(primary_key=True, serialize=False)),
                 ('name', models.CharField(max_length=20)),
-                ('password_hash', models.CharField(max_length=32)),
+                ('password_hash', models.CharField(max_length=60)),
                 ('accessLevel', models.CharField(max_length=11)),
                 ('recovery_email', models.CharField(max_length=128)),
                 ('score', models.IntegerField()),

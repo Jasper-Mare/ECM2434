@@ -1,9 +1,12 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
 
 <head>
     <link rel="stylesheet" href="{% static 'LoginPage.css' %}">
-    <script type="text/javascript" src="{% static 'loginPage.js' %}"></script>
+    <script type="text/javascript" src="{% static 'register.js' %}"></script>
+    <script type="text/javascript" src="{% static 'cookies.js' %}"></script>
     <title>Login</title>
 </head>
 
@@ -24,17 +27,30 @@
                 <input type="text" id="email" name="email"><br> <br>
 
                 <label for="passwd">Password:</label><br>
-                <input type="text" id="passwd" name="passwd"> <br> <br>
+                <input type="password" id="passwd" name="passwd"> <br> <br>
 
                 <label for="rptpasswd">Repeat password:</label><br>
-                <input type="text" id="rptpasswd" name="rptpasswd"> <br> <br>
+                <input type="password" id="rptpasswd" name="rptpasswd"> <br> <br>
 
-                <input type="submit" value="Submit"> <br> <br>
+                <input type="button" onclick="submitRegisteration()" value="Submit"> <br> <br>
             </form>
+
+            <div id="options">
+                <a href="..">Already signed up? Click here to login
+                </a><br>
+
+
+            </div>
 
 
         </div>
     </div>
+
+    <script>
+        //starPasswords('passwd');
+        //starPasswords('rptpasswd');
+
+    </script>
 
 </body>
 
