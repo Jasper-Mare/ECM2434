@@ -1,5 +1,5 @@
 
-function submitRegisteration() {
+async function submitRegisteration() {
 
     username = (document.getElementById("username").value).trim();
     email = (document.getElementById("email").value).trim();
@@ -16,8 +16,10 @@ function submitRegisteration() {
     checkPasswordMatch(passwd, rpasswd);
 
     //hash password
-    hashedPassword = hashPassword(passwd);
+    hashedPassword = await hashPassword(passwd);
+
     alert("hashed passwd is? " + hashedPassword);
+
 
     setUserInDB(username, email, hashedPassword);
 
@@ -46,9 +48,7 @@ function setUserInDB(inputUsername, inputEmail, inputPassHash) {
             alert("after relocation");
 
         }
-        else {
-            alert("didn't work");
-        }
+
     };
     xhr.send();
 
@@ -56,10 +56,10 @@ function setUserInDB(inputUsername, inputEmail, inputPassHash) {
 }
 
 // need to wait for request to come back 
-function hashPassword(inputPassword) {
+async function hashPassword(inputPassword) {
     let received = false;
     let hashedPW = "preSet";
-    fetch('hash/', {
+    return await fetch('/login/hash', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -68,21 +68,22 @@ function hashPassword(inputPassword) {
 
     })
         .then(response => {
-            received = true;
-            alert("is it hashed?");
+            if (response.ok == false) {
+                alert("error getting response");
+            }
+            return response.json();
+
 
         })
+        .then(data => {
+
+            return data.hashedPassword;
+        })
         .catch(error => {
-            alert("there was an error");
-            received = true;
+            alert("Error hashing password:", error);
             hashedPW = "";
-            // error checking/messages
+
         });
-    /*
-        while (received == false) {
-            continue;
-        }
-        */
 
 
 }
