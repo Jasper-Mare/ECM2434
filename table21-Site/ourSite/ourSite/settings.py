@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'loginPage.apps.LoginpageConfig',
+    'adminPage.apps.AdminpageConfig',
     'homePage.apps.HomeConfig',
     'map.apps.MapConfig',
     'userDB.apps.userDBConfig',
