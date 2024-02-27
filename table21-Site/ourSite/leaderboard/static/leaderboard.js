@@ -1,3 +1,4 @@
+// written by Jacob
 // get the table to be added to
 const table = document.getElementById('table');
 

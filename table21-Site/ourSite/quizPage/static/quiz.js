@@ -1,3 +1,4 @@
+// Written by Jacob
 // get the elements
 question = document.getElementById("question_text");
 op1 = document.getElementById("op1"); // options

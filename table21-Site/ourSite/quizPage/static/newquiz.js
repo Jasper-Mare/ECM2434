@@ -1,3 +1,4 @@
+// written by Jacob
 // get document elements
 topic = document.getElementById("topic");
 question = document.getElementById("question");
