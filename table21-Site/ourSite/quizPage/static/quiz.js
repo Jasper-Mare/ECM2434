@@ -46,7 +46,7 @@ function DoQuiz(locationID) {
 
     questionNumber = 1;
     scorecount = 0;
-    totalquestions = 2;
+    totalquestions = 1;
 
     nextquestion();
   });
@@ -57,7 +57,6 @@ function nextquestion() {
   // update the page elements
   QN.textContent = "Q"+questionNumber;
   score.textContent = scorecount+"/"+totalquestions;
-
   if (questionNumber <= totalquestions && questions.length > 0) { // check that there is still questions to be asked
     question.textContent = questions[0]["question"];
     correct = questions[0]["correct_answer"]; // get the index of the correct answer
