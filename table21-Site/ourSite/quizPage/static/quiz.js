@@ -19,7 +19,10 @@ if (userID == undefined || userID == "") { // if they are not logged in redirect
 try { // get the location id from the url
   const urlParams = new URLSearchParams(window.location.search);
   const locationID = urlParams.get('id');
-  if (locationID == null) {throw "no location id";} // if there is no id in the url throw an error
+  if (locationID == null) {
+    alert("error: no location id");
+    window.location.href = "/map/";
+  } // if there is no id in the url throw an error
 
   // get the location name from the location id
   request = '/contentDB/getLocationById?id=' + locationID // get the location name that is stored in the database
