@@ -21,20 +21,20 @@ try { // get the location id from the url
   const locationID = urlParams.get('id');
   if (locationID == null) {throw "no location id";} // if there is no id in the url throw an error
 
-// get the location name from the location id
-request = '/contentDB/getLocationById?id=' + locationID // get the location name that is stored in the database
-getRequest(request)
-  .then(response => {
-    place.textContent = response["name"]; // use the name variable of the returned json
-  })
+  // get the location name from the location id
+  request = '/contentDB/getLocationById?id=' + locationID // get the location name that is stored in the database
+  getRequest(request)
+    .then(response => {
+      place.textContent = response["name"]; // use the name variable of the returned json
+    })
 
-  DoQuiz(locationID); // start the quiz once variables are set and checks are made
+    DoQuiz(locationID); // start the quiz once variables are set and checks are made
 }
 
 
 catch { // if location cannot be found redirect to the map page
   alert("error: no location id");
-  //window.location.href = "/map/";
+  window.location.href = "/map/";
 }
 
 // function to set the quiz questions and start the quiz
