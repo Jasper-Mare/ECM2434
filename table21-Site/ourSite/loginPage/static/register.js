@@ -16,7 +16,7 @@ function submitRegisteration() {
     checkPasswordMatch(passwd, rpasswd);
 
     //hash password
-    hashedPassword = password
+    hashedPassword = passwd;
 
     setUserInDB(username, email, hashedPassword);
 
@@ -38,10 +38,13 @@ function setUserInDB(inputUsername, inputEmail, inputPassHash) {
             const response = JSON.parse(xhr.responseText);
             console.log(response);
 
-            const stringResponse = xhr.responseText;
-            const dbUsername = response.name;
+            setCookie("login", response.id, 1);
+            window.location.replace("../../map/");
+            alert("after relocation");
 
-
+        }
+        else {
+            alert("didn't work");
         }
     };
     xhr.send();
