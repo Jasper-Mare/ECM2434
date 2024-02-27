@@ -80,3 +80,12 @@ h1 {
 .correct {
     background-color: lawngreen;
 }
+
+#save {
+    margin: 20px 0;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    background-color: lawngreen;
+    border: solid 1px black;
+    cursor: pointer;
+}
