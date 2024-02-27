@@ -136,6 +136,7 @@ function getCookie(cname) {
   return "";
 }
 
+// function to make a get request and return the response
 async function getRequest(request) {
   try {
     const response = await fetch(request);
