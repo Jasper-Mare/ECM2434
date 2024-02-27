@@ -1,6 +1,6 @@
 // get the elements
 question = document.getElementById("question_text");
-op1 = document.getElementById("op1");
+op1 = document.getElementById("op1"); // options
 op2 = document.getElementById("op2");
 op3 = document.getElementById("op3");
 QN = document.getElementById("questionNum");
