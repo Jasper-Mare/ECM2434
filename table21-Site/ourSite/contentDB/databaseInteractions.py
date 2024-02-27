@@ -1,5 +1,8 @@
+# written by Jasper Mare
+
 from .models import Quiz, Location
 
+# builds the dictionary that turns into the JSON response for quizzes
 def makeQuizStruct(id, question, answer0, answer1, answer2, correctAnswer, points, location_id):
     return {
         "id" : int(id), 
@@ -12,7 +15,7 @@ def makeQuizStruct(id, question, answer0, answer1, answer2, correctAnswer, point
         "location": int(location_id),
     }
 
-
+# builds the dictionary that turns into the JSON response for locations
 def makeLocationStruct(id, name, lat, long, info, radius):
     return {
         "id" : int(id), 
@@ -25,6 +28,7 @@ def makeLocationStruct(id, name, lat, long, info, radius):
 
 
 def getQuizById(id):
+    # if there isn't a quiz with this id in the database an error will be thrown, so send the error forwards as a JSON object
     try:
         quiz:Quiz = Quiz.objects.get(id=id)
     except (Quiz.DoesNotExist):
