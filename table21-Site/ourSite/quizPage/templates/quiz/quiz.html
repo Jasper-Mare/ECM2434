@@ -1,25 +1,27 @@
+<!-- Written by Jacob -->
 {% load static %}
 
 <!DOCTYPE html>
 <html>
 <head>
     <title>Quiz</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}"> <!-- Link the css -->
 </head>
 <body>
     <div class="container">
-        <h1 id="topic"></h1>
+        <h1 id="topic"></h1> <!-- Content added by quiz.js -->
+        <h1 id="place" class="smaller tight"></h1> <!-- Content added by quiz.js -->
         <div class="top">
-            <h1 id="score"></h1>
-            <h1 id="questionNum"></h1>
+            <h1 id="score"></h1> <!-- Content added by quiz.js -->
+            <h1 id="questionNum"></h1> <!-- Content added by quiz.js -->
         </div>
-        <h1 id="question_text"></h1>
+        <h1 id="question_text"></h1> <!-- Content added by quiz.js -->
         <ul>
-            <li class="option smaller"><label id="op1"></label></li>
-            <li class="option smaller"><label id="op2"></label></li>
-            <li class="option smaller"><label id="op3"></label></li>
+            <li class="option"><label id="op1"></label></li> <!-- Content added by quiz.js -->
+            <li class="option"><label id="op2"></label></li> <!-- Content added by quiz.js -->
+            <li class="option"><label id="op3"></label></li> <!-- Content added by quiz.js -->
         </ul>
-        <button id="save" onclick="window.location.href='http://127.0.0.1:8000/map/'" hidden>Exit</button>
+        <button id="save" onclick="window.location.href='/map/'">Exit</button> <!-- If you are finished with the quiz or wish to return you can go back to the map page-->
     </div>
 </body>
 
