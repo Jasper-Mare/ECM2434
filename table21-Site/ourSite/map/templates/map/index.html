@@ -209,7 +209,7 @@
         </div>
     </div>
     <div class="flex-container">
-        <div class="text-box">1. DH2 <br> 2. Bus Stop <br> 3. Pond <br> 4. Student Health Centre  </div>
+        <div class="text-box">1. DH1 <br> 2. Bus Stop <br> 3. Pond <br> 4. Student Health Centre  </div>
         <div class="map-container">
             <img src="{% static 'Map.png' %}" class="center">
         </div>
@@ -221,6 +221,12 @@
     
     
     <script>
+    userID = getCookie("login"); // get the userID from the cookie
+    if (userID == undefined || userID == "") { // if they are not logged in redirect them to the login page
+        alert("Please login");
+        window.location.href = "/login/";
+    }
+
     const x = document.getElementById("myButton");
     const container = document.getElementById("container");
     var funAudio;
@@ -243,6 +249,23 @@
     } else { 
         x.innerHTML = "Geolocation is not supported by this browser.";
     }
+    }
+
+    // function to get the cookie of a given name
+    function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
     }
     
         
