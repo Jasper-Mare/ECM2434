@@ -119,6 +119,7 @@
         .map-image {
             flex: 2; /* You can adjust this value to give more space to the image relative to text */
             height: 65%; /* Adjust based on your preference */
+            height: 65%; /* Adjust based on your preference */
             margin: 0 20px; /* Adds horizontal margin for spacing */
         }
         .flex-container {
@@ -193,8 +194,7 @@
             <h2>The aim of the game</h2>
             <a class="close" href="#">&times;</a>
             <div class="content">
-                Travel to all the locations on the map and answer the sustainable questions to gain points and be top of the leaderboard.
-                <img src="{% static 'Goals.png' %}" class="center" style="width: 250px; height: auto;">
+                Travel to all the locations on the map and answer the sustainable questions and quests to gain points and be top of the leaderboard.
             </div>
         </div>
     </div>
@@ -256,6 +256,7 @@
 
             x.innerHTML = "You are near: " + firstLocation.name + ". " +
                       "<a href='" + quizPageUrl + "'>Take the quiz!</a>";
+
             console.log("First location name:", firstLocation.name);
             
             // quiz page link
