@@ -217,9 +217,9 @@
     <script>
     const x = document.getElementById("myButton");
     const container = document.getElementById("container");
+    var funAudio;
 
     function playmusic() {
-        var funAudio;
         if (funAudio == undefined) {
             funAudio = document.createElement("audio");
             funAudio.src = "{% static 'henrys jam.mp3' %}";

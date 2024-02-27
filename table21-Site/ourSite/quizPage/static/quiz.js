@@ -8,6 +8,12 @@ score = document.getElementById("score");
 exit = document.getElementById("save");
 title = document.getElementById("topic");
 title.textContent = "Sustainability quiz";
+userID = getCookie("login");
+
+if (userID == undefined || userID == "") {
+  alert("Please login to take the quiz");
+  window.location.href = "/login/";
+}
 
 // list of questions in the form where the first one in each is the correct answer
 //questions = [['what is the first char','a','b','c'],['what is the first char','d','e','f'],['what is the first char','g','h','i']];
@@ -16,8 +22,25 @@ try {
   const urlParams = new URLSearchParams(window.location.search);
   const locationID = urlParams.get('id');
   if (locationID == null) {throw "no location id";}
+
+  const xhr = new XMLHttpRequest();
+  request = '/contentDB/getLocationById?id=' + locationID
+  console.log(request);
+  xhr.open('GET', request, true);
+  xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+          const response = JSON.parse(xhr.responseText);
+          locationName = response;
+          console.log(locationName);
+          place.textContent = locationName["name"];
+      }
+  };
+  xhr.send();
+
   DoQuiz(locationID);
 }
+
+
 catch {
   alert("error: no location id");
   window.location.href = "/map/";
@@ -31,7 +54,8 @@ function DoQuiz(locationID) {
   xhr.onreadystatechange = function() {
       if (xhr.readyState === 4 && xhr.status === 200) {
           const response = JSON.parse(xhr.responseText);
-          questions = response["quizzes"];
+          questions = shuffle(response["quizzes"]);
+          console.log(questions);
 
           questionNumber = 1;
           scorecount = 0;
@@ -45,16 +69,12 @@ function DoQuiz(locationID) {
 
 // update questions and score
 function nextquestion() {
-  if (questionNumber > totalquestions) {
-    finish();
-    return;
-  }
-  QN.textContent = "Q"+questionNumber;
-  score.textContent = scorecount+"/"+totalquestions;
-  question.textContent = questions[0]["question"];
-  correct = questions[0]["correct_answer"];
+  if (questionNumber <= totalquestions && questions.length > 0) {
+    QN.textContent = "Q"+questionNumber;
+    score.textContent = scorecount+"/"+totalquestions;
+    question.textContent = questions[0]["question"];
+    correct = questions[0]["correct_answer"];
 
-  if (questions.length > 0) {
     order = shuffle([0,1,2]);
     choices = {0: questions[0]["answer0"], 1: questions[0]["answer1"], 2: questions[0]["answer2"]};
 
@@ -113,7 +133,7 @@ function addScore(id, score) {
 }
 
 function finish() {
-  addScore(getCookie("login"), scorecount);
+  addScore(userID, scorecount);
   question.textContent = "You scored " + scorecount + " out of " + totalquestions;
   op1.style.display = "none";
   op2.style.display = "none";

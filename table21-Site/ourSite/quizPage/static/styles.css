@@ -39,6 +39,10 @@ h1 {
 
 }
 
+.option {
+    font-size: 1.3em;
+}
+
 .answerBox {
     size: F50;
     width: 200px;
@@ -90,4 +94,18 @@ h1 {
 
 .correct {
     background-color: lawngreen;
+}
+
+.tight {
+    margin: 0 !important;
+    padding:0 !important;
+}
+
+#home_button {
+    margin: 20px 0;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    background-color: lawngreen;
+    border: solid 1px black;
+    cursor: pointer;
 }
