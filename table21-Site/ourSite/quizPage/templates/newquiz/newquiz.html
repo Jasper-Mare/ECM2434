@@ -1,3 +1,4 @@
+<!-- Written by Jacob -->
 {% load static %}
 
 <!DOCTYPE html>
@@ -6,7 +7,7 @@
 <head>
     <title>New Quiz</title>
     
-    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}"> <!-- Link the css -->
 </head>
 
 <body>
@@ -14,7 +15,7 @@
         <h1 id="topic">Enter a new sustainability question:</h1>
 
         <label for="locationtable">Choose a location</label>
-        <select id="locationtable">
+        <select id="locationtable"> <!-- Newquiz.js adds locations from database -->
 
         </select>
 
@@ -40,6 +41,7 @@
             </li>
         </ul>
         <button id="save" onclick="save()">Save</button>
+        <a href="/map/"><button id="home_button">Home</button></a> <!-- Return to the map page when you are finished adding questions-->
     </div>
 
 
