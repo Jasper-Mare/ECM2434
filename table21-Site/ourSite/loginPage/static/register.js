@@ -16,7 +16,8 @@ function submitRegisteration() {
     checkPasswordMatch(passwd, rpasswd);
 
     //hash password
-    hashedPassword = passwd;
+    hashedPassword = hashPassword(passwd);
+    alert("hashed passwd is? " + hashedPassword);
 
     setUserInDB(username, email, hashedPassword);
 
@@ -38,6 +39,8 @@ function setUserInDB(inputUsername, inputEmail, inputPassHash) {
             const response = JSON.parse(xhr.responseText);
             console.log(response);
 
+
+
             setCookie("login", response.id, 1);
             window.location.replace("../../map/");
             alert("after relocation");
@@ -50,13 +53,37 @@ function setUserInDB(inputUsername, inputEmail, inputPassHash) {
     xhr.send();
 
 
+}
 
+// need to wait for request to come back 
+function hashPassword(inputPassword) {
+    let received = false;
+    let hashedPW = "preSet";
+    fetch('hash/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 'password': inputPassword })
 
-    //save new user in DB
-    //name
-    //passwordhash
-    //access level  = "USER"
-    //email
+    })
+        .then(response => {
+            received = true;
+            alert("is it hashed?");
+
+        })
+        .catch(error => {
+            alert("there was an error");
+            received = true;
+            hashedPW = "";
+            // error checking/messages
+        });
+    /*
+        while (received == false) {
+            continue;
+        }
+        */
+
 
 }
 
