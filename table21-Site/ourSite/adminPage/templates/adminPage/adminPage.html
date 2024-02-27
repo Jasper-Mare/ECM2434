@@ -1,0 +1,41 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'adminPage.css' %}">
+        <script type="text/javascript" src="{% static 'adminPage.js' %}"></script>
+        <title>Admin</title>
+    </head>
+    <body>
+        <div class = "container">
+            <div class = "centred">
+                <h1>Admin</h1>
+            </div>
+            <div>
+                <button onclick="window.location.href='../../quiz/new/'">Create new quiz</button>
+                <button onclick="display()">Create new admin</button>
+                <button>Remove user</button>
+            </div>
+            
+        </div>
+        <br></br>
+        <div id = "display", class = "container hidden">
+            <div class = "table">
+                <form> 
+                    <label> Enter Username:</label>
+                    <input type="text" id="username" name="username">
+                    <input onclick = "finduser()" type="submit" value="Submit">
+                </form>                
+            </div>
+            <div id = "results">
+                <div id="entry">
+                    <div id="username-entry">testing</div> 
+                    <button id="promote-user"> accept</button>
+                </div>
+            </div>
+            
+        </div>
+            
+    </body> 
+</html>
