@@ -161,11 +161,33 @@
         visibility: hidden;
     }
 
+        .topRightButton {
+            position: fixed; /* Fixed position */
+            top: 20px; /* Distance from the top */
+            right: 20px; /* Distance from the right */
+            z-index: 1000; /* Ensure it sits on top of other content */
+                }
+
+        /* Optional: Basic styling for the button */
+        .topRightButton {
+            padding: 10px 20px;
+            background-color: #06D85F; /* Green background */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+
     </style>
     <div id="container" class="flex-container">
-        <div class="text-box"
+        <div class="text-box">
             <h1>Welcome to EcoQuest Exeter!</h1>
         </div>
+        <a href="/leaderboard/" class="topRightButtonLink">
+            <button id="leaderboardButton" class="topRightButton">Leaderboard</button>
+        </a>
+        
     </div>
     <div class="box">
         <a class="button" href="#popup1" onclick="playmusic()">Click Here</a>
@@ -190,6 +212,8 @@
 
     <button id = "myButton" class="bottomLeftButton" onclick="getLocation()">Click this button to find what location you are near.</button>
 
+    
+    
     <script>
     const x = document.getElementById("myButton");
     const container = document.getElementById("container");
@@ -209,7 +233,7 @@
 
     function getLocation() {
     if (navigator.geolocation) {
-        navigator.geolocation.watchPosition(showPosition);
+        navigator.geolocation.getCurrentPosition(showPosition);
     } else { 
         x.innerHTML = "Geolocation is not supported by this browser.";
     }
@@ -217,7 +241,7 @@
     
         
     function showPosition(position) {
-        fetch("http://127.0.0.1:8000/contentDB/getNearbyLocations?gps_lat="+ position.coords.latitude + "&gps_long="+position.coords.longitude, {method: "GET"})
+        fetch("/contentDB/getNearbyLocations?gps_lat="+ position.coords.latitude + "&gps_long="+position.coords.longitude, {method: "GET"})
         .then((response) => response.json())
         .then((json) => {writeLocationToSite(json); console.log(json)})
         
@@ -227,16 +251,15 @@
 
     function writeLocationToSite(results){
         console.log(results);
-        console.log(results.locations);
+        console.log(results.locations); 
         console.log(results.locations.length);
         if (results && results.locations && results.locations.length > 0) {
             // Access the locations array safely
             const firstLocation = results.locations[0];
-            const quizPageUrl = "http://127.0.0.1:8000/quiz/?id="+firstLocation.id; 
+            const quizPageUrl = "/quiz/?id="+firstLocation.id; 
 
             x.innerHTML = "You are near: " + firstLocation.name + ". " +
-                      "<a href='" + quizPageUrl + "' target='_blank'>Take the quiz!</a>";
-
+                      "<a href='" + quizPageUrl + "'>Take the quiz!</a>";
 
             console.log("First location name:", firstLocation.name);
             
