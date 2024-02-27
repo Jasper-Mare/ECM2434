@@ -1,9 +1,13 @@
+/* Written by MF*/
+
+/*Set background and center elements*/
 body {
     background-color: rgb(207, 234, 166);
     margin: 0,auto;
     position: fixed;
 }
 
+/** Style containers**/
 .container{
     margin: 0,auto;
     background-color: rgb(249, 242, 242);
@@ -17,6 +21,7 @@ body {
     text-align: center;
 }
 
+/*hidden class tag to hide components */
 .hidden{
     visibility: hidden;
 }
