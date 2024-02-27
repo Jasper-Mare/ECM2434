@@ -1,4 +1,5 @@
 from .models import User
+from urllib.parse import unquote
 
 AccessLevels = ["USER", "GAME_KEEPER", "DEVELOPER"]
 
@@ -41,27 +42,33 @@ def getUsersByScore(numPlayers:int):
 
 
 def createUser(name:str, password_hash:str, access_level:str, recovery_email:str):
-    user:User = User(name=name, password_hash=password_hash, access_level=access_level, recovery_email=recovery_email, score=0)
+    # decode the sanitised password hash to avoid special characters changing the hash
+    uriDecodedPasswordHash = unquote(password_hash)
+
+    user:User = User(name=name, password_hash=uriDecodedPasswordHash, access_level=access_level, recovery_email=recovery_email, score=0)
     user.save()
 
     return getUserById(user.id)
 
 
 def updateUser(id:int, new_name:str, new_password_hash:str, new_access_level:str, new_email:str, new_score:int):
+    # decode the sanitised password hash to avoid special characters changing the hash
+    uriDecodedPasswordHash = unquote(new_password_hash)
+
     try:
         user:User = User.objects.get(id=id)
     except (User.DoesNotExist):
         return {"error":"DoesNotExist", "details":f"id: {id} does not exist"}
 
     user.name = new_name
-    user.password_hash = new_password_hash
+    user.password_hash = uriDecodedPasswordHash
     user.access_level = new_access_level
     user.recovery_email = new_email
     user.score = new_score
 
     user.save()
 
-    return makeUserStruct(id, new_name, new_password_hash, new_access_level, new_email, new_score)
+    return getUserById(id)
 
 def deleteUser(id:int):
     try:
