@@ -12,16 +12,16 @@ async function submitRegisteration() {
         return;
     }
 
-    checkIfUser(username);
+
+    if (await checkIfUser(username) == true) {
+        alert("There's already an account with this username. Please login, or register with a different username");
+        return;
+    }
+
     checkPasswordMatch(passwd, rpasswd);
 
     //hash password
     hashedPassword = await hashPassword(passwd);
-
-    alert("hashed passwd is? " + hashedPassword);
-
-
-
 
     setUserInDB(username, email, hashedPassword);
 
@@ -34,7 +34,7 @@ function checkIfEmpty(value) {
 function setUserInDB(inputUsername, inputEmail, inputPassHash) {
 
     const xhr = new XMLHttpRequest();
-    var uriPasshash = encodeURI(inputPassHash)
+    var uriPassHash = encodeURIComponent(inputPassHash)
     request = '/userDB/createUser?name=' + inputUsername
         + '&password_hash=' + uriPassHash
         + '&access_level=USER&recovery_email=' + inputEmail;
@@ -47,8 +47,8 @@ function setUserInDB(inputUsername, inputEmail, inputPassHash) {
 
 
             setCookie("login", response.id, 1);
-            window.location.replace("../../map/");
-            alert("after relocation");
+            window.location.replace("/map/");
+
 
         }
 
@@ -60,8 +60,7 @@ function setUserInDB(inputUsername, inputEmail, inputPassHash) {
 
 // need to wait for request to come back 
 async function hashPassword(inputPassword) {
-    let received = false;
-    let hashedPW = "preSet";
+
     return await fetch('/login/hash', {
         method: 'POST',
         headers: {
@@ -83,14 +82,40 @@ async function hashPassword(inputPassword) {
             return data.hashedPassword;
         })
         .catch(error => {
-            alert("Error hashing password:", error);
-            hashedPW = "";
+            alert("Server side error: ", error);
+
 
         });
 
 
 }
 
+async function checkIfUser(inputUsername) {
+    request = '/userDB/getUserByName?name=' + username;
+
+    return await fetch(request, {
+        method: 'GET'
+    })
+        .then(response => {
+            if (response.ok == false) {
+                alert("error getting response");
+            }
+            return response.json();
+
+
+        })
+        .then(data => {
+
+            return (data.error == undefined);
+        })
+        .catch(error => {
+            alert("Server side error: ", error);
+
+
+        });
+
+}
+/*  
 
 function checkIfUser(inputUsername) {
 
@@ -108,26 +133,24 @@ function checkIfUser(inputUsername) {
             //check username and password matches ones in DB
             if (dbUsername == inputUsername) {// && dbPassHash == inputPassHash) {
                 alert("There's already an account with this username. Please login, or register with a different username");
+                return false;
             }
             //doesn't match any details in system
             else {
-                alert("Congrats, you can register with this username ");
-                setCookie("login", response.id, 1);
+                return true;
             }
-
         }
     };
     xhr.send();
 }
 
+*/
 
 function checkPasswordMatch(p1, p2) {
     if (p1 == p2) {
-        alert("they match!")
         return true
     }
     else {
-        alert("they don't match!")
         return false
     }
 }
