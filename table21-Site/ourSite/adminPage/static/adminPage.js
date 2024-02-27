@@ -28,16 +28,16 @@ function finduser(){
             }
             else{
                 //if found return name of user requested
-                userResponse.innerHTML = entry
+                userResponse.innerHTML = entry;
                 //depending upon current access_level change buttons to either promote or demote
                 if(access == "USER"){
-                    userResponse.innerHTML += "<button onclick = 'clearance(1)'>Promote</button>";
+                    userResponse.innerHTML += "<button class ='action' onclick = 'clearance(1)'>Promote</button>";
                 }
                 else if(access == "GAME_KEEPER"){
-                    userResponse.innerHTML += "<button onclick = 'clearance(2)'>Demote</button>";
+                    userResponse.innerHTML += "<button class ='action' onclick = 'clearance(2)'>Demote</button>";
                 }
                 //option to remove user from database
-                userResponse.innerHTML += "<button onclick = 'clearance(3)'>Remove</button>";
+                userResponse.innerHTML += "<button class ='action' onclick = 'clearance(3)'>Remove</button>";
             }
         }
     };
