@@ -21,6 +21,8 @@ async function submitRegisteration() {
     alert("hashed passwd is? " + hashedPassword);
 
 
+
+
     setUserInDB(username, email, hashedPassword);
 
 }
@@ -32,8 +34,9 @@ function checkIfEmpty(value) {
 function setUserInDB(inputUsername, inputEmail, inputPassHash) {
 
     const xhr = new XMLHttpRequest();
+    var uriPasshash = encodeURI(inputPassHash)
     request = '/userDB/createUser?name=' + inputUsername
-        + '&password_hash=' + inputPassHash
+        + '&password_hash=' + uriPassHash
         + '&access_level=USER&recovery_email=' + inputEmail;
     xhr.open('GET', request, true);
     xhr.onreadystatechange = function () {

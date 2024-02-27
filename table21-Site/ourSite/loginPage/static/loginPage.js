@@ -37,6 +37,8 @@ function checkIfEmpty(value) {
 }
 
 
+
+
 /*
 function checkValidLogin(inputUsername, inputPassHash) {
 

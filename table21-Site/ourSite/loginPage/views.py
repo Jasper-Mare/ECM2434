@@ -37,7 +37,7 @@ def hashPass(request):
 
     return JsonResponse({'error': 'Method not allowed'}, status=405)
 
-#checks input password matches 
+#only works for single letter passwords
 @csrf_exempt #This skips csrf validation
 def passCheck(request):
     if request.method == 'POST':
@@ -59,11 +59,15 @@ def passCheck(request):
 
         if "error" in user: 
             return JsonResponse({'validLogin': False, 'error': 'user not found'})
-
+        
         hashedPW = user['password_hash']
-        print("hashed passs   ", hashedPW)
-        #a = make_password("hi")
-        #print("is ittttt   ", check_password(password, hashedPW))
+        print("hashedPW = ", hashedPW)
+        
+        print("issss ittt   ", check_password("charlie", 'pbkdf2_sha256$720000$YaTJOdOqvikzCIg5hddznf$UJLBqhithkwl0BkXN1Q2KmyDQ96K5ppASBquIzuc+Jc='))
+        #print("is ittttt   ", check_password("charlie", "pbkdf2_sha256$720000$t3EIv9raullkDCM1Ou79wh$eWPavLWUhcn6P0Tiq4uAskTVKBpPwvfiz1ho78wuv4="))
+
+        #a = authenticate(request, username = username, password=password)
+        #if user is None
 
         userId = user['id']
 
