@@ -1,6 +1,6 @@
 // get the elements
 question = document.getElementById("question_text");
-op1 = document.getElementById("op1");
+op1 = document.getElementById("op1"); // options
 op2 = document.getElementById("op2");
 op3 = document.getElementById("op3");
 QN = document.getElementById("questionNum");
@@ -136,6 +136,7 @@ function getCookie(cname) {
   return "";
 }
 
+// function to make a get request and return the response
 async function getRequest(request) {
   try {
     const response = await fetch(request);
