@@ -1,0 +1,40 @@
+<!--Written by MF-->
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <!--Link css and js files-->
+        <link rel="stylesheet" href="{% static 'adminStyles.css' %}">
+        <script type="text/javascript" src="{% static 'adminPage.js' %}"></script>
+        <title>Admin</title>
+    </head>
+    <body>
+        <!--Title page-->
+        <div class = "container">
+            <div class = "centred">
+                <h1>Admin</h1>
+            </div>
+            <!--Action Buttons-->
+            <div>
+                <button onclick="window.location.href='../../quiz/new/'">Create new quiz</button>
+                <button onclick="display()"> User Authority</button>
+                <button onclick="window.location.href='../../map/'">Home</button>
+            </div>
+            
+        </div>
+        <br>
+        <!--Display for user retrieval-->
+        <div id = "display" class = "container hidden">
+            <div class = "table">
+                <fieldset> 
+                    <label> Enter Username:</label>
+                    <input type="text" id="username" name="username">
+                    <input onclick = "finduser()" type="submit" value="Submit">
+                </fieldset>                
+            </div>
+            <div id = "results"></div>
+        </div>
+            
+    </body> 
+</html>
