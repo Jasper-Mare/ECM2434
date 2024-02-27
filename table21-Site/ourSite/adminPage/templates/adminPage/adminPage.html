@@ -14,27 +14,21 @@
             </div>
             <div>
                 <button onclick="window.location.href='../../quiz/new/'">Create new quiz</button>
-                <button onclick="display()">Create new admin</button>
-                <button>Remove user</button>
+                <button onclick="display()"> User Authority</button>
+                <button onclick="window.location.href='../../map/'">Home</button>
             </div>
             
         </div>
         <br></br>
-        <div id = "display", class = "container hidden">
+        <div id = "display" class = "container hidden">
             <div class = "table">
-                <form> 
+                <fieldset> 
                     <label> Enter Username:</label>
                     <input type="text" id="username" name="username">
                     <input onclick = "finduser()" type="submit" value="Submit">
-                </form>                
+                </fieldset>                
             </div>
-            <div id = "results">
-                <div id="entry">
-                    <div id="username-entry">testing</div> 
-                    <button id="promote-user"> accept</button>
-                </div>
-            </div>
-            
+            <div id = "results"></div>
         </div>
             
     </body> 

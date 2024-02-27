@@ -166,7 +166,7 @@
             top: 20px; /* Distance from the top */
             right: 20px; /* Distance from the right */
             z-index: 1000; /* Ensure it sits on top of other content */
-                }
+        }
 
         /* Optional: Basic styling for the button */
         .topRightButton {
@@ -187,6 +187,7 @@
         <a href="/leaderboard/" class="topRightButtonLink">
             <button id="leaderboardButton" class="topRightButton">Leaderboard</button>
         </a>
+        <button class ="hidden" id="admin" onload="sethidden()" onclick="window.location.href='../../adminPage/'">admin</button>
         
     </div>
     <div class="box">
@@ -218,6 +219,8 @@
     const x = document.getElementById("myButton");
     const container = document.getElementById("container");
     var funAudio;
+    const adminLink = document.getElementById("admin");
+    userID = getCookie("login");
 
     function playmusic() {
         if (funAudio == undefined) {
@@ -275,9 +278,42 @@
         x.innerHTML += "Long" + position.coords.latitude + "<br>Longitude: " + position.coords.longitude;
 */
 
-  
+    }
+    //Written by MF
+
+    function sethidden(){
+        const xhr = new XMLHttpRequest();
+        request = 'http://127.0.0.1:8000/userDB/getUserById?id='+String(userID)
+        xhr.open('GET', request, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                const access = response.access_level;
+                if(access == "GAME_KEEPER"){
+                    adminLink.classList.remove("hidden");
+                }
+            }
+        };
+        xhr.send();
     }
 
+    function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+    }
+    //https://www.w3schools.com/js/js_cookies.asp
+    
     </script>
 </body>
 </html>
