@@ -1,22 +1,24 @@
+<!-- Written by Jacob -->
 {% load static %}
 
 <!DOCTYPE html>
 <html>
 <head>
     <title>Leaderboard</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}"> <!-- link the django stylesheet in the static folder -->
 </head>
 <body>
     <div class="container">
         <h1 id="topic">Leaderboard</h1>
         <table id="table">
             <tr>
+                <!-- Start with just the headers for the columns -->
                 <th>Position</th>
                 <th>Name</th>
                 <th>Score</th>
             </tr>
         </table>
-        <a href="/map/"><button id="home_button">Home</button></a>        
+        <a href="/map/"><button id="home_button">Home</button></a>   
     </div>
     
 </body>
