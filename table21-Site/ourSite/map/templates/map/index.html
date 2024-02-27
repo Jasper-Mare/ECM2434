@@ -1,5 +1,6 @@
 {% load static %}
 
+<!-- page written by Ruby Ham-->
 <!DOCTYPE html>
 <html>
 <body>
@@ -11,6 +12,8 @@
             margin-right: auto;
             height: 70%;
             }
+
+            /* sets background image*/
             body {
             background: url('{% static "Exeter.jpeg" %}');
             font-family: Arial, sans-serif;
@@ -110,17 +113,17 @@
             text-align: center;
         }
         .map-text {
-            flex: 1; /* Allows the text to take up equal space on either side */
-            padding: 20px; /* Adds some spacing around the text */
+            flex: 1; 
+            padding: 20px; 
             font-family: Tahoma, Arial, sans-serif;
             color: #fff;
             font-size: 25px;
         }
         .map-image {
-            flex: 2; /* You can adjust this value to give more space to the image relative to text */
-            height: 65%; /* Adjust based on your preference */
-            height: 65%; /* Adjust based on your preference */
-            margin: 0 20px; /* Adds horizontal margin for spacing */
+            flex: 2; 
+            height: 65%; 
+            height: 65%; 
+            margin: 0 20px; 
         }
         .flex-container {
             display: flex;
@@ -168,7 +171,6 @@
             z-index: 1000; /* Ensure it sits on top of other content */
         }
 
-        /* Optional: Basic styling for the button */
         .Button {
             padding: 10px 20px;
             background-color: #06D85F; /* Green background */
@@ -238,6 +240,7 @@
     const adminLink = document.getElementById("admin");
     userID = getCookie("login");
 
+    // function to play Henry's music he created
     function playmusic() {
         if (funAudio == undefined) {
             funAudio = document.createElement("audio");
@@ -250,6 +253,7 @@
         funAudio.play();
     }
 
+    // function to get current user position only once
     function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
@@ -275,7 +279,7 @@
     return "";
     }
     
-        
+    // function to show what the user's curent position is by getting their latitude and longitude   
     function showPosition(position) {
         fetch("/contentDB/getNearbyLocations?gps_lat="+ position.coords.latitude + "&gps_long="+position.coords.longitude, {method: "GET"})
         .then((response) => response.json())
@@ -289,31 +293,31 @@
         console.log(results);
         console.log(results.locations); 
         console.log(results.locations.length);
+        // checks if user is near a location
         if (results && results.locations && results.locations.length > 0) {
-            // Access the locations array safely
+            
+            // sets constant for the location and quiz url the user is near
             const firstLocation = results.locations[0];
             const quizPageUrl = "/quiz/?id="+firstLocation.id; 
 
+            // writes what location the user is near and the quiz page link, depending on the location
             x.innerHTML = "You are near: " + firstLocation.name + ". " +
                       "<a href='" + quizPageUrl + "'>Take the quiz!</a>";
 
             console.log("First location name:", firstLocation.name);
             
-            // quiz page link
+        // if the user isn't near a location then returns this    
         } else {
             x.innerHTML="No locations available or results is not defined.";
             console.log("No locations available or results is not defined.");
         }
-        /*
-        var firstLocation = results.locations[0];
     
-        x.innerHTML="You are near: " + firstLocation.name;
-        x.innerHTML += "Long" + position.coords.latitude + "<br>Longitude: " + position.coords.longitude;
-*/
 
     }
+
     //Written by MF
 
+    // function that shows admin button only if they have access
     function sethidden(){
         const xhr = new XMLHttpRequest();
         request = 'http://127.0.0.1:8000/userDB/getUserById?id='+String(userID)
