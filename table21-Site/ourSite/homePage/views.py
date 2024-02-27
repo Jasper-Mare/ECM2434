@@ -3,12 +3,14 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
 # Create your views here.
-from django.http import HttpResponse
-
 
 def index(request):
 
-    isLoggedIn = False
+    # load up the redirect page, set to redirect to the map or login pages depending on whether the user is logged in
+
+    loginCookie = request.COOKIES.get('login', 'no_login')
+    
+    isLoggedIn = (loginCookie != 'no_login')
 
     if (isLoggedIn):
         target_url = '/map'
@@ -16,7 +18,3 @@ def index(request):
         target_url = '/login'
 
     return render(request, 'homePage/redirectPage.html', {'target_url': target_url})
-
-
-# redirect user to appropriate page depending on if there is a login cookie yet
-# https://www.geeksforgeeks.org/django-redirects/

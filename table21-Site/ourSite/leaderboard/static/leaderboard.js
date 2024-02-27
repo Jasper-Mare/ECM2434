@@ -1,7 +1,7 @@
 const xhr = new XMLHttpRequest();
 const table = document.getElementById('table');
 
-xhr.open('GET', 'http://127.0.0.1:8000/userDB/getUsersByScore?number_of_players=50', true);
+xhr.open('GET', '/userDB/getUsersByScore?number_of_players=50', true);
 xhr.onreadystatechange = function() {
     if (xhr.readyState === 4 && xhr.status === 200) {
         const response = JSON.parse(xhr.responseText);
