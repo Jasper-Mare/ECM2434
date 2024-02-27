@@ -54,7 +54,7 @@ function DoQuiz(locationID) {
   xhr.onreadystatechange = function() {
       if (xhr.readyState === 4 && xhr.status === 200) {
           const response = JSON.parse(xhr.responseText);
-          questions = response["quizzes"];
+          questions = shuffle(response["quizzes"]);
           console.log(questions);
 
           questionNumber = 1;
