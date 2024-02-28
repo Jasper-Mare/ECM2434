@@ -1,6 +1,8 @@
 # Authors
 Jacob Ferris
 
+ - Jacob Ferris
+
 # Testing
 Testing is done to ensure that the quiz page and newQuiz page is requested correctly and the expected elements are added through tests.py.
 
