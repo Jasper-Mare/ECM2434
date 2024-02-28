@@ -202,7 +202,7 @@
         <a href="/leaderboard/" class="topRightButtonLink">
             <button id="leaderboardButton" class="topRightButton button">Leaderboard</button>
         </a>
-        <a href="/login/" class="topLeftButtonLink">
+        <a href="javascript:void(0);" onclick="logOut()" class="topLeftButtonLink">
             <button id="logoutButton" class="topLeftButton button">Log out</button>
         </a>
         <a href= "/adminPage" class="topButtonLink">
@@ -318,6 +318,11 @@
         .then((json) => {writeLocationToSite(json); console.log(json)})
         
 
+    }
+
+    function logOut() {
+        document.cookie = "login=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;" // set it to an expired date so its deleted
+        window.location.href = "/login/";
     }
 
 
