@@ -1,5 +1,6 @@
 {% load static %}
 
+<!-- page written by Ruby Ham-->
 <!DOCTYPE html>
 <html>
 <body>
@@ -11,6 +12,8 @@
             margin-right: auto;
             height: 70%;
             }
+
+            /* sets background image*/
             body {
             background: url('{% static "Exeter.jpeg" %}');
             font-family: Arial, sans-serif;
@@ -18,109 +21,109 @@
             height: 100vh;
             }
 
-            h1 {
-            text-align: center;
-            font-family: Tahoma, Arial, sans-serif;
-            color: #06D85F;
-            margin: 10px 0;
-            }
+        h1 {
+        text-align: center;
+        font-family: Tahoma, Arial, sans-serif;
+        color: #06D85F;
+        margin: 10px 0;
+        }
 
-            .box {
-            width: 20%;
-            margin: 0 auto;
-            background: rgba(255,255,255,0.2);
-            padding: 5px;
-            border-radius: 20px/50px;
-            background-clip: padding-box;
-            text-align: center;
-            }
+        .box {
+        width: 20%;
+        margin: 0 auto;
+        background: rgba(255,255,255,0.2);
+        padding: 5px;
+        border-radius: 20px/50px;
+        background-clip: padding-box;
+        text-align: center;
+        }
 
-            .button {
-            font-size: 1em;
-            padding: 5px;
-            color: #06D85F;
-            border: 2px solid #06D85F;
-            border-radius: 20px/50px;
-            background: #fff;
-            cursor: pointer;
-            transition: all 0.3s ease-out;
-            }
-            .button:hover {
-            background: #06D85F;
-            }
+        .button {
+        font-size: 1em;
+        padding: 5px;
+        color: #06D85F;
+        border: 2px solid #06D85F;
+        border-radius: 20px/50px;
+        background: #fff;
+        cursor: pointer;
+        transition: all 0.3s ease-out;
+        }
+        .button:hover {
+        background: #06D85F;
+        }
 
-            .overlay {
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0, 0, 0, 0.7);
-            transition: opacity 500ms;
-            visibility: hidden;
-            opacity: 0;
-            }
-            .overlay:target {
-            visibility: visible;
-            opacity: 1;
-            }
+        .overlay {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.7);
+        transition: opacity 500ms;
+        visibility: hidden;
+        opacity: 0;
+        }
+        .overlay:target {
+        visibility: visible;
+        opacity: 1;
+        }
 
-            .popup {
-            margin: 70px auto;
-            padding: 20px;
-            background: #06D85F;
-            border-radius: 5px;
-            width: 30%;
-            position: relative;
-            transition: all 5s ease-in-out;
-            }
+        .popup {
+        margin: 70px auto;
+        padding: 20px;
+        background: #06D85F;
+        border-radius: 5px;
+        width: 30%;
+        position: relative;
+        transition: all 5s ease-in-out;
+        }
 
-            .popup h2 {
-            margin-top: 0;
-            color: #333;
-            font-family: Tahoma, Arial, sans-serif;
-            }
-            .popup .close {
-            position: absolute;
-            top: 10px;
-            right: 30px;
-            transition: all 200ms;
-            font-size: 30px;
-            font-weight: bold;
-            text-decoration: none;
-            color: #333;
-            }
-            .popup .close:hover {
-            color: #06D85F;
-            }
-            .popup .content {
-            max-height: 30%;
-            overflow: auto;
-            }
+        .popup h2 {
+        margin-top: 0;
+        color: #333;
+        font-family: Tahoma, Arial, sans-serif;
+        }
+        .popup .close {
+        position: absolute;
+        top: 10px;
+        right: 30px;
+        transition: all 200ms;
+        font-size: 30px;
+        font-weight: bold;
+        text-decoration: none;
+        color: #333;
+        }
+        .popup .close:hover {
+        color: #06D85F;
+        }
+        .popup .content {
+        max-height: 30%;
+        overflow: auto;
+        }
 
-            @media screen and (max-width: 700px){
-            .box{
-                width: 70%;
-            }
-            .popup{
-                width: 70%;
-            }
-            }
+        @media screen and (max-width: 700px){
+        .box{
+            width: 70%;
+        }
+        .popup{
+            width: 70%;
+        }
+        }
         .map-container {
             text-align: center;
         }
         .map-text {
-            flex: 1; /* Allows the text to take up equal space on either side */
-            padding: 20px; /* Adds some spacing around the text */
+            flex: 1; 
+            padding: 20px; 
             font-family: Tahoma, Arial, sans-serif;
             color: #fff;
             font-size: 25px;
         }
         .map-image {
-            flex: 2; /* You can adjust this value to give more space to the image relative to text */
-            height: 65%; /* Adjust based on your preference */
-            height: 65%; /* Adjust based on your preference */
-            margin: 0 20px; /* Adds horizontal margin for spacing */
+            flex: 2; 
+            height: 65%; 
+            height: 65%; 
+            margin: 0 20px; 
         }
         .flex-container {
             display: flex;
@@ -157,9 +160,9 @@
             font-size: 24px;
         }
     
-    .hidden{
-        visibility: hidden;
-    }
+        .hidden{
+            visibility: hidden;
+        }
 
         .topRightButton {
             position: fixed; /* Fixed position */
@@ -168,7 +171,6 @@
             z-index: 1000; /* Ensure it sits on top of other content */
         }
 
-        /* Optional: Basic styling for the button */
         .Button {
             padding: 10px 20px;
             background-color: #06D85F; /* Green background */
@@ -184,6 +186,12 @@
             left: 20px; /* Distance from the right */
             z-index: 1000; /* Ensure it sits on top of other content */
                 }
+        
+        .topButton{
+            position: fixed; /* Fixed position */
+            top: 20px; /* Distance from the top */
+            z-index: 1000; /* Ensure it sits on top of other content */
+        }
 
 
     </style>
@@ -197,11 +205,14 @@
         <a href="/login/" class="topLeftButtonLink">
             <button id="logoutButton" class="topLeftButton button">Log out</button>
         </a>
-        <button class ="hidden" id="admin" onload="sethidden()" onclick="window.location.href='../../adminPage/'">admin</button>
-        
+        <a href= "/adminPage" class="topButtonLink">
+            <button id="admin" class="topButton button">Admin</button>
+        </a>        
     </div>
+
     <div class="box">
         <a class="button" href="#popup1" onclick="playmusic()">Click Here</a>
+        
     </div>
     
     <div id="popup1" class="overlay">
@@ -211,7 +222,9 @@
             <div class="content">
                 Travel to all the locations on the map and answer the sustainable questions and quests to gain points and be top of the leaderboard.
             </div>
+            <img src="{% static 'Goals.png' %}" class="center" height="100" width="350">
         </div>
+        
     </div>
     <div class="flex-container">
         <div class="text-box">1. DH1 <br> 2. Bus Stop <br> 3. Pond <br> 4. Student Health Centre  </div>
@@ -229,15 +242,36 @@
     userID = getCookie("login"); // get the userID from the cookie
     if (userID == undefined || userID == "") { // if they are not logged in redirect them to the login page
         alert("Please login");
+        document.cookie = "login=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;" // set it to an expired date so its deleted
         window.location.href = "/login/";
     }
 
     const x = document.getElementById("myButton");
     const container = document.getElementById("container");
     var funAudio;
-    const adminLink = document.getElementById("admin");
-    userID = getCookie("login");
 
+    //Written by MF
+    document.addEventListener('DOMContentLoaded',function(){ //page loading event triggers function
+        const xhr = new XMLHttpRequest(); //start http using ID retrieved from cookie
+        request = '/userDB/getUserById?id='+String(userID)
+        xhr.open('GET', request, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                //when json response comes from http request check access_level of user
+                const access = response.access_level;
+                //if user doesn't have authority hide button
+                if(access == "USER"){
+                    document.getElementById("admin").classList.add("hidden");
+                }
+            }
+        };
+        //send request
+        xhr.send();
+    })
+    
+
+    // function to play Henry's music he created
     function playmusic() {
         if (funAudio == undefined) {
             funAudio = document.createElement("audio");
@@ -250,6 +284,7 @@
         funAudio.play();
     }
 
+    // function to get current user position only once
     function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
@@ -274,8 +309,9 @@
     }
     return "";
     }
+     //https://www.w3schools.com/js/js_cookies.asp
     
-        
+    // function to show what the user's curent position is by getting their latitude and longitude   
     function showPosition(position) {
         fetch("/contentDB/getNearbyLocations?gps_lat="+ position.coords.latitude + "&gps_long="+position.coords.longitude, {method: "GET"})
         .then((response) => response.json())
@@ -289,63 +325,28 @@
         console.log(results);
         console.log(results.locations); 
         console.log(results.locations.length);
+        // checks if user is near a location
         if (results && results.locations && results.locations.length > 0) {
-            // Access the locations array safely
+            
+            // sets constant for the location and quiz url the user is near
             const firstLocation = results.locations[0];
             const quizPageUrl = "/quiz/?id="+firstLocation.id; 
 
+            // writes what location the user is near and the quiz page link, depending on the location
             x.innerHTML = "You are near: " + firstLocation.name + ". " +
                       "<a href='" + quizPageUrl + "'>Take the quiz!</a>";
 
             console.log("First location name:", firstLocation.name);
             
-            // quiz page link
+        // if the user isn't near a location then returns this    
         } else {
             x.innerHTML="No locations available or results is not defined.";
             console.log("No locations available or results is not defined.");
         }
-        /*
-        var firstLocation = results.locations[0];
     
-        x.innerHTML="You are near: " + firstLocation.name;
-        x.innerHTML += "Long" + position.coords.latitude + "<br>Longitude: " + position.coords.longitude;
-*/
 
     }
-    //Written by MF
 
-    function sethidden(){
-        const xhr = new XMLHttpRequest();
-        request = 'http://127.0.0.1:8000/userDB/getUserById?id='+String(userID)
-        xhr.open('GET', request, true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                const response = JSON.parse(xhr.responseText);
-                const access = response.access_level;
-                if(access == "GAME_KEEPER"){
-                    adminLink.classList.remove("hidden");
-                }
-            }
-        };
-        xhr.send();
-    }
-
-    function getCookie(cname) {
-    let name = cname + "=";
-    let decodedCookie = decodeURIComponent(document.cookie);
-    let ca = decodedCookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-    }
-    //https://www.w3schools.com/js/js_cookies.asp
     
     </script>
 </body>
