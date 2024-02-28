@@ -66,8 +66,7 @@ function clearance(access){
                 request = '/userDB/updateUser?id='+id+'&access_level=GAME_KEEPER';
                 xml.open('GET', request, true);
                 xml.send();
-            }
-            if(access == 2){
+            } else if(access == 2){
                 //demote admin to user through new request
                 const xml = new XMLHttpRequest();
                 request = '/userDB/updateUser?id='+id+'&access_level=USER';
