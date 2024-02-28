@@ -229,6 +229,7 @@
     userID = getCookie("login"); // get the userID from the cookie
     if (userID == undefined || userID == "") { // if they are not logged in redirect them to the login page
         alert("Please login");
+        document.cookie = "login=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;" // set it to an expired date so its deleted
         window.location.href = "/login/";
     }
 
