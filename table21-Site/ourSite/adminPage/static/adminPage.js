@@ -61,19 +61,21 @@ function clearance(access){
             id = response.id;
             // depending on which button is pressed
             if(access == 1){
+                alert("User " + username + " has been promoted to Game Keeper!");
                 //promote user to admin through new request
                 const xml = new XMLHttpRequest();
                 request = '/userDB/updateUser?id='+id+'&access_level=GAME_KEEPER';
                 xml.open('GET', request, true);
                 xml.send();
             } else if(access == 2){
+                alert("User " + username + " has been demoted to User!");
                 //demote admin to user through new request
                 const xml = new XMLHttpRequest();
                 request = '/userDB/updateUser?id='+id+'&access_level=USER';
                 xml.open('GET', request, true);
                 xml.send();
-            }
-            else{
+            } else{
+                alert("User " + username + " has been deleted!");
                 //delete user from database through new request
                 const xml = new XMLHttpRequest();
                 request = '/userDB/deleteUser?id='+id;
