@@ -1,5 +1,4 @@
-//generic cookie functions from https://www.w3schools.com/js/js_cookies.asp
-
+//generic cookie functions (set, get and check) taken from https://www.w3schools.com/js/js_cookies.asp
 
 function setCookie(cname, cvalue, exdays) {
 
@@ -30,9 +29,9 @@ function checkCookie() {
     let user = getCookie("username");
     if (user != "") {
         // a user has logged in
-        alert("Hi again " + user)
+        return true
     } else {
         //user hasn't got cookie set up
-        alert("Hmmm you haven't got a cookie yet")
+        return false
     }
 }
