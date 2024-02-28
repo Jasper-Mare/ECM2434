@@ -25,7 +25,11 @@ async function submitRegisteration() {
 
     //check both password and repeatPassword match
     //extra security to ensure user types in the same password both times
-    checkPasswordMatch(passwd, rpasswd);
+    if (checkPasswordMatch(passwd, rpasswd) ==false ) {
+        alert("Passwords don't match");
+        //return if passwords don't match
+        return 
+    }
 
     //hash password
     hashedPassword = await hashPassword(passwd);
