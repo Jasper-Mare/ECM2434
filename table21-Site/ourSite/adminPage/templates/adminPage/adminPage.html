@@ -1,17 +1,21 @@
+<!--Written by MF-->
 {% load static %}
 
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="{% static 'adminPage.css' %}">
+        <!--Link css and js files-->
+        <link rel="stylesheet" href="{% static 'adminStyles.css' %}">
         <script type="text/javascript" src="{% static 'adminPage.js' %}"></script>
         <title>Admin</title>
     </head>
     <body>
+        <!--Title page-->
         <div class = "container">
             <div class = "centred">
                 <h1>Admin</h1>
             </div>
+            <!--Action Buttons-->
             <div>
                 <button onclick="window.location.href='../../quiz/new/'">Create new quiz</button>
                 <button onclick="display()"> User Authority</button>
@@ -19,7 +23,8 @@
             </div>
             
         </div>
-        <br></br>
+        <br>
+        <!--Display for user retrieval-->
         <div id = "display" class = "container hidden">
             <div class = "table">
                 <fieldset> 

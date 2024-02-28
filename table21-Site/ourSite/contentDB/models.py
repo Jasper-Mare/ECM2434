@@ -1,3 +1,5 @@
+# written by Jasper Mare
+
 from django.db import models
 
 # Create your models here.
