@@ -18,7 +18,9 @@ if (userID == undefined || userID == "") { // if they are not logged in redirect
 
 try { // get the location id from the url
   const urlParams = new URLSearchParams(window.location.search);
+ //----------------change code back ----------------//
   const locationID = urlParams.get('id');
+  //const locationID = 6
   if (locationID == null) {
     alert("error: no location id");
     window.location.href = "/map/";
