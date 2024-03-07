@@ -6,9 +6,6 @@ if (userID == undefined || userID == "") { // if they are not logged in redirect
     window.location.href = "/login/";
 }
 
-const x = document.getElementById("myButton");
-const container = document.getElementById("container");
-var funAudio;
 
 //Function written by MF
 document.addEventListener('DOMContentLoaded',function(){ //page loading event triggers function
@@ -33,6 +30,8 @@ document.addEventListener('DOMContentLoaded',function(){ //page loading event tr
 
 // function to play Henry's music he created
 function playmusic() {
+    var funAudio;
+    const container = document.getElementById("container");
     if (funAudio == undefined) {
         funAudio = document.createElement("audio");
         funAudio.src = "../static/henrys jam.mp3";
@@ -48,24 +47,25 @@ function playmusic() {
 
 // function to get the cookie of a given name
 function getCookie(cname) {
-let name = cname + "=";
-let decodedCookie = decodeURIComponent(document.cookie);
-let ca = decodedCookie.split(';');
-for (let i = 0; i < ca.length; i++) {
-    let c = ca[i];
-    while (c.charAt(0) == ' ') {
-        c = c.substring(1);
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
     }
-    if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length);
-    }
-}
-return "";
+    return "";
 }
     //https://www.w3schools.com/js/js_cookies.asp
 
 // function to get current user position only once
 function getLocation() {
+    const x = document.getElementById("myButton");
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
     } else { 
@@ -75,18 +75,19 @@ function getLocation() {
 
 // function to show what the user's curent position is by getting their latitude and longitude   
 function showPosition(position) {
+    
     fetch("/contentDB/getNearbyLocations?gps_lat="+ position.coords.latitude + "&gps_long="+position.coords.longitude, {method: "GET"})
     .then((response) => response.json())
     .then((json) => {writeLocationToSite(json); console.log(json)})
 }
 
 function writeLocationToSite(results){
+    const x = document.getElementById("myButton");
     console.log(results);
     console.log(results.locations); 
     console.log(results.locations.length);
     // checks if user is near a location
     if (results && results.locations && results.locations.length > 0) {
-        
         // sets constant for the location and quiz url the user is near
         const firstLocation = results.locations[0];
         const quizPageUrl = "/quiz/?id="+firstLocation.id; 
