@@ -1,15 +1,19 @@
 <!--Written by MF-->
 {% load static %}
 
+
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!--Link css and js files-->
-        <!--link rel="stylesheet" href="{% static 'css/adminStyles.css' %}?{% now 'U' %}"-->
-        <link rel="stylesheet" href="{% static 'css/allStyles.css' %}?{% now 'U' %}">
-        <!--<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">-->
+        <!--link rel="stylesheet" href="{% static 'css/adminStyles.css' %}?{% now 'U' %}"--> <!--Personal css-->
+        <link rel="stylesheet" href="{% static 'css/allStyles.css' %}?{% now 'U' %}"> <!--Global css-->
+        <!--Bootstrap-->
+        <!-- Option1 <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}?{% now 'U' %}">-->
+        <!-- Option2<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">-->
+
         <script type="text/javascript" src="{% static 'js/adminPage.js' %}"></script>
         <title>Admin</title>
     </head>
@@ -40,6 +44,5 @@
             </div>
             <div id = "results"></div>
         </div>
-            
     </body> 
 </html>
