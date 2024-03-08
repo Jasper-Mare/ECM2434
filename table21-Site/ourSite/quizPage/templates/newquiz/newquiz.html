@@ -5,36 +5,37 @@
 <html>
 
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>New Quiz</title>
-    
-    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}"> <!-- Link the css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/allStyles.css'%}?{% now 'U' %}">
+    <!--<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css'%}?{% now 'U' %}">--> <!-- Link the css -->
 </head>
 
-<body>
-    <div class="container">
+<body class = "colour">
+    {% include "homePage/toolbar.html"%}
+    <div class="container2">
         <h1 id="topic">Enter a new sustainability question:</h1>
 
         <label for="locationtable">Choose a location</label>
-        <select id="locationtable"> <!-- Newquiz.js adds locations from database -->
-
-        </select>
+        <select id="locationtable"> <!-- Newquiz.js adds locations from database --></select>
 
         <h1 class="smaller">
             Question:
             <input type="text" id="question" placeholder="Question...">
         </h1>
-        <ul>
-            <li class="option smaller">
+        <ul class ="quizlist">
+            <li class="option smaller quizlistitem">
                 Option 1:
                 <input type="text" class="answerBox" id="op1" placeholder="Option...">
                 <button class="choose correct" id="b1" onclick="select(id)">✓</button>
             </li>
-            <li class="option smaller">
+            <li class="option smaller quizlistitem">
                 Option 2:
                 <input type="text" class="answerBox" id="op2" placeholder="Option...">
                 <button class="choose" id="b2" onclick="select(id)">✓</button>
             </li>
-            <li class="option smaller">
+            <li class="option smaller quizlistitem">
                 Option 3:
                 <input type="text" class="answerBox" id="op3" placeholder="Option...">
                 <button class="choose" id="b3" onclick="select(id)">✓</button>
@@ -43,10 +44,6 @@
         <button id="save" onclick="save()">Save</button>
         <a href="/map/"><button id="home_button">Home</button></a> <!-- Return to the map page when you are finished adding questions-->
     </div>
-
-
 </body>
-
-<script src="{% static 'newquiz.js' %}"></script>
-
+<script src="{% static 'js/newquiz.js' %}?{% now 'U' %}"></script>
 </html>
