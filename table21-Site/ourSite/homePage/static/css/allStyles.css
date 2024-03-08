@@ -3,30 +3,34 @@
 
 /** --- ALL BODY STYLES --- **/
 /** FOR admin & login & leaderboard & quiz**/
-body.colour{
+body.colour {
     background-color: rgb(207, 234, 166);
 }
+
 /** FOR map uni background**/
-body.imageBack{
+body.imageBack {
     background: url("../images/Exeter.jpeg");
     font-family: Arial, sans-serif;
     background-size: cover;
     height: 100vh;
 }
+
 /** --- ALL CONTAINER STYLES --- **/
 /** FOR admin**/
 .container1 {
     background-color: rgb(249, 242, 242);
     box-shadow: 0px 0px 5px green;
     text-align: center;
-    margin: 0 auto; 
+    margin: 0 auto;
     padding: 10px;
-    width: 30%; 
+    width: 30%;
 }
+
 /** FOR admin (button)**/
 .container1 button {
     margin-top: 20px;
 }
+
 /** FOR leaderboard & quiz**/
 .container2 {
     display: flex;
@@ -38,15 +42,18 @@ body.imageBack{
     padding: 30px;
     margin: 30px 120px;
 }
+
 /** --- ALL HEADING STYLES --- **/
 /** FOR admin**/
 h1.group1 {
-    margin-top: 50px; 
+    margin-top: 50px;
 }
+
 /** FOR leaderboard & quiz**/
 h1.group2 {
     padding: 20px 0;
 }
+
 /** FOR map**/
 h1.group3 {
     text-align: center;
@@ -54,10 +61,12 @@ h1.group3 {
     color: #06D85F;
     margin: 10px 0;
 }
+
 /** --- ALL DISPLAY STYLES --- **/
-.hidden{
+.hidden {
     display: none;
 }
+
 /** FOR Login **/
 .centreV1 {
     position: absolute;
@@ -67,6 +76,7 @@ h1.group3 {
     background-color: rgb(249, 242, 242);
     box-shadow: 0px 0px 5px green;
 }
+
 /** FOR Map **/
 .centreV2 {
     display: block;
@@ -74,27 +84,33 @@ h1.group3 {
     margin-right: auto;
     height: 70%;
 }
+
 /** ========== ADMIN PAGE ========== **/
 #display {
-    margin-top: 20px; 
+    margin-top: 20px;
 }
-fieldset.hideborder{
+
+fieldset.hideborder {
     border: none;
 }
-.action{
+
+.action {
     margin-left: 3px;
     margin-right: 3px;
 }
+
 /** ========== LEADERBOARD & QUIZ PAGE ========== **/
 .title {
     text-align: center;
     margin: 0 auto;
 }
+
 .top {
     width: 90%;
     display: flex;
     justify-content: space-between;
 }
+
 ul.quizlist {
     list-style-type: none;
     padding: 0;
@@ -102,12 +118,15 @@ ul.quizlist {
     padding-right: 12px;
     margin: 0;
 }
+
 li.quizlistitem {
     margin: 0 0 10px 10px;
 }
+
 .smaller {
     font-size: 1.2em;
 }
+
 #save {
     margin: 20px 0;
     padding: 10px 20px;
@@ -116,42 +135,53 @@ li.quizlistitem {
     border: solid 1px black;
     cursor: pointer;
 }
+
 #save:hover {
     background-color: limegreen;
 }
+
 #table {
     width: 100%;
     border-collapse: collapse;
 }
+
 #table td {
     padding: 10px;
     border: 1px solid #ddd;
     background-color: #f2f2f2;
 }
+
 #table th {
     background-color: #f2f2f2;
     border: 1px solid #ddd;
 }
+
 .choose {
     margin-left: 10px;
 }
+
 .correct {
     background-color: lawngreen;
 }
+
 #question {
     width: 400px;
 }
+
 .option {
     font-size: 1.3em;
 }
+
 .answerBox {
     size: F50;
     width: 200px;
 }
+
 .tight {
     margin: 0 !important;
-    padding:0 !important;
+    padding: 0 !important;
 }
+
 #home_button {
     margin: 20px 0;
     padding: 10px 20px;
@@ -160,6 +190,7 @@ li.quizlistitem {
     border: solid 1px black;
     cursor: pointer;
 }
+
 /** ========== LOGIN PAGE ========== **/
 .loginPage {
     margin: 0 auto;
@@ -169,16 +200,24 @@ li.quizlistitem {
     height: 100vh;
     width: 100vh;
 }
+
+
+#loginErrorMessage {
+    color: red;
+}
+
+
 /** ========== MAP PAGE ========== **/
 .box {
     width: 20%;
     margin: 0 auto;
-    background: rgba(255,255,255,0.2);
+    background: rgba(255, 255, 255, 0.2);
     padding: 5px;
     border-radius: 20px/50px;
     background-clip: padding-box;
     text-align: center;
 }
+
 .button {
     font-size: 1em;
     padding: 5px;
@@ -189,9 +228,11 @@ li.quizlistitem {
     cursor: pointer;
     transition: all 0.3s ease-out;
 }
+
 .button:hover {
     background: #06D85F;
 }
+
 .overlay {
     position: fixed;
     top: 0;
@@ -203,10 +244,12 @@ li.quizlistitem {
     visibility: hidden;
     opacity: 0;
 }
+
 .overlay:target {
     visibility: visible;
     opacity: 1;
 }
+
 .popup {
     margin: 70px auto;
     padding: 20px;
@@ -216,11 +259,13 @@ li.quizlistitem {
     position: relative;
     transition: all 5s ease-in-out;
 }
+
 .popup h2 {
     margin-top: 0;
     color: #333;
     font-family: Tahoma, Arial, sans-serif;
 }
+
 .popup .close {
     position: absolute;
     top: 10px;
@@ -231,42 +276,51 @@ li.quizlistitem {
     text-decoration: none;
     color: #333;
 }
+
 .popup .close:hover {
     color: #06D85F;
 }
+
 .popup .content {
     max-height: 30%;
     overflow: auto;
 }
-@media screen and (max-width: 700px){
-    .box{
+
+@media screen and (max-width: 700px) {
+    .box {
         width: 70%;
     }
-    .popup{
+
+    .popup {
         width: 70%;
     }
 }
+
 .map-container {
     text-align: center;
 }
+
 .map-text {
-    flex: 1; 
-    padding: 20px; 
+    flex: 1;
+    padding: 20px;
     font-family: Tahoma, Arial, sans-serif;
     color: #fff;
     font-size: 25px;
 }
+
 .map-image {
-    flex: 2; 
-    height: 65%; 
-    height: 65%; 
-    margin: 0 20px; 
+    flex: 2;
+    height: 65%;
+    height: 65%;
+    margin: 0 20px;
 }
+
 .flex-container {
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 .text-box {
     background-color: #fff;
     padding: 20px;
@@ -277,67 +331,73 @@ li.quizlistitem {
     color: #06D85F;
     font-size: 25px;
 }
+
 img.center {
     display: block;
     margin-left: auto;
     margin-right: auto;
     height: 75%;
 }
+
 .bottomLeftButton {
-    position: fixed; /* Position the button relative to the viewport */
-    bottom: 20px; /* Distance from the bottom of the viewport */
-    left: 20px; /* Distance from the left of the viewport */
-    padding: 20px; /* Padding inside the button */
-    background-color: #06D85F; /* Background color */
-    color: white; /* Text color */
-    border: none; /* No border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Change cursor to pointer on hover */
+    position: fixed;
+    /* Position the button relative to the viewport */
+    bottom: 20px;
+    /* Distance from the bottom of the viewport */
+    left: 20px;
+    /* Distance from the left of the viewport */
+    padding: 20px;
+    /* Padding inside the button */
+    background-color: #06D85F;
+    /* Background color */
+    color: white;
+    /* Text color */
+    border: none;
+    /* No border */
+    border-radius: 5px;
+    /* Rounded corners */
+    cursor: pointer;
+    /* Change cursor to pointer on hover */
     font-size: 24px;
 }
+
 .topRightButton {
-    position: fixed; /* Fixed position */
-    top: 20px; /* Distance from the top */
-    right: 20px; /* Distance from the right */
-    z-index: 1000; /* Ensure it sits on top of other content */
+    position: fixed;
+    /* Fixed position */
+    top: 20px;
+    /* Distance from the top */
+    right: 20px;
+    /* Distance from the right */
+    z-index: 1000;
+    /* Ensure it sits on top of other content */
 }
+
 .map-button {
     padding: 10px 20px;
-    background-color: #06D85F; /* Green background */
+    background-color: #06D85F;
+    /* Green background */
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
+
 .topLeftButton {
-    position: fixed; /* Fixed position */
-    top: 20px; /* Distance from the top */
-    left: 20px; /* Distance from the right */
-    z-index: 1000; /* Ensure it sits on top of other content */
+    position: fixed;
+    /* Fixed position */
+    top: 20px;
+    /* Distance from the top */
+    left: 20px;
+    /* Distance from the right */
+    z-index: 1000;
+    /* Ensure it sits on top of other content */
 }
-.topButton{
-    position: fixed; /* Fixed position */
-    top: 20px; /* Distance from the top */
-    z-index: 1000; /* Ensure it sits on top of other content */
+
+.topButton {
+    position: fixed;
+    /* Fixed position */
+    top: 20px;
+    /* Distance from the top */
+    z-index: 1000;
+    /* Ensure it sits on top of other content */
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

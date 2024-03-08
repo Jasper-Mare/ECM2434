@@ -13,9 +13,10 @@
     <title>Login</title>
 </head>
 
-<body class ="colour">
+<body class="colour">
     <div id="content" class="loginPage">
         <div class="centreV1">
+            <p id="loginErrorMessage" class="hidden"></p>
             <h1>Login</h1>
             <!-- create form for users to login -->
             <form id="loginForm">
@@ -23,10 +24,12 @@
                 <input type="text" id="username" name="username"><br> <br>
 
                 <label for="passwd">Password:</label><br>
-                <input type="password" id="passwd" name="passwd"> <br> <br>
+                <input type="password" id="passwd" name="passwd"> <br><br>
+                <a href="forgotPassword">Forgot password? </a><br><br>
 
                 <!-- use button so input fields aren't shown in users url -->
                 <input type="button" onclick="submitLogin()" value="Submit"> <br> <br>
+
             </form>
 
             <div id="options">
