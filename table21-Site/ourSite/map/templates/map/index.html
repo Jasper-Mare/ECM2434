@@ -4,14 +4,28 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <!---->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="{% static 'css/allStyles.css' %}?{% now 'U' %}">
-        <!--<link rel="stylesheet" href="{% static 'css/mapStyles.css' %}?{% now 'U' %}">-->
         <script type="text/javascript" src="{% static 'js/map.js' %}?{% now 'U' %}"></script>
+        <!-- Global CSS Link-->
+        <link rel="stylesheet" href="{% static 'css/allStyles.css' %}?{% now 'U' %}">
+        <!-- Personal/Local CSS Link-->
+        <!--<link rel="stylesheet" href="{% static 'css/mapStyles.css' %}?{% now 'U' %}">-->
     </head>
 <body class ="imageBack">
     {% include "homePage/toolbar.html"%}
+
+<!-- New Navbar -->
+    <div id="container" class="flex-container">
+        <div class="text-box">
+            <h1 class="group3">Welcome to EcoQuest Exeter!</h1>
+        </div>
+    </div>
+    
+<!-- Old Navbar -->
+<!-- If if to be active again make sure to remove the same version on toolbar.html-->
+<!--
     <div id="container" class="flex-container">
         <div class="text-box">
             <h1 class="group3">Welcome to EcoQuest Exeter!</h1>
@@ -26,7 +40,7 @@
             <button id="admin" class="topButton button">Admin</button>
         </a>        
     </div>
-
+-->
     <div class="box">
         <a class="button" href="#popup1" onclick="playmusic()">Click Here</a>
     </div>

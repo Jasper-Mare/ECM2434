@@ -1,3 +1,7 @@
+<!--As toolbar.html is not included bootstrap is not uploaded must load manually-->
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
 {% load static %}
 
 <!DOCTYPE html>
@@ -6,11 +10,15 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{% static 'css/allStyles.css' %}?{% now 'U' %}">
-    <!--<link rel="stylesheet" href="{% static 'css/LoginPage.css' %}?{% now 'U' %}">-->
+    <title>Login</title>
     <script type="text/javascript" src="{% static 'js/loginPage.js' %}?{% now 'U' %}"></script>
     <script type="text/javascript" src="{% static 'js/cookies.js' %}?{% now 'U' %}"></script>
-    <title>Login</title>
+    <!--Personal css-->
+    <!--<link rel="stylesheet" href="{% static 'css/LoginPage.css' %}?{% now 'U' %}">-->
+    <!--Global css-->
+    <link rel="stylesheet" href="{% static 'css/allStyles.css' %}?{% now 'U' %}">
+    
+    
 </head>
 
 <body class ="colour">

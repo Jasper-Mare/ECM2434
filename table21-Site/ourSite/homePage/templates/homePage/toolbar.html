@@ -1,18 +1,35 @@
 <!DOCTYPE html>
 <html>
     <head>
+      <!-- Option 1: Use Django-bootstrap5 (must be using right interpreter) -->
+      <!--    Must Load Bootstrap First-->
+        {% load django_bootstrap5 %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+
+        {%load static%}
+        <!-- Option 2: Locally Downloaded Files-->
+        <!--    CSS: <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}?{% now 'U' %}"> -->
+        <!--    JS: <script type="text/javascript" src="{% static 'js/bootstrap.js' %}?{% now 'U' %}"></script> -->
+        <!-- Option 3: CDN Link (Note: not latest BootStrap)-->
+        <!--    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">-->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
     </head>
     <body>
-        <nav>
-            <ul>
-            <a name ="Home" href="/map">Home</a>
-            <a name ="Log out" href="/LoginPage">LogOut</a>
-            <a name ="Admin" href="/adminPage">Admin</a>
-            <a name="Leaderboard" href="/leaderboard">Leaderboard</a>
-            </ul>                      
-        </nav>
+      <!--Copied leaderboard from \map
+          TODO: logOut function will not work as js is not stored in local file  
+      -->
+      <div id="container" class="flex-container">
+        <a href="/leaderboard/" class="topRightButtonLink">
+            <button id="leaderboardButton" class="topRightButton button">Leaderboard</button>
+        </a>
+        <a href="/login" onclick="logOut()" class="topLeftButtonLink">
+            <button id="logoutButton" class="topLeftButton button">Log out</button>
+        </a>
+        <a href= "/adminPage" class="topButtonLink">
+            <button id="admin" class="topButton button">Admin</button>
+        </a>        
+      </div>
     </body>
 </html>
