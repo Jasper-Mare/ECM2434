@@ -20,3 +20,5 @@ http://127.0.0.1:8000/userDB/deleteUser?id=1
 
 
 Access Levels can be: USER, GAME_KEEPER or, DEVELOPER
+
+(instructions written by Jasper)
