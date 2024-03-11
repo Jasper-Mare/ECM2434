@@ -1,19 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-      <!-- Option 1: Use Django-bootstrap5 (must be using right interpreter) -->
-      <!--    Must Load Bootstrap First-->
-        {% load django_bootstrap5 %}
-        {% bootstrap_css %}
-        {% bootstrap_javascript %}
-
         {%load static%}
-        <!-- Option 2: Locally Downloaded Files-->
-        <!--    CSS: <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}?{% now 'U' %}"> -->
-        <!--    JS: <script type="text/javascript" src="{% static 'js/bootstrap.js' %}?{% now 'U' %}"></script> -->
-        <!-- Option 3: CDN Link (Note: not latest BootStrap)-->
-        <!--    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">-->
-        <meta charset="utf-8">
+        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}?{% now 'U' %}">
+        <script type="text/javascript" src="{% static 'js/bootstrap.js' %}?{% now 'U' %}"></script>
+         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
