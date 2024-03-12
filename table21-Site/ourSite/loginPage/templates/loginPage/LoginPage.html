@@ -4,22 +4,26 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="{% static 'LoginPage.css' %}">
-    <script type="text/javascript" src="{% static 'loginPage.js' %}"></script>
-    <script type="text/javascript" src="{% static 'cookies.js' %}"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login</title>
+    <script type="text/javascript" src="{% static 'js/loginPage.js' %}?{% now 'U' %}"></script>
+    <script type="text/javascript" src="{% static 'js/cookies.js' %}?{% now 'U' %}"></script>
+    <!--Personal css-->
+    <!--<link rel="stylesheet" href="{% static 'css/LoginPage.css' %}?{% now 'U' %}">-->
+    <!--Global css-->
+    <link rel="stylesheet" href="{% static 'css/allStyles.css' %}?{% now 'U' %}">
+    <!--Bootstrap added in manually as page doesn't include toolbar.html-->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}?{% now 'U' %}">
+    <script type="text/javascript" src="{% static 'js/bootstrap.js' %}?{% now 'U' %}"></script>
+    
+    
 </head>
 
-<body>
-
+<body class ="colour">
     <div id="content" class="loginPage">
-        <div class="centre">
-
-
-
+        <div class="centreV1">
             <h1>Login</h1>
-
-
             <!-- create form for users to login -->
             <form id="loginForm">
                 <label for="username">Username:</label><br>
@@ -36,15 +40,9 @@
                 <a href="Register">Haven't signed up yet? Click here to sign
                     up</a><br>
 
-
             </div>
-
-
         </div>
-
     </div>
-
-
 </body>
 
 </html>
