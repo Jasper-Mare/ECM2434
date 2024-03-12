@@ -1,0 +1,358 @@
+{% load static %}
+
+<!-- page written by Ruby Ham-->
+<!DOCTYPE html>
+<html>
+<body>
+    
+    <style>
+            .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            height: 70%;
+            }
+
+            /* sets background image*/
+            body {
+            background: url('{% static "Exeter.jpeg" %}');
+            font-family: Arial, sans-serif;
+            background-size: cover;
+            height: 100vh;
+            }
+
+        h1 {
+        text-align: center;
+        font-family: Tahoma, Arial, sans-serif;
+        color: #06D85F;
+        margin: 10px 0;
+        }
+
+        .box {
+        width: 20%;
+        margin: 0 auto;
+        background: rgba(255,255,255,0.2);
+        padding: 5px;
+        border-radius: 20px/50px;
+        background-clip: padding-box;
+        text-align: center;
+        }
+
+        .button {
+        font-size: 1em;
+        padding: 5px;
+        color: #06D85F;
+        border: 2px solid #06D85F;
+        border-radius: 20px/50px;
+        background: #fff;
+        cursor: pointer;
+        transition: all 0.3s ease-out;
+        }
+        .button:hover {
+        background: #06D85F;
+        }
+
+        .overlay {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.7);
+        transition: opacity 500ms;
+        visibility: hidden;
+        opacity: 0;
+        }
+        .overlay:target {
+        visibility: visible;
+        opacity: 1;
+        }
+
+        .popup {
+        margin: 70px auto;
+        padding: 20px;
+        background: #06D85F;
+        border-radius: 5px;
+        width: 30%;
+        position: relative;
+        transition: all 5s ease-in-out;
+        }
+
+        .popup h2 {
+        margin-top: 0;
+        color: #333;
+        font-family: Tahoma, Arial, sans-serif;
+        }
+        .popup .close {
+        position: absolute;
+        top: 10px;
+        right: 30px;
+        transition: all 200ms;
+        font-size: 30px;
+        font-weight: bold;
+        text-decoration: none;
+        color: #333;
+        }
+        .popup .close:hover {
+        color: #06D85F;
+        }
+        .popup .content {
+        max-height: 30%;
+        overflow: auto;
+        }
+
+        @media screen and (max-width: 700px){
+        .box{
+            width: 70%;
+        }
+        .popup{
+            width: 70%;
+        }
+        }
+        .map-container {
+            text-align: center;
+        }
+        .map-text {
+            flex: 1; 
+            padding: 20px; 
+            font-family: Tahoma, Arial, sans-serif;
+            color: #fff;
+            font-size: 25px;
+        }
+        .map-image {
+            flex: 2; 
+            height: 65%; 
+            height: 65%; 
+            margin: 0 20px; 
+        }
+        .flex-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .text-box {
+            background-color: #fff;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            font-family: Tahoma, Arial, sans-serif;
+            color: #06D85F;
+            font-size: 25px;
+        }
+        img.center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            height: 75%;
+        }
+
+        .bottomLeftButton {
+            position: fixed; /* Position the button relative to the viewport */
+            bottom: 20px; /* Distance from the bottom of the viewport */
+            left: 20px; /* Distance from the left of the viewport */
+            padding: 20px; /* Padding inside the button */
+            background-color: #06D85F; /* Background color */
+            color: white; /* Text color */
+            border: none; /* No border */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Change cursor to pointer on hover */
+            font-size: 24px;
+        }
+    
+        .hidden{
+            visibility: hidden;
+        }
+
+        .topRightButton {
+            position: fixed; /* Fixed position */
+            top: 20px; /* Distance from the top */
+            right: 20px; /* Distance from the right */
+            z-index: 1000; /* Ensure it sits on top of other content */
+        }
+
+        .Button {
+            padding: 10px 20px;
+            background-color: #06D85F; /* Green background */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .topLeftButton {
+            position: fixed; /* Fixed position */
+            top: 20px; /* Distance from the top */
+            left: 20px; /* Distance from the right */
+            z-index: 1000; /* Ensure it sits on top of other content */
+                }
+        
+        .topButton{
+            position: fixed; /* Fixed position */
+            top: 20px; /* Distance from the top */
+            z-index: 1000; /* Ensure it sits on top of other content */
+        }
+
+
+    </style>
+    <div id="container" class="flex-container">
+        <div class="text-box">
+            <h1>Welcome to EcoQuest Exeter!</h1>
+        </div>
+        <a href="/leaderboard/" class="topRightButtonLink">
+            <button id="leaderboardButton" class="topRightButton button">Leaderboard</button>
+        </a>
+        <a href="javascript:void(0);" onclick="logOut()" class="topLeftButtonLink">
+            <button id="logoutButton" class="topLeftButton button">Log out</button>
+        </a>
+        <a href= "/adminPage" class="topButtonLink">
+            <button id="admin" class="topButton button">Admin</button>
+        </a>        
+    </div>
+
+    <div class="box">
+        <a class="button" href="#popup1" onclick="playmusic()">Click Here</a>
+        
+    </div>
+    
+    <div id="popup1" class="overlay">
+        <div class="popup">
+            <h2>The aim of the game</h2>
+            <a class="close" href="#">&times;</a>
+            <div class="content">
+                Travel to all the locations on the map and answer the sustainable questions and quests to gain points and be top of the leaderboard.
+            </div>
+            <img src="{% static 'Goals.png' %}" class="center" height="100" width="350">
+        </div>
+        
+    </div>
+    <div class="flex-container">
+        <div class="text-box">1. DH1 <br> 2. Bus Stop <br> 3. Pond <br> 4. Student Health Centre  </div>
+        <div class="map-container">
+            <img src="{% static 'Map.png' %}" class="center">
+        </div>
+        <div class="text-box">5. Bus Stop <br> 6. Centre for Resillience <br>in Environment, Water <br> and Waste <br> 7. Harrison Building <br> 8. Streatham Court  </div>
+    </div>
+
+    <button id = "myButton" class="bottomLeftButton" onclick="getLocation()">Click this button to find what location you are near.</button>
+
+    
+    
+    <script>
+    userID = getCookie("login"); // get the userID from the cookie
+    if (userID == undefined || userID == "") { // if they are not logged in redirect them to the login page
+        alert("Please login");
+        document.cookie = "login=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;" // set it to an expired date so its deleted
+        window.location.href = "/login/";
+    }
+
+    const x = document.getElementById("myButton");
+    const container = document.getElementById("container");
+    var funAudio;
+
+    //Written by MF
+    document.addEventListener('DOMContentLoaded',function(){ //page loading event triggers function
+        const xhr = new XMLHttpRequest(); //start http using ID retrieved from cookie
+        request = '/userDB/getUserById?id='+String(userID)
+        xhr.open('GET', request, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                //when json response comes from http request check access_level of user
+                const access = response.access_level;
+                //if user doesn't have authority hide button
+                if(access == "USER"){
+                    document.getElementById("admin").classList.add("hidden");
+                }
+            }
+        };
+        //send request
+        xhr.send();
+    })
+    
+
+    // function to play Henry's music he created
+    function playmusic() {
+        if (funAudio == undefined) {
+            funAudio = document.createElement("audio");
+            funAudio.src = "{% static 'henrys jam.mp3' %}";
+            funAudio.loop = true;
+            funAudio.autoplay = true;
+            funAudio.volume = 0.2;
+            container.appendChild(funAudio);
+        }
+        funAudio.play();
+    }
+
+    // function to get current user position only once
+    function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else { 
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+    }
+
+    // function to get the cookie of a given name
+    function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+    }
+     //https://www.w3schools.com/js/js_cookies.asp
+    
+    // function to show what the user's curent position is by getting their latitude and longitude   
+    function showPosition(position) {
+        fetch("/contentDB/getNearbyLocations?gps_lat="+ position.coords.latitude + "&gps_long="+position.coords.longitude, {method: "GET"})
+        .then((response) => response.json())
+        .then((json) => {writeLocationToSite(json); console.log(json)})
+        
+
+    }
+
+    function logOut() {
+        document.cookie = "login=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;" // set it to an expired date so its deleted
+        window.location.href = "/login/";
+    }
+
+
+    function writeLocationToSite(results){
+        console.log(results);
+        console.log(results.locations); 
+        console.log(results.locations.length);
+        // checks if user is near a location
+        if (results && results.locations && results.locations.length > 0) {
+            
+            // sets constant for the location and quiz url the user is near
+            const firstLocation = results.locations[0];
+            const quizPageUrl = "/quiz/?id="+firstLocation.id; 
+
+            // writes what location the user is near and the quiz page link, depending on the location
+            x.innerHTML = "You are near: " + firstLocation.name + ". " +
+                      "<a href='" + quizPageUrl + "'>Take the quiz!</a>";
+
+            console.log("First location name:", firstLocation.name);
+            
+        // if the user isn't near a location then returns this    
+        } else {
+            x.innerHTML="No locations available or results is not defined.";
+            console.log("No locations available or results is not defined.");
+        }
+    
+
+    }
+
+    
+    </script>
+</body>
+</html>
