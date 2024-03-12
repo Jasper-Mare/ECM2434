@@ -1,15 +1,22 @@
 //Written by MF
+
 function display(){ //function to get display element and remove hidden class tag to be visible
     element = document.getElementById("display");
     element.classList.remove("hidden");
 }
 
-function finduser(){
+function display2(){ //function to get display element and remove hidden class tag to be visible
+    element = document.getElementById("locDisplay");
+    element.classList.remove("hidden");
+    getLocation()
+}
+
+function findUser(){
     //get necessary document elements such as username and entry
     username = (document.getElementById("username").value).trim();
-    userResponse = document.getElementById("results");
+    userOption = document.getElementById("results");
     //reset display html
-    userResponse.innerHTML= "";
+    userOption.innerHTML= "";
     //start a httpRequest to retrieve a valid user
     const xhr = new XMLHttpRequest();
     request = '/userDB/getUserByName?name=' + username;
@@ -24,20 +31,20 @@ function finduser(){
             const access = response.access_level;
             //if json has undefined return or couldn't find anything print statement
             if(entry !== username){
-                userResponse.innerHTML = "User Not Found";
+                userOption.innerHTML = "User Not Found";
             }
             else{
                 //if found return name of user requested
-                userResponse.innerHTML = entry;
+                userOption.innerHTML = entry;
                 //depending upon current access_level change buttons to either promote or demote
                 if(access == "USER"){
-                    userResponse.innerHTML += "<button class ='action' onclick = 'clearance(1)'>Promote</button>";
+                    userOption.innerHTML += "<button type='button' class ='action' onclick = 'clearance(1)'>Promote</button>";
                 }
                 else if(access == "GAME_KEEPER"){
-                    userResponse.innerHTML += "<button class ='action' onclick = 'clearance(2)'>Demote</button>";
+                    userOption.innerHTML += "<button type='button' class ='action' onclick = 'clearance(2)'>Demote</button>";
                 }
                 //option to remove user from database
-                userResponse.innerHTML += "<button class ='action' onclick = 'clearance(3)'>Remove</button>";
+                userOption.innerHTML += "<button type='button' class ='action' onclick = 'clearance(3)'>Remove</button>";
             }
         }
     };
@@ -46,7 +53,7 @@ function finduser(){
 }
 
 //function for buttons
-//main process for all buttons is the same only need to change type of request hence "access" parametre
+//main process for all buttons is the same only need to change type of request hence "access" parameter
 function clearance(access){
     //start http request
     username = (document.getElementById("username").value).trim();
@@ -87,7 +94,24 @@ function clearance(access){
     };
     // send original request for name
     xhr.send();
+    //findUser()
 }
 
 
 
+function getLocation() {
+    const x = document.getElementById("localized");
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+      x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+  }
+  
+  function showPosition(position) {
+    const x = document.getElementById("localized");
+    x.innerHTML = "Latitude: " + position.coords.latitude +
+    "<br>Longitude: " + position.coords.longitude;
+  }
+
+//Function getLocation() & showPosition() gets code from: https://www.w3schools.com/html/html5_geolocation.asp

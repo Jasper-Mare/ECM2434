@@ -37,14 +37,15 @@ INSTALLED_APPS = [
     'map.apps.MapConfig',
     'userDB.apps.userDBConfig',
     'contentDB.apps.contentDBConfig',
+    'quizPage.apps.QuizPageConfig',
+    'leaderboard.apps.LeaderboardConfig',
+    #
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'quizPage.apps.QuizPageConfig',
-    'leaderboard.apps.LeaderboardConfig',
 ]
 
 MIDDLEWARE = [
@@ -127,6 +128,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    BASE_DIR / "homePage/static"
+]
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
