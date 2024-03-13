@@ -30,38 +30,31 @@ function save() {
     locationID = locationtable.value;
     console.log(toSave);
 
-    emptyInputsFlag = false;
-
     // make sure that they have filled in all inputs
     if (isempty(q) || isempty(ans1) || isempty(ans2) || isempty(ans3)) {
-        document.getElementById("errorMessage").classList.remove("hidden");
         text = "You've left a field empty, please fill out all fields";
-        document.getElementById("errorMessage").innerHTML = text;
+        document.getElementById("errorMessage").innerHTML = `
+        <div class="alert py-1 alert-danger alert-dismissible fade show" role="alert">` + text + 
+        `<button type="button" class="btn-close py-2" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>`;
         emptyInputsFlag = true;
     }
+    else{
+         // send the information to the database
+        const xhr = new XMLHttpRequest();
+        request = '/contentDB/createQuiz?question=' + q + '&answer0=' + ans1 + '&answer1=' + ans2 + '&answer2=' + ans3 + '&correct_answer=' + correctAnswer + '&points=10&location_id=' + locationID;
+        xhr.open('GET', request, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                console.log(response);
 
-
-    // send the information to the database
-    const xhr = new XMLHttpRequest();
-    request = '/contentDB/createQuiz?question=' + q + '&answer0=' + ans1 + '&answer1=' + ans2 + '&answer2=' + ans3 + '&correct_answer=' + correctAnswer + '&points=10&location_id=' + locationID;
-    xhr.open('GET', request, true);
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            const response = JSON.parse(xhr.responseText);
-            console.log(response);
-
-        }
-    };
-    xhr.send();
-
-    if (emptyInputsFlag == false) {
-        // hide error message when question is successfully added
-        document.getElementById("errorMessage").classList.add("hidden");
+            }
+        };
+        xhr.send();
         alert("Quiz question has been submitted successfully ");
-
     }
-
-
+    
     // clear input boxes
     question.value = "";
     op1.value = "";
