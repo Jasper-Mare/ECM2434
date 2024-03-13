@@ -9,25 +9,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>New Quiz</title>
     <!--Personal css-->
-    <!--<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css'%}?{% now 'U' %}">-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css'%}?{% now 'U' %}">
     <!--Global css-->
     <link rel="stylesheet" type="text/css" href="{% static 'css/allStyles.css'%}?{% now 'U' %}">
-    
+
 </head>
 
-<body class = "colour">
+<body class="colour">
     {% include "homePage/toolbar.html"%}
     <div class="container2">
         <h1 id="topic">Enter a new sustainability question:</h1>
 
-        <label for="locationtable">Choose a location</label>
+        <label for="locationtable">Choose a location</label><br>
         <select id="locationtable"> <!-- Newquiz.js adds locations from database --></select>
 
+        <br>
         <h1 class="smaller">
             Question:
             <input type="text" id="question" placeholder="Question...">
         </h1>
-        <ul class ="quizlist">
+        <ul class="quizlist">
             <li class="option smaller quizlistitem">
                 Option 1:
                 <input type="text" class="answerBox" id="op1" placeholder="Option...">
@@ -44,13 +45,18 @@
                 <button class="choose" id="b3" onclick="select(id)">✓</button>
             </li>
         </ul>
+        <br>
+        <p id="errorMessage" class="hidden"></p>
+
         <button id="save" onclick="save()">Save</button>
         <div>
-            <a href="/map/"><button id="home_button">Home</button></a> <!-- Return to the map page when you are finished adding questions-->
+            <a href="/map/"><button id="home_button">Home</button></a>
+            <!-- Return to the map page when you are finished adding questions-->
             <a href="/adminPage/"><button id="home_button">Admin</button></a>
         </div>
-        
+
     </div>
 </body>
 <script src="{% static 'js/newquiz.js' %}?{% now 'U' %}"></script>
+
 </html>
