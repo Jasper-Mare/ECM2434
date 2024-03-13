@@ -59,9 +59,9 @@ function save() {
 // function to select the correct answer
 function select(id) {
     // resets classes of all buttons
-    b1.classList = "choose";
-    b2.classList = "choose";
-    b3.classList = "choose";
+    b1.classList = "btn choose";
+    b2.classList = "btn choose";
+    b3.classList = "btn choose";
     // adds the correct class to the selected button
     document.getElementById(id).classList.add("correct");
 }

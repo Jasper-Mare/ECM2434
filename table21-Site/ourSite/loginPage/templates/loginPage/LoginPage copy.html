@@ -12,20 +12,20 @@
     <!--Personal css-->
     <!--<link rel="stylesheet" href="{% static 'css/LoginPage.css' %}?{% now 'U' %}">-->
     <!--Global css-->
-    <link rel="stylesheet" href="{% static 'css/allStyles.css' %}?{% now 'U' %}">
+    <link rel="stylesheet" href="{% static 'css/allStyles copy.css' %}?{% now 'U' %}">
     <!--Bootstrap added in manually as page doesn't include toolbar.html-->
-    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}?{% now 'U' %}">
-    <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.js' %}?{% now 'U' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}?{% now 'U' %}">
+    <script type="text/javascript" src="{% static 'js/bootstrap.js' %}?{% now 'U' %}"></script>
     
     
 </head>
 
-<body>
-    <div>
-        <div>
+<body class ="colour">
+    <div id="content" class="loginPage">
+        <div class="centreV1">
             <h1>Login</h1>
             <!-- create form for users to login -->
-            <form>
+            <form id="loginForm">
                 <label for="username">Username:</label><br>
                 <input type="text" id="username" name="username"><br> <br>
 
@@ -36,7 +36,7 @@
                 <input type="button" onclick="submitLogin()" value="Submit"> <br> <br>
             </form>
 
-            <div>
+            <div id="options">
                 <a href="Register">Haven't signed up yet? Click here to sign
                     up</a><br>
 
