@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-14!46l(0j1hl1o$v8dw+4g-gxvaf%67tja=o-4yv%ig=4#ded%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['10.0.2.2', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -37,14 +37,15 @@ INSTALLED_APPS = [
     'map.apps.MapConfig',
     'userDB.apps.userDBConfig',
     'contentDB.apps.contentDBConfig',
+    'quizPage.apps.QuizPageConfig',
+    'leaderboard.apps.LeaderboardConfig',
+    #
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'quizPage.apps.QuizPageConfig',
-    'leaderboard.apps.LeaderboardConfig',
 ]
 
 MIDDLEWARE = [
@@ -127,6 +128,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    BASE_DIR / "homePage/static"
+]
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 

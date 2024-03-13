@@ -1,7 +1,7 @@
 /* Written by Jacob */
 /* Styles for leaderboard.html */
 
-body {
+body.colour {
     background-color: rgb(207, 234, 166);
 }
 
@@ -16,7 +16,7 @@ body {
     justify-content: space-between;
 }
 
-ul {
+ul.quizlist {
     list-style-type: none;
     padding: 0;
     padding-top: 8px;
@@ -24,11 +24,11 @@ ul {
     margin: 0;
 }
 
-li {
+li.quizlistitem {
     margin: 0 0 10px 10px;
 }
 
-h1 {
+h1.group2 {
     padding: 20px 0;
 }
 
@@ -36,7 +36,7 @@ h1 {
     font-size: 1.2em;
 }
 
-.container {
+.container2 {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -84,11 +84,3 @@ h1 {
     background-color: lawngreen;
 }
 
-#save {
-    margin: 20px 0;
-    padding: 10px 20px;
-    font-size: 1.2em;
-    background-color: lawngreen;
-    border: solid 1px black;
-    cursor: pointer;
-}
