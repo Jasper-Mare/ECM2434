@@ -23,7 +23,13 @@ def register(request):
 
 #returns forgot password page url
 def forgotPassword(request):
-    return render(request, 'loginPage/ForgotPassword.html')
+    return render(request, 'registration/password_reset_form.html')
+
+#def resetPassEmailSent(request):
+    #return render(request, 'registration/password_reset_done.html')
+
+#def resetPass(request):
+    #return render(request, 'registration/password_reset_done.html')
 
 
 @csrf_exempt #This skips csrf validation

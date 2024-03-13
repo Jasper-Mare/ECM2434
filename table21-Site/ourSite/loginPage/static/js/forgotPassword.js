@@ -26,7 +26,7 @@ async function sendPasswordEmail() {
     }
     */
 
-    alert(checkEmail.validEmail);
+    //alert(checkEmail.validEmail);
     //send user an email
 }
 
