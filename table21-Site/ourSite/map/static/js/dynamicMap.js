@@ -72,7 +72,7 @@ const mapImg = new Image();
 mapImg.onload = () => {
     mapImgLoaded = true;
 };
-mapImg.src = `/static/exeter-Map-Edited.png`;
+mapImg.src = `/static/images/exeter-Map-Edited.png`;
 
 // ============================= main functions ============================ //
 
