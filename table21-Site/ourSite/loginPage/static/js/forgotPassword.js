@@ -1,49 +1,50 @@
 //code written by Hannah Jellett
-//Jasper Mare helped with hashing passwords
 
-//function runs when submit button is clicked
-async function submitLogin() {
+async function sendPasswordEmail() {
+    alert("we will send you an email!");
+    //save all user input fields
+    //trim all the values to remove any whitespaces
+    email = (document.getElementById("email").value).trim();
 
-    //gets values input by user in both text fields
-    //trim both values to remove any whitespaces
-    username = (document.getElementById("username").value).trim();
-    password = (document.getElementById("passwd").value).trim();
-
-    //ensure no fields are left empty
-    if (checkIfEmpty(username) || checkIfEmpty(password)) {
+    //check field isn't empty
+    if (checkIfEmpty(email)) {
+        //show error message on screen to user
         document.getElementById("loginErrorMessage").classList.remove("hidden");
         document.getElementById("loginErrorMessage").innerHTML = "Please fill in all fields!";
-        //alert("Please fill in all fields");
-        //leave function if a field is empty
         return;
     }
 
-    //check user input matches a valid login
-    validData = await checkValidLogin(password, username);
-
-    // if login is valid, set user cookie and move to map game page
-    if (validData.validLogin == true) {
-        setCookie("login", validData.userId, 1);
-        window.location.replace("../../map/");
-    }
-    else {
-        //let user know that one/both of their fields don't match the DB
+    //checks email exists in system
+    /*
+    checkEmail = await checkEmailExists(email);
+    if (checkEmail.validEmail == false) {
+        //show error message on screen to user
+        message = "This email isn't registered on our system<br>Please enter the email you used to register:";
         document.getElementById("loginErrorMessage").classList.remove("hidden");
-        error = "Username and password don't match any user on our system: <br>Try again, or register";
-        document.getElementById("loginErrorMessage").innerHTML = error;
-        //alert("Username and password don't match any user on our system: Try again, or register");
+        document.getElementById("loginErrorMessage").innerHTML = message;
+        return;
     }
+    */
 
-
+    //alert(checkEmail.validEmail);
+    //send user an email
 }
 
 
+//check email exists in the DB
+async function checkEmailExists() {
+    //sends POST request to passCheck function in login views
+    return await fetch('/login/emailCheck', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        //sends user input of password and username as the body of request
+        body: JSON.stringify({ 'email': email })
 
-function checkIfEmpty(value) {
-    //check values aren't null or an empty string
-    return (value == null || value == '');
+    })
+
 }
-
 
 //check user login attempt is valid
 //async to make sure thie function waits for fetch results
@@ -83,4 +84,6 @@ async function checkValidLogin(inputPassword, inputUsername) {
 
 }
 
-
+function checkIfEmpty(value) {
+    return (value == null || value == "");
+}
