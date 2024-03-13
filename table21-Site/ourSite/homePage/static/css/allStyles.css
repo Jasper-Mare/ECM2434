@@ -1,5 +1,7 @@
 /****/
-/** ========== THEMES ========== **/
+/*====================================================================================================
+    To use this css file place the following in the <head> tag
+    <link rel="stylesheet" href="{% static 'css/allStyles.css' %}>
 
 /** --- ALL BODY STYLES --- **/
 /** FOR admin & login & leaderboard & quiz**/
@@ -40,7 +42,7 @@ body.imageBack {
     font-weight: bold;
     background-color: antiquewhite;
     padding: 30px;
-    margin: 30px 120px;
+    margin: 65px 120px;
 }
 
 /** --- ALL HEADING STYLES --- **/
@@ -200,7 +202,6 @@ li.quizlistitem {
     height: 100vh;
     width: 100vh;
 }
-
 
 #loginErrorMessage {
     color: red;
@@ -391,6 +392,7 @@ img.center {
     /* Distance from the right */
     z-index: 1000;
     /* Ensure it sits on top of other content */
+
 }
 
 .topButton {

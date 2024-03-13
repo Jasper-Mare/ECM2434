@@ -6,7 +6,6 @@ if (userID == undefined || userID == "") { // if they are not logged in redirect
     window.location.href = "/login/";
 }
 
-
 //Function written by MF
 document.addEventListener('DOMContentLoaded',function(){ //page loading event triggers function
     const xhr = new XMLHttpRequest(); //start http using ID retrieved from cookie
@@ -27,9 +26,8 @@ document.addEventListener('DOMContentLoaded',function(){ //page loading event tr
     xhr.send();
 })
 
-
-// function to play Henry's music he created
 function playmusic() {
+// function to play Henry's music he created
     var funAudio;
     const container = document.getElementById("container");
     if (funAudio == undefined) {
@@ -43,10 +41,8 @@ function playmusic() {
     funAudio.play();
 }
 
-
-
-// function to get the cookie of a given name
 function getCookie(cname) {
+// function to get the cookie of a given name
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
     let ca = decodedCookie.split(';');
@@ -61,10 +57,11 @@ function getCookie(cname) {
     }
     return "";
 }
-    //https://www.w3schools.com/js/js_cookies.asp
+//Function getCookie() gets code from: https://www.w3schools.com/js/js_cookies.asp
 
-// function to get current user position only once
+
 function getLocation() {
+// function to get current user position only once
     const x = document.getElementById("myButton");
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
@@ -73,13 +70,15 @@ function getLocation() {
     }
     }
 
-// function to show what the user's curent position is by getting their latitude and longitude   
+   
 function showPosition(position) {
-    
+// function to show what the user's curent position is by getting their latitude and longitude
     fetch("/contentDB/getNearbyLocations?gps_lat="+ position.coords.latitude + "&gps_long="+position.coords.longitude, {method: "GET"})
     .then((response) => response.json())
     .then((json) => {writeLocationToSite(json); console.log(json)})
 }
+
+//Function getLocation() & showPosition() gets code from: https://www.w3schools.com/html/html5_geolocation.asp
 
 function writeLocationToSite(results){
     const x = document.getElementById("myButton");

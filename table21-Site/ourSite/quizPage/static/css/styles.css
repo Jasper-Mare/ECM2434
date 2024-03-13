@@ -28,7 +28,7 @@ li.quizlistitem {
     margin: 0 0 10px 10px;
 }
 
-h1.group2{
+h1.group2 {
     padding: 20px 0;
 }
 
@@ -99,7 +99,7 @@ h1.group2{
 
 .tight {
     margin: 0 !important;
-    padding:0 !important;
+    padding: 0 !important;
 }
 
 #home_button {
@@ -109,4 +109,8 @@ h1.group2{
     background-color: lawngreen;
     border: solid 1px black;
     cursor: pointer;
+}
+
+#errorMessage {
+    color: red;
 }
