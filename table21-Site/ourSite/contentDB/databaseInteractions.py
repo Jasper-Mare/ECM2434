@@ -1,6 +1,6 @@
-# written by Jasper Mare
+# written by Jasper Mare and Ruby Ham
 
-from .models import Quiz, Location
+from .models import Quiz, Location, Quest
 
 # builds the dictionary that turns into the JSON response for quizzes
 def makeQuizStruct(id, question, answer0, answer1, answer2, correctAnswer, points, location_id):
@@ -24,6 +24,13 @@ def makeLocationStruct(id, name, lat, long, info, radius):
         "gps_long" : float(long), 
         "info": info,
         "radius" : float(radius),
+    }
+
+def makeQuestStruct(id, task ,points):
+    return {
+        "id" : int(id), 
+        "quest" : task, 
+        "points": int(points),
     }
 
 
@@ -90,6 +97,16 @@ def getNearbyLocations(lat, long):
 
     return {"locations": locationArray}
 
+def getQuestById(id):
+    # if there isn't a quiz with this id in the database an error will be thrown, so send the error forwards as a JSON object
+    try:
+        quest:Quest = Quest.objects.get(id=id)
+    except (Quest.DoesNotExist):
+        return {"error":"DoesNotExist", "details":f"id: {id} does not exist"}
+    
+    return makeQuestStruct(id, quest.task, quest.points)
+
+
 
 def createLocation(lat, long, name, info, radius):
     location:Location = Location(name=name, info=info, gps_lat=lat, gps_long=long, radius=radius)
@@ -99,6 +116,12 @@ def createLocation(lat, long, name, info, radius):
 
 def createQuiz(question, answer0, answer1, answer2, correctAnswer, points, location_id):
     quiz:Quiz = Quiz(question=question, answer0=answer0, answer1=answer1, answer2=answer2, correct_answer=correctAnswer, points=points, location=location_id)
+    quiz.save()
+
+    return getQuizById(quiz.id)
+
+def createQuest(task, points):
+    quest:Quest = Quest(task=task, points=points)
     quiz.save()
 
     return getQuizById(quiz.id)
@@ -138,6 +161,19 @@ def updateQuiz(id, new_question, new_answer0, new_answer1, new_answer2, new_corr
 
     return getQuizById(id)
 
+def updateQuest(id, new_task, new_points):
+    try:
+        quest:Quest = Quest.objects.get(id=id)
+    except (Quest.DoesNotExist):
+        return {"error":"DoesNotExist", "details":f"id: {id} does not exist"}
+    
+    quest.task = new_task
+    quest.points = new_points
+
+    quest.save()
+
+    return getQuestById(id)
+
 def deleteLocation(id):
     try:
         location:Location = Location.objects.get(id=id)
@@ -162,4 +198,13 @@ def deleteQuiz(id):
         return {"error":"DoesNotExist", "details":f"id: {id} does not exist"}
     
     quiz.delete()
+    return {"successful" : True}
+
+def deleteQuest(id):
+    try:
+        quest:Quest = Quest.objects.get(id=id)
+    except (Quest.DoesNotExist):
+        return {"error":"DoesNotExist", "details":f"id: {id} does not exist"}
+    
+    quest.delete()
     return {"successful" : True}
