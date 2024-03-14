@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'userDB.apps.userDBConfig',
     'contentDB.apps.contentDBConfig',
     'quizPage.apps.QuizPageConfig',
+    'questPage.apps.QuestsConfig',
     'leaderboard.apps.LeaderboardConfig',
     #
     'django.contrib.admin',
