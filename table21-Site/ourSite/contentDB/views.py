@@ -139,7 +139,7 @@ def createQuest(request):
     if (points == -1):
         return makeError("parameter missing", "points parameter is missing!")
     
-    quest = databaseInteractions.createQuiz(task, points)
+    quest = databaseInteractions.createQuest(task, points)
 
     return JsonResponse(quest)
 
@@ -184,7 +184,7 @@ def updateQuiz(request):
 
     return JsonResponse(newQuizInfo)
 
-def updateQuiz(request):
+def updateQuest(request):
     questId:int = request.GET.get('id', -1)
 
     if (questId == -1):
@@ -196,7 +196,7 @@ def updateQuiz(request):
     task = request.GET.get('task', oldQuestInfo["task"])
     points:int = int(request.GET.get('points', oldQuestInfo["points"]))
 
-    newQuestInfo = databaseInteractions.updateQuiz(questId, task, points)
+    newQuestInfo = databaseInteractions.updateQuest(questId, task, points)
 
     return JsonResponse(newQuestInfo)
 

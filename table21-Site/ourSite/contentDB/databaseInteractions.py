@@ -29,7 +29,7 @@ def makeLocationStruct(id, name, lat, long, info, radius):
 def makeQuestStruct(id, task ,points):
     return {
         "id" : int(id), 
-        "quest" : task, 
+        "task" : task, 
         "points": int(points),
     }
 
@@ -122,9 +122,9 @@ def createQuiz(question, answer0, answer1, answer2, correctAnswer, points, locat
 
 def createQuest(task, points):
     quest:Quest = Quest(task=task, points=points)
-    quiz.save()
+    quest.save()
 
-    return getQuizById(quiz.id)
+    return getQuestById(quest.id)
 
 def updateLocation(id, new_lat, new_long, new_name, new_info, new_radius):
     try:
