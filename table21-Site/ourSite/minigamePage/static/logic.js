@@ -1,4 +1,4 @@
-const SCENES = {
+export const SCENES = {
     game: {
         buttons: [],
         text: [],
@@ -7,11 +7,10 @@ const SCENES = {
     }
 }
 
-
-var currentScene = "game";
-const windowAmount = "5";
-windowStates = [];
-var difficulty = 1;
+export var currentScene;
+export var windowAmount;
+export var windowStates;
+export var difficulty;
 
 
 /**
@@ -20,7 +19,7 @@ var difficulty = 1;
  * 
  * Change states of variables
  */
-function logicUpdate() {
+export function logicUpdate() {
     if (Math.random() > 1-((difficulty/10)+1)) {
         windowStates[Math.floor(Math.random() * windowAmount)] = 1
     }
@@ -31,7 +30,11 @@ function logicUpdate() {
  * Returns: nothing
  * Preset state of windows, timer, energy meter
  */
-function start() {
+export function start() {
+    currentScene = "game";
+    windowAmount = 5;
+    difficulty = 1;
+
     // set all window states to 0
     for (let i = 0; i < windowAmount; i++) {
         windowStates[i] = 0
@@ -41,6 +44,6 @@ function start() {
 /**
  * 
  */
-function clickWindow() {
+export function clickWindow() {
     // Get which window and then reset the state to 0
 }
