@@ -74,7 +74,7 @@ function lerp(startValue, endValue, t) {
     return startValue + (endValue - startValue) * t;
 }
 
-function screenToWorldSpace(x, y) {
+export function screenToWorldSpace(x, y) {
     // screen space 0 to 1 on width and height
     // world space = canvas space
     const xWorld = lerp(0, canvasDims.width, x);
@@ -135,7 +135,7 @@ canvas.addEventListener("click", (e) => {
 //----------------------------------------------------
 //------------------ OBJECT SPRITES ------------------
 //#region object sprites
-class UIButton {
+export class UIButton {
     constructor(coords, dims, zDims, onClickFunction, text = "", color = "#f49d37") {
         this.anchor = { x: coords[0], y: coords[1] };
         this.offset = { x: 0, y: 0 };
@@ -251,7 +251,7 @@ class UIText {
     }
 }
 
-class UIRect {
+export class UIRect {
     constructor(coords, dims, color, cornerRadii = 10) {
         this.anchor = { x: coords[0], y: coords[1] };
         this.dims = { w: dims[0], h: dims[1] };
@@ -278,6 +278,7 @@ const GLOBALS = {
 
 const BUILDINGS = [];
 const UI = [];
+console.log(UI)
 const UI_FLOAT = [];
 // renders background elements
 const BACKGROUND_ELEMS = [];
@@ -353,7 +354,18 @@ function setDelta() {
 //====================== GAME LOGIC ======================
 //#region game logic
 
-import {logicUpdate, start, clickWindow, SCENES, currentScene, windowAmount, windowStates, difficulty} from "./logic.js";
+import {logicUpdate, start, clickWindow, currentScene, windowAmount, windowStates, difficulty} from "./logic.js";
+
+const SCENES = {
+    game: {
+        buttons: [
+            new UIButton(screenToWorldSpace(0.5, 0.5), screenToWorldSpace(100, 100), screenToWorldSpace(100, 100), clickWindow(), "", "#f49d37")
+        ],
+        text: [],
+        sprites: [],
+        background: []
+    }
+}
 
 // applies initial settings
 function init() {
@@ -365,6 +377,7 @@ var updateLimiter = false;
 var gameIsPaused = false;
 
 function setupScene() {
+    console.log(UI)
     BACKGROUND_ELEMS.splice(0, BACKGROUND_ELEMS.length);
     BUILDINGS.splice(0,BUILDINGS.length);
     UI.splice(0, UI.length);

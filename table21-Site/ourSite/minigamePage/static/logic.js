@@ -1,15 +1,6 @@
 import {UIButton, screenToWorldSpace, UIRect} from "./framework.js";
 
-export const SCENES = {
-    game: {
-        buttons: [
-            new UIButton(screenToWorldSpace(0.5, 0.5), screenToWorldSpace(100, 100), screenToWorldSpace(100, 100), clickWindow(), "", "#f49d37")
-        ],
-        text: [],
-        sprites: [],
-        background: []
-    }
-}
+
 
 export var currentScene;
 export var windowAmount;
