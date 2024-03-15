@@ -18,9 +18,9 @@ async function submitRegisteration() {
         return;
     }
 
-    //check if user already exists
-    if (await checkIfUser(username) == true) {
-        message = "There's already an account with this username. Please login, or register with a different username";
+    //check if user or email already exists
+    if (await checkIfUser(username) == true || await checkIfEmailExists(email) == true) {
+        message = "There's already an account with this username or email.<br> Please login, or register with a different username/email";
         document.getElementById("loginErrorMessage").classList.remove("hidden");
         document.getElementById("loginErrorMessage").innerHTML = message;
 
@@ -59,6 +59,7 @@ async function submitRegisteration() {
 function checkIfEmpty(value) {
     return (value == null || value == "");
 }
+
 
 //function to set up new user in DB after all checks are complete
 function setUserInDB(inputUsername, inputEmail, inputPassHash) {
@@ -125,7 +126,32 @@ async function hashPassword(inputPassword) {
 //async so function waits for fetch response
 //function checks if user trying to register is already a user on the system
 async function checkIfUser(inputUsername) {
-    request = '/userDB/getUserByName?name=' + username;
+    request = '/userDB/getUserByName?name=' + inputUsername;
+
+    //send GET request
+    return await fetch(request, {
+        method: 'GET'
+    })
+        .then(response => {
+            if (response.ok == false) {
+                alert("error getting response");
+            }
+            return response.json();
+
+        })
+        .then(data => {
+            //sends back response to function 
+            //true if they're already a user, else false
+            return (data.error == undefined);
+        })
+        .catch(error => {
+            alert("Server side error: ", error);
+        });
+
+}
+
+async function checkIfEmailExists(inputEmail) {
+    request = '/userDB/getUserByEmail?email=' + inputEmail;
 
     //send GET request
     return await fetch(request, {

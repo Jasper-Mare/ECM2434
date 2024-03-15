@@ -24,6 +24,15 @@ def getUserById(id:int):
     return makeUserStruct(user.id, user.name, user.password_hash, user.access_level, user.recovery_email, user.score)
 
 
+def getUserByEmail(email: str):
+    try:
+        user:User = User.objects.get(email = email)
+    except (User.DoesNotExist):
+        return {"error":"DoesNotExist", "details":f"email: {email} does not exist"}
+
+    return makeUserStruct(user.id, user.name, user.password_hash, user.access_level, email, user.score)
+
+
 def getUserByName(name:str):
     try:
         user:User = User.objects.get(name=name)
