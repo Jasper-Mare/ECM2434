@@ -270,10 +270,218 @@ class UIRect {
 //-----------------------------------------------------
 //------------------ FRAME RENDERING ------------------
 //#region frame rendering
+const GLOBALS = {
+    mousePosition: { x: 0, y: 0 },
+    screenSize: { width: 0, height: 0 },
+    isMusicPlaying: false
+};
+
+const BUILDINGS = [];
+const UI = [];
+const UI_FLOAT = [];
+// renders background elements
+const BACKGROUND_ELEMS = [];
+
+function renderBackground() {
+    for (let elem of BACKGROUND_ELEMS) {
+        elem.render();
+    }
+}
+
+// renders prop objects from PROPS
+function renderProps() {
+    const renderOrder = [];
+    const numBuild = BUILDINGS.length;
+    for(let i = 0; i < numBuild; i++) {
+        const building = BUILDINGS[i];
+        renderOrder.push(building);
+    }
+    for (let card of renderOrder) {
+        card.render();
+    }
+    const numUI = UI.length;
+    for (let i = 0; i < numUI; i++) {
+        UI[i].render();
+    }
+}
+
+function renderFloatUI() {
+    for (let elem of UI_FLOAT) {
+        elem.render();
+    }
+}
+
+function startFrames() {
+    //reset update limit for on screen button presses.
+    updateLimiter = false;
+    setDelta();
+
+    //update game logic
+    if (currentScene === "level") {
+        logicUpdate();
+    }
+
+    // erase canvas
+    ctx.clearRect(0, 0, canvasDims.width, canvasDims.height);
+
+    // render entities in order
+    renderBackground();
+    renderProps();
+    renderFloatUI();
+
+    // call next frame
+    window.requestAnimationFrame(startFrames);
+}
+
+const deltaTime = new Map([
+    ['now', 0],
+    ['delta', 0],
+    ['then', 0]
+]);
+
+function setDelta() {
+    deltaTime.set('then', deltaTime.get('now'));
+    deltaTime.set('now', Date.now());
+    deltaTime.set('delta', (deltaTime.get('now') - deltaTime.get('then')) / 1000);
+}
 
 //#endregion
+
 //#endregion
 
-// Game logic
+//========================================================
+//====================== GAME LOGIC ======================
+//#region game logic
 
-// Music
+import {logicUpdate, start, clickWindow, SCENES, currentScene, windowAmount, windowStates, difficulty} from "./logic.js";
+
+// applies initial settings
+function init() {
+    resizeCanvas();
+    setupScene();
+    start()
+}
+var updateLimiter = false;
+var gameIsPaused = false;
+
+function setupScene() {
+    BACKGROUND_ELEMS.splice(0, BACKGROUND_ELEMS.length);
+    BUILDINGS.splice(0,BUILDINGS.length);
+    UI.splice(0, UI.length);
+    UI_FLOAT.splice(0, UI_FLOAT.length);
+
+    if (!gameIsPaused) {
+        for (let i in SCENES[currentScene].UI.buttons) {
+            var button = SCENES[currentScene].UI.buttons[i];
+            button.currentDims.w = button.originalDims.w;
+            button.currentDims.h = button.originalDims.h;
+            button.offset.y = (button.originalDims.h - button.currentDims.h) / 2;
+            button.offset.x = (button.originalDims.w - button.currentDims.w) / 2;
+            UI.push(button);
+        }
+    }
+
+    for (let i in SCENES[currentScene].UI.text) {
+        UI.push(SCENES[currentScene].UI.text[i]);
+    }
+    for (let i in SCENES[currentScene].Background) {
+        BACKGROUND_ELEMS.push(SCENES[currentScene].Background[i]);
+    }
+
+    if (gameIsPaused) {
+        for (let i in SCENES.level.UI.pauseMenu.sprites) {
+            UI_FLOAT.push(SCENES.level.UI.pauseMenu.sprites[i]);
+        }
+        for (let i in SCENES.level.UI.pauseMenu.buttons) {
+            var button = SCENES.level.UI.pauseMenu.buttons[i];
+            button.currentDims.w = button.originalDims.w;
+            button.currentDims.h = button.originalDims.h;
+            button.offset.y = (button.originalDims.h - button.currentDims.h) / 2;
+            button.offset.x = (button.originalDims.w - button.currentDims.w) / 2;
+            UI_FLOAT.push(button);
+        }
+        for (let i in SCENES.level.UI.pauseMenu.text) {
+            UI_FLOAT.push(SCENES.level.UI.pauseMenu.text[i]);
+        }
+    }
+
+    if (levelLost) {
+        for (let i in SCENES.level.UI.loss_menu.sprites) {
+            UI_FLOAT.push(SCENES.level.UI.loss_menu.sprites[i]);
+        }
+        for (let i in SCENES.level.UI.loss_menu.buttons) {
+            var button = SCENES.level.UI.loss_menu.buttons[i];
+            button.currentDims.w = button.originalDims.w;
+            button.currentDims.h = button.originalDims.h;
+            button.offset.y = (button.originalDims.h - button.currentDims.h) / 2;
+            button.offset.x = (button.originalDims.w - button.currentDims.w) / 2;
+            UI_FLOAT.push(button);
+        }
+
+        for (let i in SCENES.level.UI.loss_menu.text) {
+            UI_FLOAT.push(SCENES.level.UI.loss_menu.text[i]);
+        }
+    }
+
+}
+
+function loseLevel() {
+    levelLost = true;
+    setupScene();
+}
+
+window.onload = () => {
+    init(); // initialize the game
+    startFrames(); // start running frames
+}
+//#endregion 
+
+//========================================================
+//======================== MUSIC =========================
+// All music © 2023 Henry Grantham-Smith.
+//#region music
+var currentIndex = 0;
+
+async function playTracks() {
+    var tracks = await shuffleArray(["./songs/Bit Vibes.mp3", "./songs/Lofi Vibes.mp3", "./songs/Waltz Vibes.mp3"]);
+    // Set the duration of the break between tracks (in milliseconds)
+    var breakDuration = 2000;
+
+    // Create an array of Promises to preload the audio files
+    var preloadPromises = tracks.map(track => {
+        return new Promise(resolve => {
+            var audio = new Audio(track);
+            audio.addEventListener('canplaythrough', () => {
+                resolve();
+            });
+        });
+    });
+
+    // Wait for all the audio files to finish preloading
+    await Promise.all(preloadPromises);
+
+    // Create a loop to play each track
+    while (true) {
+        // Create a new audio element
+        var audio = new Audio(tracks[currentIndex]);
+
+        // Play the audio
+        audio.play();
+
+        // Wait for the audio to finish playing before scheduling the next track
+        await new Promise(resolve => audio.addEventListener('ended', resolve));
+
+        // Increment the current index to play the next track
+        currentIndex++;
+
+        // If the current index is equal to the length of the playlist,
+        // reset the index to 0 to start playing the playlist from the beginning
+        if (currentIndex == tracks.length) {
+            currentIndex = 0;
+        }
+
+        // Wait for the break duration before playing the next track
+        await new Promise(resolve => setTimeout(resolve, breakDuration));
+    }
+}
+//#endregion
