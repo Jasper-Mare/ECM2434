@@ -456,7 +456,7 @@ window.onload = () => {
 var currentIndex = 0;
 
 async function playTracks() {
-    var tracks = await shuffleArray(["./songs/Bit Vibes.mp3", "./songs/Lofi Vibes.mp3", "./songs/Waltz Vibes.mp3"]);
+    var tracks = await shuffleArray(["./songs/ECOPOLY soundtrack 1.mp3", "./songs/ECOPOLY soundtrack 2.mp3"]);
     // Set the duration of the break between tracks (in milliseconds)
     var breakDuration = 2000;
 
