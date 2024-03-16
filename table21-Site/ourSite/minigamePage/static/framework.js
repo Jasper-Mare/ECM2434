@@ -1,6 +1,7 @@
 //=========================================================
 //===================== CANVAS SET-UP =====================
 //#region canvas_setup
+console.log("script running");
 const canvas = document.querySelector("canvas");
 window.scrollTo({ top: 0, behavior: "auto" });
 document.body.style.overflow = "hidden";
@@ -114,11 +115,6 @@ canvas.addEventListener("click", (e) => {
             for (const ui of UI) {
                 if (ui.isZoomed) {
                     ui.onClick();
-                }
-            }
-            for (const card of CARDS) {
-                if (card.isHovered) {
-                    card.onClick();
                 }
             }
             break;
@@ -354,24 +350,100 @@ function setDelta() {
 //====================== GAME LOGIC ======================
 //#region game logic
 
-import {logicUpdate, start, clickWindow, currentScene, windowAmount, windowStates, difficulty} from "./logic.js";
+import {logicUpdate, start, currentScene, clickWindow, windowAmount, windowStates, difficulty, levelLost} from "./logic.js";
 
 const SCENES = {
     game: {
-        buttons: [
-            new UIButton(screenToWorldSpace(0.5, 0.5), screenToWorldSpace(100, 100), screenToWorldSpace(100, 100), clickWindow(), "", "#f49d37")
-        ],
-        text: [],
-        sprites: [],
-        background: []
+        UI: {
+            buttons: [
+                new UIButton(
+                    screenToWorldSpace(0.02, 0.02), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.11, 0.11),
+                    () => {
+                        if (!gameIsPaused) {
+                            gameIsPaused = true;
+                            setupScene();
+                        }
+                    },
+                    "pause")
+            ],
+            text: [
+                new UIText(screenToWorldSpace(0.2, 0.03), "60", "'Courier new'",
+                    "white", "Match " + 2 + " cards", undefined, undefined, "left")
+            ],
+
+            pauseMenu: {
+                buttons: [
+                    new UIButton(
+                        screenToWorldSpace(0.4, 0.4), screenToWorldSpace(0.2, 0.1), screenToWorldSpace(0.21, 0.11),
+                        () => {
+                            gameIsPaused = false;
+                            updateLimiter = true;
+                            setupScene();
+                        },
+                        "Resume"),
+                    new UIButton(
+                        screenToWorldSpace(0.4, 0.6), screenToWorldSpace(0.2, 0.1), screenToWorldSpace(0.21, 0.11),
+                        () => {
+                            gameIsPaused = false;
+                            currentScene = "level_select";
+                            setupScene();
+                        },
+                        "exit")
+                ],
+                text: [
+                    new UIText(
+                        screenToWorldSpace(0.5, 0.22), "62", "'Courier new'", "white", "⊣ PAUSED ⊢",
+                        undefined, undefined, "center"
+                    )
+                ],
+                sprites: [
+                    new UIRect(screenToWorldSpace(0.325, 0.175), screenToWorldSpace(0.35, 0.65), "#21897e", 10)
+                ]
+            },
+
+            loss_menu: {
+                buttons: [
+                    new UIButton(
+                        screenToWorldSpace(0.4, 0.55), screenToWorldSpace(0.2, 0.1), screenToWorldSpace(0.21, 0.11),
+                        () => {
+                            levelLost = false;
+                            updateLimiter = true;
+                            currentScene = "level_select";
+                            setupScene();
+                            currentScene = "level";
+                            setupLevel();
+                            setupScene();
+                        },
+                        "Retry"),
+                    new UIButton(
+                        screenToWorldSpace(0.375, 0.7), screenToWorldSpace(0.25, 0.1), screenToWorldSpace(0.26, 0.11),
+                        () => {
+                            levelLost = false;
+                            currentScene = "level_select";
+                            setupScene();
+                        },
+                        "Return to Menu")
+                ],
+                text: [
+                    new UIText(
+                        screenToWorldSpace(0.5, 0.22), "52", "'Courier new'", "white", "⊣ LEVEL LOST ⊢",
+                        undefined, undefined, "center"
+                    ),
+                ],
+                sprites: [
+                    new UIRect(screenToWorldSpace(0.25, 0.175), screenToWorldSpace(0.5, 0.65), "#21897e", 10)
+                ]
+            }
+        },
+        Background: [new UIRect([0, 0], [canvasDims.width, canvasDims.height], "#293e55ff", 0)]
     }
-}
+};
 
 // applies initial settings
 function init() {
     resizeCanvas();
-    setupScene();
     start()
+    setupScene();
 }
 var updateLimiter = false;
 var gameIsPaused = false;
@@ -402,19 +474,19 @@ function setupScene() {
     }
 
     if (gameIsPaused) {
-        for (let i in SCENES.level.UI.pauseMenu.sprites) {
-            UI_FLOAT.push(SCENES.level.UI.pauseMenu.sprites[i]);
+        for (let i in SCENES.game.UI.pauseMenu.sprites) {
+            UI_FLOAT.push(SCENES.game.UI.pauseMenu.sprites[i]);
         }
-        for (let i in SCENES.level.UI.pauseMenu.buttons) {
-            var button = SCENES.level.UI.pauseMenu.buttons[i];
+        for (let i in SCENES.game.UI.pauseMenu.buttons) {
+            var button = SCENES.game.UI.pauseMenu.buttons[i];
             button.currentDims.w = button.originalDims.w;
             button.currentDims.h = button.originalDims.h;
             button.offset.y = (button.originalDims.h - button.currentDims.h) / 2;
             button.offset.x = (button.originalDims.w - button.currentDims.w) / 2;
             UI_FLOAT.push(button);
         }
-        for (let i in SCENES.level.UI.pauseMenu.text) {
-            UI_FLOAT.push(SCENES.level.UI.pauseMenu.text[i]);
+        for (let i in SCENES.game.UI.pauseMenu.text) {  
+            UI_FLOAT.push(SCENES.game.UI.pauseMenu.text[i]);
         }
     }
 

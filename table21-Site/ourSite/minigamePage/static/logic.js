@@ -4,8 +4,9 @@ import {UIButton, screenToWorldSpace, UIRect} from "./framework.js";
 
 export var currentScene;
 export var windowAmount;
-export var windowStates;
+export var windowStates = [];
 export var difficulty;
+export var levelLost = false;
 
 
 /**
