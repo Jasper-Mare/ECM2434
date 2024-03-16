@@ -1,5 +1,5 @@
 
-#written by Hannahy Jellett
+# written by Hannahy Jellett
 # Create your views here.
 
 from django.shortcuts import render
@@ -15,14 +15,29 @@ def index(request):
     template = loader.get_template("EmailLinkDB/instructions.txt")
     return HttpResponse(template.render(), content_type='text/plain')
 
+def createUserPassLink(request):
+    linkID = request.GET.get('linkID', -1)
+    userID = request.GET.get('userID', -1)
+    timeCreated = request.GET.get('timeCreated', "")
+
+    if (linkID == -1):
+        return makeError("parameter missing",  "linkID parameter is missing!")
+    if (userID == -1):
+        return makeError("parameter missing", "userID parameter is missing!")
+    if (timeCreated == ""):
+        return makeError("parameter missing", "timeCreated parameter is missing!")
+    
+    user = databaseInteractions.createUserLink(linkID, userID, timeCreated)
+
+    return JsonResponse(user)
 
 def getUserByLinkID(request):
-    linkId:int = int(request.GET.get('linkID', -1))
+    linkID:int = int(request.GET.get('linkID', -1))
 
-    if (linkId == -1):
-        return makeError("parameter missing", "id parameter is missing!")
+    if (linkID == -1):
+        return makeError("parameter missing", "linkID parameter is missing!")
 
-    user = databaseInteractions.getUserByLinkID(linkId)
+    user = databaseInteractions.getUserByLinkID(linkID)
 
     return JsonResponse(user)
 

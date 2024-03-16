@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'homePage.apps.HomeConfig',
     'map.apps.MapConfig',
     'userDB.apps.userDBConfig',
+    'emailLinkDB.apps.EmaillinkdbConfig',
     'contentDB.apps.contentDBConfig',
     'django.contrib.admin',
     'django.contrib.auth',

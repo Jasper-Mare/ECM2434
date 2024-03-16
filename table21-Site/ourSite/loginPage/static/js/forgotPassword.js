@@ -6,47 +6,61 @@ async function sendPasswordEmail() {
     //trim all the values to remove any whitespaces
     email = (document.getElementById("email").value).trim();
 
+    //checks email exists in system
+    //checkEmail = await checkEmailExists(email);
+
     //check field isn't empty
     if (checkIfEmpty(email)) {
         //show error message on screen to user
-        document.getElementById("loginErrorMessage").classList.remove("hidden");
-        document.getElementById("loginErrorMessage").innerHTML = "Please fill in all fields!";
+        //document.getElementById("loginErrorMessage").classList.remove("hidden");
+        //document.getElementById("loginErrorMessage").innerHTML = "Please fill in all fields!";
+        alert("Please fill in all fields!")
+        return;
+    }
+
+    if (await checkEmailExists(email) == false) {
+        //show error message on screen to user
+        message = "This email isn't registered on our system. Please enter the email you used to register:";
+        //document.getElementById("loginErrorMessage").classList.remove("hidden");
+        //document.getElementById("loginErrorMessage").innerHTML = message;
+        alert(message);
         return;
     }
     else {
+
         //window.location.replace("/password_reset_done/");
         //alert("uibiub");
         alert("beforeeeee");
-        checkSendEmail = await sendEmailRequest(email);
-        alert("afterrr " + checkSendEmail + " bubub");
+        //checkSendEmail = await sendEmailRequest(email);
 
+        if (await sendEmailRequest(email) == true) {
+            alert("the email was senttt")
+            window.location.replace("https://www.w3schools.com/");
+        }
+        //i need to get this to do proper checks!!
+        else {
+            window.location.replace("https://www.w3schools.com/");
+            alert("hiegner")
+
+        }
         //alert("check is " + checkSendEmail.sendEmail);
+        /*
         if (checkSendEmail.sendEmail == True) {
             window.location.replace("https://www.w3schools.com/");
             //window.location.replace("/password_reset_done/");
         }
-
+        */
     }
-
-    //checks email exists in system
-    /*
-    checkEmail = await checkEmailExists(email);
-    if (checkEmail.validEmail == false) {
-        //show error message on screen to user
-        message = "This email isn't registered on our system<br>Please enter the email you used to register:";
-        document.getElementById("loginErrorMessage").classList.remove("hidden");
-        document.getElementById("loginErrorMessage").innerHTML = message;
-        return;
-    }
-    */
-
-    //alert(checkEmail.validEmail);
-    //send user an email
 }
 
 
+
+
+
+
+
 //sends email to user
-async function sendEmailRequest() {
+async function sendEmailRequest(inputEmail) {
     //sends POST request to sendEmail function in login views
     return await fetch('/login/sendEmail', {
         method: 'POST',
@@ -54,7 +68,7 @@ async function sendEmailRequest() {
             'Content-Type': 'application/json'
         },
         //sends user input of password and username as the body of request
-        body: JSON.stringify({ 'email': email })
+        body: JSON.stringify({ 'email': inputEmail })
 
     })
         //once a response, check there's no errors
@@ -66,6 +80,51 @@ async function sendEmailRequest() {
             return response.json();
 
 
+        })
+        .then(data => {
+            return true;
+
+            /*
+            if (data.includes("Email sent successfully!"))
+                return True;
+            else {
+                return False
+            }
+            */
+            //alert("ifjeijgoerjge");
+            //return data from fetch 
+            //return data;
+        })
+        //catch any errors
+        .catch(error => {
+            //alert(data)
+            alert("server side error: " + error);
+        });
+
+}
+
+/*
+//check email exists in the DB
+async function checkEmailExists(inputEmail) {
+    //sends POST request to passCheck function in login views
+    return await fetch('/login/emailCheck', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        //sends user input of password and username as the body of request
+        body: JSON.stringify({ 'email': inputEmail })
+ 
+    })
+        //once a response, check there's no errors
+        .then(response => {
+            if (response.ok == false) {
+                alert("error getting response");
+            }
+            //send response to function below 
+            return response.json();
+ 
+ 
         })
         .then(data => {
             //return data from fetch 
@@ -75,39 +134,33 @@ async function sendEmailRequest() {
         .catch(error => {
             alert("server side error: ", error);
         });
-
+ 
 }
+*/
 
 
-//check email exists in the DB
-async function checkEmailExists() {
-    //sends POST request to passCheck function in login views
-    return await fetch('/login/emailCheck', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        //sends user input of password and username as the body of request
-        body: JSON.stringify({ 'email': email })
 
+async function checkEmailExists(inputEmail) {
+    request = '/userDB/getUserByEmail?recovery_email=' + inputEmail;
+
+    //send GET request
+    return await fetch(request, {
+        method: 'GET'
     })
-        //once a response, check there's no errors
         .then(response => {
             if (response.ok == false) {
                 alert("error getting response");
             }
-            //send response to function below 
             return response.json();
-
 
         })
         .then(data => {
-            //return data from fetch 
-            return data;
+            //sends back response to function 
+            //true if they're already a user, else false
+            return (data.error == undefined);
         })
-        //catch any errors
         .catch(error => {
-            alert("server side error: ", error);
+            alert("Server side error: ", error);
         });
 
 }
@@ -153,3 +206,4 @@ async function checkValidLogin(inputPassword, inputUsername) {
 function checkIfEmpty(value) {
     return (value == null || value == "");
 }
+

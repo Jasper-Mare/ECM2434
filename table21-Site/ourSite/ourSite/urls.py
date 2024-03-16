@@ -26,5 +26,6 @@ urlpatterns = [
     path("adminPage/", include("adminPage.urls")),
     path("leaderboard/", include("leaderboard.urls")),
     path("", include("homePage.urls")),
+    path("emailLinkDB", include("emailLinkDB.urls")),
     
 ]

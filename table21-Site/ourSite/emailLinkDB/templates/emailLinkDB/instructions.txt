@@ -1,0 +1,4 @@
+Welcome to the emailLink Database API
+
+http://127.0.0.1:8000/emailLinkDB/getUserByLinkID?id=1234567
+ - get the json for a user's unique link by requesting with their email token id

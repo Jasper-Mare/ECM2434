@@ -151,7 +151,7 @@ async function checkIfUser(inputUsername) {
 }
 
 async function checkIfEmailExists(inputEmail) {
-    request = '/userDB/getUserByEmail?email=' + inputEmail;
+    request = '/userDB/getUserByEmail?recovery_email=' + inputEmail;
 
     //send GET request
     return await fetch(request, {

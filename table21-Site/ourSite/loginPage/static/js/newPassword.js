@@ -31,9 +31,9 @@ async function saveNewPass() {
     //hash password
     hashedPassword = await hashPassword(passwd);
 
-    user.userID
+    userID = user.userID;
     //store new password in DB
-    resetUserPassInDB(user.userID, hashedPassword)
+    resetUserPassInDB(userID, hashedPassword);
 
 }
 

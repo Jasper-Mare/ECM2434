@@ -20,17 +20,18 @@ def getUserById(id:int):
         user:User = User.objects.get(id=id)
     except (User.DoesNotExist):
         return {"error":"DoesNotExist", "details":f"id: {id} does not exist"}
-
+    
     return makeUserStruct(user.id, user.name, user.password_hash, user.access_level, user.recovery_email, user.score)
 
 
-def getUserByEmail(email: str):
+def getUserByEmail(email:str):
     try:
-        user:User = User.objects.get(email = email)
+        user:User = User.objects.get(recovery_email=email)
     except (User.DoesNotExist):
+        print("email doesn't exist yetttt")
         return {"error":"DoesNotExist", "details":f"email: {email} does not exist"}
 
-    return makeUserStruct(user.id, user.name, user.password_hash, user.access_level, email, user.score)
+    return makeUserStruct(user.id, user.name, user.password_hash, user.access_level, user.recovery_email, user.score)
 
 
 def getUserByName(name:str):

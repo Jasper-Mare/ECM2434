@@ -109,11 +109,14 @@ def emailCheck(request):
         #gets email fields from request
         email = data['email']
 
-        emailExists = databaseInteractions.getUserByEmail(email)
+        user = databaseInteractions.getUserByEmail(email)
+        print("userrrr is like   ")
+        print(user['id'])
 
         #if there isn't a user with the input email, return an error
-        if "error" in emailExists: 
+        if "error" in user: 
             return JsonResponse({'validEmail': False, 'error': 'email not found'})
+        
 
     #else return an error if unable to fetch/return the above
     return JsonResponse({'error': 'Method not allowed'}, status=405)
@@ -123,40 +126,55 @@ def createLink(userID):
     secretsGenerator = secrets.SystemRandom()
     # Generate a unique token for the user
     uniqueToken = str(secretsGenerator.randint(1000000, 9999999))
+    time = '19:20:00' #get the actual time
+
+    user = databaseInteractions.createUserLink(uniqueToken, userID, time)
+
 
     # Construct the reset link URL with token and uid
-    resetLink = "http://127.0.0.1:8000/login/password-reset-confirm/?token={token}"
+    resetLink = "http://127.0.0.1:8000/login/password-reset-confirm/?token="+uniqueToken
 
     return resetLink
 
 @csrf_exempt #This skips csrf validation
 def sendEmail(request):
-    print("hiiiii i am in send email")
     
     #function to check email exists on the system
 
     if request.method == 'POST':
-
-        #gets email from request
-        data = json.loads(request.body.decode('ascii'))
-        email = data['email']
-
-        #link for user bob with id 5
-        uniqueLink2 = createLink(5)
-        uniqueLink = "http://127.0.0.1:8000/login/password-reset-confirm/"
-
-        subject = 'Reset Your Password'
-        message = "Here's your link to reset your password: "+uniqueLink
-        print("the message iss ", message)
-        sender_email = 'ecoquestexeter@gmail.com'
-        recipient_list = [email]
-
-        send_mail(subject, message, sender_email, recipient_list)
-        print("we've just sent an email!!!")
-        return JsonResponse({'sendEmail':True})
-    
+        try:
 
 
+            #gets email from request
+            data = json.loads(request.body.decode('ascii'))
+            email = data['email']
+
+            print("the email sent in isss "+email)
+
+            user = databaseInteractions.getUserByEmail(email)
+            userID = user['id']
+      
+            uniqueLink = createLink(userID)
+            uniqueLink2 = "http://127.0.0.1:8000/login/password-reset-confirm/"
+
+            print("the unique link issss "+uniqueLink)
+
+            subject = 'Reset Your Password'
+            message = "Here's your link to reset your password: "+uniqueLink
+            
+            sender_email = 'ecoquestexeter@gmail.com'
+            recipient_list = [email]
+
+            send_mail(subject, message, sender_email, recipient_list)
+            print("Email was sent!")
+            return JsonResponse({'success': True})
+        
+
+        except Exception as e:
+            print("Error sending email:", str(e))
+            return JsonResponse({'error': 'An error occurred while sending the email.'}, status=500)
+
+        
     #else return an error if unable to fetch/return the above
     return JsonResponse({'error': 'Method not allowed'}, status=405)
 

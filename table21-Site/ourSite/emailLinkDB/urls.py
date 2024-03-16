@@ -7,5 +7,5 @@ from . import views
 
 urlpatterns = [
     path("", views.index, name="index"),
-    path("getUserByLinkId", views.getUserByLinkID, name="getUserByLinkID"),
+    path("getUserByLinkID", views.getUserByLinkID, name="getUserByLinkID"),
 ]
