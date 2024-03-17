@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'homePage.apps.HomeConfig',
     'map.apps.MapConfig',
     'userDB.apps.userDBConfig',
+    'emailLinkDB.apps.EmaillinkdbConfig',
     'contentDB.apps.contentDBConfig',
     'quizPage.apps.QuizPageConfig',
     'questPage.apps.QuestsConfig',
@@ -141,11 +142,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 #SMTP config
-#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
-#EMAIL_HOST = 'smtp.gmail.com'
-#EMAIL_PORT = 587
-#EMAIL_USE_TLS = True
-#EMAIL_HOST_USER = "ecoquestexeter@gmail.com"
-#EMAIL_HOST_PASSWORD = "EcoQuestExe!" 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "ecoquestexeter@gmail.com"
+EMAIL_HOST_PASSWORD = "ucja qvuo cexf ient"
