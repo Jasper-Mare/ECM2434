@@ -11,6 +11,7 @@ This database is a table holding all the quizzes, linked to a table holding all 
 
  - Jasper Mare
  - Hannah Jellett
+ - Ruby Ham
 
 # Testing
 
@@ -29,6 +30,9 @@ http://127.0.0.1:8000/contentDB/getQuizById?id=1
 http://127.0.0.1:8000/contentDB/getQuizzesByLocation?id=1
  - gets all quizzes that have the same location 
 
+http://127.0.0.1:8000/contentDB/getQuestById?id=1
+ - get the json for a quest by requesting with its id
+
 http://127.0.0.1:8000/contentDB/getLocationById?id=1
  - get the json for a location by requesting with its id
 
@@ -44,11 +48,17 @@ http://127.0.0.1:8000/contentDB/getLocationById?id=1
 http://127.0.0.1:8000/contentDB/createQuiz?question=What year is it?&answer0=2022&answer1=2023&answer2=2024&correct_answer=2&points=10&location_id=1
 - create a quiz and get the json of its info, all parameters are necessary
 
+http://127.0.0.1:8000/contentDB/createQuest?task=Use a reusable coffee cup&points=10
+- create a quest and get the json of its info, all parameters are necessary
+
 http://127.0.0.1:8000/contentDB/updateLocation?id=1&name=DH1&gps_lat=50.7351567&long=-3.5345085&info=This is DH1&radius=10
 - update a location's info and return the updated json, id is necessary, all other parameters are optional
 
 http://127.0.0.1:8000/contentDB/updateQuiz?id=1&question=What year is it?&answer0=2022&answer1=2023&answer2=2024&correct_answer=2&points=10&location_id=1
 - update a quiz's info and return the updated json, id is necessary, all other parameters are optional
+
+http://127.0.0.1:8000/contentDB/updateQuest?id=1&task=Use a reusable coffee cup?&points=10&
+- update a quest's info and return the updated json, id is necessary, all other parameters are optional
 
 http://127.0.0.1:8000/contentDB/deleteLocation?id=1
  - delete a location, returns json dictionary, where successful is true or false
@@ -56,6 +66,9 @@ http://127.0.0.1:8000/contentDB/deleteLocation?id=1
  http://127.0.0.1:8000/contentDB/deleteQuiz?id=1
  - delete a quiz, returns json dictionary, where successful is true or false
 
+  http://127.0.0.1:8000/contentDB/deleteQuest?id=1
+ - delete a quest, returns json dictionary, where successful is true or false
 
 
-(instructions written by Hannah Jellett)
+
+(instructions written by Hannah Jellett and Ruby Ham)

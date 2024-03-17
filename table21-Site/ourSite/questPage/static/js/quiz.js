@@ -8,7 +8,7 @@ QN = document.getElementById("questionNum");
 score = document.getElementById("score");
 exit = document.getElementById("save");
 title = document.getElementById("topic");
-title.textContent = "Sustainability quiz";
+title.textContent = "Sustainability quest";
 
 userID = getCookie("login"); // get the userID from the cookie
 if (userID == undefined || userID == "") { // if they are not logged in redirect them to the login page

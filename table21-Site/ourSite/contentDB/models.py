@@ -21,3 +21,8 @@ class Quiz(models.Model):
     points = models.IntegerField()
     location = models.IntegerField() # The foreign key that points to the id of the related location
      # models.ForeignKey(Location, on_delete=models.SET_DEFAULT, to_field='id', default=-1)
+    
+class Quest(models.Model):
+    id = models.AutoField(primary_key=True)
+    task = models.CharField(max_length=256)
+    points = models.IntegerField()
