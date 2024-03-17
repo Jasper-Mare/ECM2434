@@ -75,8 +75,6 @@ async function getUserID() {
         headers: {
             'Content-Type': 'application/json'
         },
-        //sends user input of password and username as the body of request
-        //body: JSON.stringify({ 'email': email })
 
     })
         //once a response, check there's no errors

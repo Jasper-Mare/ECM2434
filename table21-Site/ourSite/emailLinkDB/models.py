@@ -4,4 +4,3 @@ from django.db import models
 class EmailLink(models.Model):
     linkID = models.IntegerField(primary_key=True)
     userID = models.IntegerField()
-    timeCreated = models.TimeField()
