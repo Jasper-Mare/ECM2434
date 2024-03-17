@@ -1,15 +1,30 @@
 #written by Hannah Jellett with help from Jasper Mare
 from django.shortcuts import render
 from django.http import JsonResponse
-from django.http import HttpResponse
-from django.http import HttpResponseBadRequest
+from django.http import HttpResponse, HttpRequest, HttpResponseBadRequest
 from django.template import Context, loader
 from django.views.decorators.csrf import csrf_exempt,csrf_protect
 import json
 
+from django.urls import resolve
+
+from urllib.parse import urlparse
+
 from userDB import databaseInteractions
 
+
 from django.contrib.auth.hashers import make_password, check_password
+
+from django.core.mail import send_mail
+
+from django.http import HttpRequest
+
+import secrets
+
+#django imports for generating unique link
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
 
 
 def index (request):
@@ -22,14 +37,17 @@ def register(request):
 
 
 #returns forgot password page url
-def forgotPassword(request):
+def passResetEmail(request):
     return render(request, 'registration/password_reset_form.html')
 
-#def resetPassEmailSent(request):
-    #return render(request, 'registration/password_reset_done.html')
+def resetPassEmailSent(request):
+    return render(request, 'registration/password_reset_done.html')
 
-#def resetPass(request):
-    #return render(request, 'registration/password_reset_done.html')
+def PasswordBeenReset(request):
+    return render(request, 'registration/password_reset_complete.html')
+
+def resetPasswordLink(request):
+    return render(request, 'registration/password_reset_confirm.html')
 
 
 @csrf_exempt #This skips csrf validation
@@ -94,15 +112,111 @@ def emailCheck(request):
     if request.method == 'POST':
         data = json.loads(request.body.decode('ascii'))
         
-        #gets password and username fields from request
+        #gets email fields from request
         email = data['email']
 
-
-        emailExists = databaseInteractions.getUserByName(email)
+        user = databaseInteractions.getUserByEmail(email)
+        print("userrrr is like   ")
+        print(user['id'])
 
         #if there isn't a user with the input email, return an error
-        if "error" in emailExists: 
+        if "error" in user: 
             return JsonResponse({'validEmail': False, 'error': 'email not found'})
+        
 
     #else return an error if unable to fetch/return the above
     return JsonResponse({'error': 'Method not allowed'}, status=405)
+    
+
+def createLink(userID):
+    from emailLinkDB import databaseInteractions
+
+    secretsGenerator = secrets.SystemRandom()
+    # Generate a unique token for the user
+    uniqueToken = str(secretsGenerator.randint(1000000, 9999999))
+    time = '19:20:00' #get the actual time
+
+    user = databaseInteractions.createUserLink(uniqueToken, userID, time)
+
+
+    # Construct the reset link URL with token and uid
+    resetLink = "http://127.0.0.1:8000/login/password-reset-confirm/?token="+uniqueToken
+
+    return resetLink
+
+@csrf_exempt #This skips csrf validation
+def sendEmail(request):
+    
+    #function to check email exists on the system
+
+    if request.method == 'POST':
+        try:
+
+
+            #gets email from request
+            data = json.loads(request.body.decode('ascii'))
+            email = data['email']
+
+            print("the email sent in isss "+email)
+
+            user = databaseInteractions.getUserByEmail(email)
+            userID = user['id']
+      
+            uniqueLink = createLink(userID)
+            uniqueLink2 = "http://127.0.0.1:8000/login/password-reset-confirm/"
+
+            print("the unique link issss "+uniqueLink)
+
+            subject = 'Reset Your Password'
+            message = "Here's your link to reset your password: "+uniqueLink
+            
+            sender_email = 'ecoquestexeter@gmail.com'
+            recipient_list = [email]
+
+            send_mail(subject, message, sender_email, recipient_list)
+            print("Email was sent!")
+            return JsonResponse({'success': True})
+        
+
+        except Exception as e:
+            print("Error sending email:", str(e))
+            return JsonResponse({'error': 'An error occurred while sending the email.'}, status=500)
+
+        
+    #else return an error if unable to fetch/return the above
+    return JsonResponse({'error': 'Method not allowed'}, status=405)
+
+
+@csrf_exempt #This skips csrf validation
+def getToken(request):
+    from emailLinkDB import databaseInteractions
+    print("in get toekn")
+    linkID:int = int(request.GET.get('token', -1))
+
+    linkID = 1550691
+
+    print(linkID)
+
+    if (linkID == -1):
+        print("token is not here")
+        return makeError("parameter missing", "token parameter is missing!")
+
+    user = databaseInteractions.getUserByLinkID(linkID)
+    print(user)
+
+    return JsonResponse(user)
+
+
+def getUserByEmail(request):
+    email:str = str(request.GET.get('recovery_email', ""))
+
+    if (email == ""):
+        return makeError("parameter missing", "email parameter is missing!")
+
+    user = databaseInteractions.getUserByEmail(email)
+
+    return JsonResponse(user)
+
+
+def makeError(type, errorMsg):
+    return JsonResponse({"error":type,"details":errorMsg})

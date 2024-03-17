@@ -1,4 +1,4 @@
-# from Jasper
+# from Jasper and Hannah
 
 from django.shortcuts import render
 from django.http import JsonResponse
@@ -35,6 +35,16 @@ def getUserByName(request):
 
     return JsonResponse(user)
 
+def getUserByEmail(request):
+    email:str = str(request.GET.get('recovery_email', ""))
+
+    if (email == ""):
+        return makeError("parameter missing", "email parameter is missing!")
+
+    user = databaseInteractions.getUserByEmail(email)
+
+    return JsonResponse(user)
+
 
 def getUsersByScore(request):
     numPlayers:int = int(request.GET.get('number_of_players', -1))
@@ -67,6 +77,8 @@ def createUser(request):
 
 def updateUser(request):
     userId:int = request.GET.get('id', -1)
+
+    print("inside update user")
 
     if (userId == -1):
         return makeError("parameter missing", "id parameter is missing!")
