@@ -4,12 +4,12 @@
         {%load static%}
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Bootstrap links-->
         <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}?{% now 'U' %}">
         <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.js' %}?{% now 'U' %}"></script>
 
         <link rel="stylesheet" href="{% static 'css/allStyles.css' %}?{% now 'U' %}">
-        <!--<link rel="stylesheet" href="{% static 'css/test.css' %}?{% now 'U' %}">-->
-        <script type="text/javascript" src="{% static 'js/globalfunctions.js' %}?{% now 'U' %}"></script>
+        <script type="text/javascript" src="{% static 'js/globalfunctions.js' %}?{% now 'U' %}"></script>        
         {% block style %}
         {% endblock %}
         {% block script %}
@@ -19,7 +19,7 @@
     <body >
         <div class ="text-center">
             <div>
-                <nav class="navbar navbar-expand-lg bg-primary border-bottom border-body border-2 " data-bs-theme="dark">
+                <nav class="navbar navbar-expand-lg bg-primary border-bottom border-body border-2 " data-bs-theme="dark" id="bar">
                     <div class="container-fluid">
                         <a class="navbar-brand" onclick="playMusic()" data-bs-toggle="collapse" href="#collapseAbout" role="button" aria-expanded="false" aria-controls="collapseAbout">EcoQuest</a>
                         <!--Alternative go to page instead of tab appearing-->
@@ -63,10 +63,8 @@
                    </div>
                 </div>
             </div>
-            <div class = "container">
-                {% block content %}
-                {% endblock %}
-            </div>
+            {% block content %}
+            {% endblock %}
         </div>
     </body>
 </html>

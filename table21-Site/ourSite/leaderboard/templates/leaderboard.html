@@ -17,31 +17,35 @@
     <body>
         {% block content %}
         <div class = "container">
-            <h1>Leaderboard</h1>
+            <div class = "container">
+                <h1>Leaderboard</h1>
+            </div>
+            <div class = "container">
+                <div class = "table-responsive">
+                    <table class ="table table-hover table-sm border table-borderless" id="yourScore">
+                        <tr class="table-secondary">
+                            <!-- Start with just the headers for the columns -->
+                            <th class="col-3">Position</th>
+                            <th class="col-3">Name</th>
+                            <th class="col-3">Score</th>
+                        </tr>
+                    </table>
+                      
+                </div>
+                <div class = "table-responsive">
+                    <table class ="table table-hover" id="table">
+                        <tr class="table-secondary">
+                            <!-- Start with just the headers for the columns -->
+                            <th class="col-3">Position</th>
+                            <th class="col-3">Name</th>
+                            <th class="col-3">Score</th>
+                        </tr>
+                    </table>
+                      
+                </div>
+                <a href="/map/"><button class = "btn btn-primary">Exit</button></a> 
+            </div>
         </div>
-        <div class = "table-responsive">
-            <table class ="table table-hover" id="yourScore">
-                <tr>
-                    <!-- Start with just the headers for the columns -->
-                    <th>Position</th>
-                    <th>Name</th>
-                    <th>Score</th>
-                </tr>
-            </table>
-              
-        </div>
-        <div class = "table-responsive">
-            <table class ="table table-hover" id="table">
-                <tr>
-                    <!-- Start with just the headers for the columns -->
-                    <th>Position</th>
-                    <th>Name</th>
-                    <th>Score</th>
-                </tr>
-            </table>
-              
-        </div>
-        <a href="/map/"><button class = "btn btn-primary">Exit</button></a> 
         <script src="{% static 'js/leaderboard.js' %}?{% now 'U' %}"></script>
         {% endblock %}
     </body>

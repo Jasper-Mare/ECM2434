@@ -1,5 +1,6 @@
-
+window.addEventListener('resize', changeScreen);
 document.addEventListener('DOMContentLoaded',function(){
+    changeScreen();
     var userID = getCookie("login"); // get the userID from the cookie
     if (userID == undefined || userID == "") { // if they are not logged in redirect them to the login page
         document.cookie = "login=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;" // set it to an expired date so its deleted
@@ -24,6 +25,18 @@ document.addEventListener('DOMContentLoaded',function(){
         xhr.send();
         }  
 })
+
+function changeScreen(){
+    const bar = document.getElementById("bar");
+    width = window.innerWidth;
+    if(width<550){
+        bar.classList.add("fixed-bottom");
+    }
+    else{
+        bar.classList.remove("fixed-bottom");
+    }
+   
+}
 
 function playMusic() {
     // function to play Henry's music he created
