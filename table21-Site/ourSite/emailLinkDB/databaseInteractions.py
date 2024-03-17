@@ -14,7 +14,7 @@ def makeEmailLinkStruct(linkID, userID, timeCreated):
 def createUserLink(linkToken:int, user:int, timeOut:str):
     # decode the sanitised password hash to avoid special characters changing the hash
 
-    user:EmailLink = EmailLink(id=linkToken, userID=user, timeCreated=timeOut)
+    user:EmailLink = EmailLink(linkID=linkToken, userID=user, timeCreated=timeOut)
     user.save()
 
     return getUserByLinkID(linkToken)
@@ -28,3 +28,4 @@ def getUserByLinkID(linkID):
         return {"error":"DoesNotExist", "details":f"id: {id} does not exist"}
     
     return makeEmailLinkStruct(linkID, emailLink.userID, emailLink.timeCreated)
+

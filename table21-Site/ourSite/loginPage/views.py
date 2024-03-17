@@ -8,7 +8,10 @@ import json
 
 from django.urls import resolve
 
+from urllib.parse import urlparse
+
 from userDB import databaseInteractions
+
 
 from django.contrib.auth.hashers import make_password, check_password
 
@@ -37,8 +40,11 @@ def register(request):
 def passResetEmail(request):
     return render(request, 'registration/password_reset_form.html')
 
-#def resetPassEmailSent(request):
-    #return render(request, 'registration/password_reset_done.html')
+def resetPassEmailSent(request):
+    return render(request, 'registration/password_reset_done.html')
+
+def PasswordBeenReset(request):
+    return render(request, 'registration/password_reset_complete.html')
 
 def resetPasswordLink(request):
     return render(request, 'registration/password_reset_confirm.html')
@@ -123,6 +129,8 @@ def emailCheck(request):
     
 
 def createLink(userID):
+    from emailLinkDB import databaseInteractions
+
     secretsGenerator = secrets.SystemRandom()
     # Generate a unique token for the user
     uniqueToken = str(secretsGenerator.randint(1000000, 9999999))
@@ -179,13 +187,22 @@ def sendEmail(request):
     return JsonResponse({'error': 'Method not allowed'}, status=405)
 
 
+@csrf_exempt #This skips csrf validation
 def getToken(request):
-    token:int = int(request.GET.get('token', -1))
+    from emailLinkDB import databaseInteractions
+    print("in get toekn")
+    linkID:int = int(request.GET.get('token', -1))
 
-    if (token == -1):
+    linkID = 1550691
+
+    print(linkID)
+
+    if (linkID == -1):
+        print("token is not here")
         return makeError("parameter missing", "token parameter is missing!")
 
-    user = databaseInteractions.getUserByLinkID(token)
+    user = databaseInteractions.getUserByLinkID(linkID)
+    print(user)
 
     return JsonResponse(user)
 

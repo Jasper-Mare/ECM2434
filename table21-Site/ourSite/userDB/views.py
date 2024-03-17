@@ -78,6 +78,8 @@ def createUser(request):
 def updateUser(request):
     userId:int = request.GET.get('id', -1)
 
+    print("inside update user")
+
     if (userId == -1):
         return makeError("parameter missing", "id parameter is missing!")
 

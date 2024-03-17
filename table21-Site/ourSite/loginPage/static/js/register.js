@@ -1,5 +1,6 @@
 //code written by Hannah Jellett
 //Jasper Mare helped with hashing passwords
+
 //function called when user presses submit button
 async function submitRegisteration() {
 

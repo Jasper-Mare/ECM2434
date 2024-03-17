@@ -29,7 +29,8 @@ urlpatterns = [
 
     path("password-reset-form", views.passResetEmail, name="password_reset_form"),
     path("password-reset-confirm/", views.resetPasswordLink, name="password_reset_confirm"),
-    #path("password-reset-confirm/<uidb64>/<token>", views.resetPasswordLink, name="password_reset_confirm"),
+    path("password-reset-done/", views.resetPassEmailSent, name="password_reset_done"),
+    path("password-reset-complete/", views.PasswordBeenReset, name="password_reset_complete"),
 
     path("sendEmail", views.sendEmail, name="sendEmail"),
     path("getToken", views.getToken, name="getToken"),
