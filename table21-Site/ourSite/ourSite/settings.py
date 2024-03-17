@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'quizPage.apps.QuizPageConfig',
     'questPage.apps.QuestsConfig',
     'leaderboard.apps.LeaderboardConfig',
+    'minigamePage.apps.MinigamepageConfig',
     #
     'django.contrib.admin',
     'django.contrib.auth',
