@@ -47,7 +47,10 @@
                             <a class="nav-link" id="pill-tab-4" data-bs-toggle="pill" href="#pill-tabpanel-4" onclick="window.alert('No Link Available')" role="tab" aria-controls="pill-tabpanel-4" aria-selected="false">New Quest</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="pill-tab-5" data-bs-toggle="pill" href="#pill-tabpanel-5" onclick="window.location.href='../../map/'" role="tab" aria-controls="pill-tabpanel-5" aria-selected="false">Exit</a>
+                            <a class="nav-link" id="pill-tab-5" data-bs-toggle="pill" href="#pill-tabpanel-5" role="tab" aria-controls="pill-tabpanel-5" aria-selected="false">Help</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pill-tab-6" data-bs-toggle="pill" href="#pill-tabpanel-6" onclick="window.location.href='../../map/'" role="tab" aria-controls="pill-tabpanel-6" aria-selected="false">Exit</a>
                         </li>
                     </ul>
                 </div>
@@ -58,9 +61,7 @@
                 <div class="tab-pane active" id="pill-tabpanel-default" role="tabpanel" aria-labelledby="pill-tab-default">
                     <div class = "container">
                         <h2>Number of Users</h2>
-                        <div class = "container" id="numUser"> 
-                            TODO getData(), fill in table, create location, check new quiz works
-
+                        <div class = "container display-1" id="numUser"> 
                         </div>
                     </div>
                 </div>
@@ -130,6 +131,9 @@
                         </div>
                     </div>
                     <script type="text/javascript" src="{% static 'js/newquiz.js' %}?{% now 'U' %}"></script>
+                </div>
+                <div class="tab-pane" id="pill-tabpanel-5" role="tabpanel" aria-labelledby="pill-tab-5">
+                    <div> To contact a developer</div>
                 </div>
             </div> 
         {% endblock %}       
