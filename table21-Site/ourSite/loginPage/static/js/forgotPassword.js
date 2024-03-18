@@ -4,14 +4,12 @@ async function sendPasswordEmail() {
     //save all user input fields
     //trim all the values to remove any whitespaces
     email = (document.getElementById("email").value).trim();
-
     //check field isn't empty
     if (checkIfEmpty(email)) {
         //show error message on screen to user
         alert("Please fill in all fields!")
         return;
     }
-
     //checks email exists in system
     if (await checkEmailExists(email) == false) {
         //show error message on screen to user
@@ -24,10 +22,8 @@ async function sendPasswordEmail() {
         if (await sendEmailRequest(email) == true) {
             window.location.replace("password-reset-done");
         }
-
     }
 }
-
 
 //sends email to user
 async function sendEmailRequest(inputEmail) {
@@ -39,7 +35,6 @@ async function sendEmailRequest(inputEmail) {
         },
         //sends user input of email as the body of request
         body: JSON.stringify({ 'email': inputEmail })
-
     })
         //once a response, check there's no errors
         .then(response => {
@@ -48,26 +43,21 @@ async function sendEmailRequest(inputEmail) {
             }
             //send response to function below 
             return response.json();
-
-
         })
         .then(data => {
             //return true that the email has sent 
             return true;
-
         })
         //catch any errors
         .catch(error => {
             alert("server side error: " + error);
         });
-
 }
 
 //async to make sure this function waits for fetch results
 //function to check input email exists in the DB
 async function checkEmailExists(inputEmail) {
     request = '/userDB/getUserByEmail?recovery_email=' + inputEmail;
-
     //send GET request
     return await fetch(request, {
         method: 'GET'
@@ -77,7 +67,6 @@ async function checkEmailExists(inputEmail) {
                 alert("error getting response");
             }
             return response.json();
-
         })
         .then(data => {
             //sends back response to function 
@@ -87,13 +76,11 @@ async function checkEmailExists(inputEmail) {
         .catch(error => {
             alert("Server side error: ", error);
         });
-
 }
 
 //check user login attempt is valid
 //async to make sure this function waits for fetch results
 async function checkValidLogin(inputPassword, inputUsername) {
-
     //sends POST request to passCheck function in login views
     return await fetch('/login/passCheck', {
         method: 'POST',
@@ -102,7 +89,6 @@ async function checkValidLogin(inputPassword, inputUsername) {
         },
         //sends user input of password and username as the body of request
         body: JSON.stringify({ 'password': inputPassword, 'username': inputUsername })
-
     })
         //once a response, check there's no errors
         .then(response => {
@@ -111,8 +97,6 @@ async function checkValidLogin(inputPassword, inputUsername) {
             }
             //send response to function below 
             return response.json();
-
-
         })
         .then(data => {
             //return data from fetch 
@@ -122,10 +106,7 @@ async function checkValidLogin(inputPassword, inputUsername) {
         .catch(error => {
             alert("server side error: ", error);
             hashedPW = "";
-
         });
-
-
 }
 
 //check value sent in isn't empty

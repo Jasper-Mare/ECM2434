@@ -1,19 +1,23 @@
 // written by Ruby
 // get document elements
-topic = document.getElementById("topic");
-question = document.getElementById("question");
+topic = document.getElementById("topicQuest");
+question = document.getElementById("questionQuest");
 
 
 
 // function to check that a question is valid and then add it to the database
 function save() {
-    q = question.value;
+    q = question.value
     toSave = [q];
     console.log(toSave);
 
     // make sure that they have filled in all inputs
     if (isempty(q)) {
-        alert("field is empty!!!!!")
+        const text = "Field is empty" ;
+        document.getElementById("errorMessageQuest").innerHTML = `
+        <div class="alert py-1 alert-danger alert-dismissible fade show" role="alert">` + text + 
+        `<button type="button" class="btn-close py-1" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>`;
     }
 
 

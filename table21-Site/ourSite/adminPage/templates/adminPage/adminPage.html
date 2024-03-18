@@ -132,17 +132,15 @@
                     <script type="text/javascript" src="{% static 'js/newquiz.js' %}?{% now 'U' %}"></script>
                 </div>
                 <div class="tab-pane" id="pill-tabpanel-4" role="tabpanel" aria-labelledby="pill-tab-4">
-
                     <div class ="container">
-                        <h4 id="topic">Enter a new sustainability quest:</h4>
+                        <h4 id="topicQuest">Enter a new sustainability quest:</h4>
                     </div>
                     <div class ="mt-2">
-                        <input type="text" class="form-control-lg" id="question" placeholder="Quest...">
+                        <input type="text" class="form-control-lg" id="questionQuest" placeholder="Quest...">
                     </div>
-                    <div class = "col-6 mx-auto" role="alert" id="errorMessage"></div>
+                    <div class = "col-6 mx-auto" role="alert" id="errorMessageQuest"></div>
                     <div class ="mt-2">
-                        <input class="btn btn-outline-secondary" id="save" onclick="save()" type="submit" value="Submit">
-                        <!-- Return to the map page when you are finished adding questions-->
+                        <input class="btn btn-outline-secondary" id="saveQuest" onclick="save()" type="submit" value="Submit">
                     </div>
                     <script src="{% static 'js/newquest.js' %}?{% now 'U' %}"></script>
                 </div>
