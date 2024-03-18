@@ -52,7 +52,6 @@ function DoQuest() {
 // update questions and score
 function nextquestion() {
   // update the page elements
-  QN.textContent = "Quest: "+questionNumber;
   score.textContent = "Points: 10";
   if (questionNumber <= totalquestions && questions.length > 0) { // check that there is still questions to be asked
     question.textContent = questions[0]["task"];
