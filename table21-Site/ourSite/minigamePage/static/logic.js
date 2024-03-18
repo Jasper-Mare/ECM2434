@@ -4,8 +4,8 @@ export var startScene;
 export var windowAmount;
 export var windowStates = [];
 export var difficulty;
-export var levelLost = false;
 export var energyWasted;
+var gameover;
 
 const userID = getCookie("login"); // get the userID from the cookie
 if (userID == undefined || userID == "") { // if they are not logged in redirect them to the login page
@@ -21,16 +21,18 @@ if (userID == undefined || userID == "") { // if they are not logged in redirect
  */
 export function logicUpdate() {
     if (Math.random() > (1-(difficulty/10))) {
-        var index = Math.floor(Math.random() * (windowAmount+1))
-        windowStates[index] = 1
-        SCENES.game.UI.buttons[index].resetColor("#eebb33");
+        var index = Math.floor(Math.random() * (windowAmount))
+        windowStates[index+1] = 1
+        SCENES.game.UI.buttons[index+1].resetColor("#eebb33");
     }
     difficulty += 0.00003
 
     if (energyWasted > 15000) {
+      if (!gameover) {
+        gameover = true;
         loseLevel()
         addScore() // write the score to the database
-        //console.log("lost at "+difficulty)
+      }
     }
     else {
       for (let i = 0; i < windowAmount; i++) {
@@ -52,9 +54,11 @@ export function start() {
     windowAmount = 36;
     difficulty = 0.03;
     energyWasted = 0;
+    gameover = false;
+    SCENES.game.UI.sprites[5].resetwidth(screenToWorldSpace(0.4*energyWasted/15000,0.052)[0])
 
     // set all window states to 0
-    for (let i = 0; i < windowAmount; i++) {
+    for (let i = 1; i < windowAmount; i++) {
         windowStates[i] = 0
         SCENES.game.UI.buttons[i].resetColor("#666666");
     }
@@ -77,15 +81,17 @@ export function clickWindow(index) {
 
 // function to add the score to the user in the database
 function addScore() {
-  var score = Math.floor(100 * difficulty); // calculate the score
+  var score = Math.floor(12 * difficulty); // calculate the score
+  alert(score)
+  console.log("score=",score)
   // get the current score of the user
-  request = 'http://127.0.0.1:8000/userDB/getUserById?id='+String(userID) // get user details from their id
+  var request = "../userDB/getUserById?id="+String(userID) // get user details from their id
   getRequest(request)
   .then(response => {
-    currentscore = parseInt(response["score"]); // get the score attribute from the json
+    var currentscore = parseInt(response["score"]); // get the score attribute from the json
 
     // add the score to the current score
-    request = '/userDB/updateUser?id='+String(id)+'&score='+String(score+currentscore) // use updateUser in contentDB
+    var request = '../userDB/updateUser?id='+String(userID)+'&score='+String(score+currentscore) // use updateUser in contentDB
     getRequest(request)
     .then(response => {
       console.log(response);
@@ -123,3 +129,4 @@ function getCookie(cname) {
   }
   return "";
 }
+
