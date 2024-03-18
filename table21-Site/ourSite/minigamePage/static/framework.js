@@ -394,7 +394,7 @@ export const SCENES = {
 
             buttons: [
                 new UIButton(
-                    screenToWorldSpace(0.02, 0.02), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.11, 0.11),
+                    screenToWorldSpace(0.02, 0.02), screenToWorldSpace(0.18, 0.08), screenToWorldSpace(0.19, 0.09),
                     () => {
                         if (!gameIsPaused) {
                             gameIsPaused = true;
