@@ -220,7 +220,7 @@ async function geoError(onCampus = true) {
     ctx.fillStyle = "black"
     ctx.font = "30px Arial";
     ctx.fillText(text, 10, textTL);
-    ctx.fillText(text, 50);
+    ctx.fillText(text, 10, 50);
     
 }
 
