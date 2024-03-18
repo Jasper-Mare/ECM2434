@@ -16,7 +16,7 @@ class GPScoord {
         const playerTargetDist = playerGPS.getDistance(targetedLocation);
 
         // only allow the map to zoom in till a certain point
-        const viewDist = Math.max(playerTargetDist*(canvasAspectRatio+0.1), playerMinViewDist);
+        const viewDist = Math.max(playerTargetDist*(canvasAspectRatio+0.5), playerMinViewDist);
 
         // get the midpoint to centre the view
         const playerTargetMid = new GPScoord((playerGPS.lat + targetedLocation.lat)/2, (playerGPS.lon + targetedLocation.lon)/2);
@@ -142,6 +142,8 @@ mapImg.onload = () => {
 };
 mapImg.src = `/static/images/exeter-Map-Edited.png`;
 
+window.addEventListener('resize', resizeMap, true);
+
 // ============================= main functions ============================ //
 
 function initialiseMap() {
@@ -169,13 +171,14 @@ function initialiseMap() {
 }
 
 function resizeMap() {
-    // this code is just for now, remove once the map is in the website
-    ctx.canvas.width  = window.innerWidth - 20;
-    ctx.canvas.height = window.innerHeight - 25;
+
+    ctx.canvas.width  = window.innerWidth;
+    ctx.canvas.height = window.innerHeight;
 
     canvasW = ctx.canvas.width;
     canvasH = ctx.canvas.height;
     canvasLongestSide = Math.max(canvasH, canvasW);
+    
     // longest side divided by shortest side
     canvasAspectRatio = canvasLongestSide/Math.min(canvasH, canvasW);
 }
