@@ -355,6 +355,15 @@ import {logicUpdate, start, currentScene, clickWindow, windowAmount, windowState
 const SCENES = {
     game: {
         UI: {
+            sprites: [
+                new UIRect(screenToWorldSpace(0, 0.4), screenToWorldSpace(0.25, 1), "#000000"),
+                new UIRect(screenToWorldSpace(0.25, 0.6), screenToWorldSpace(0.1, 1), "#000000"),
+                new UIRect(screenToWorldSpace(0.35, 0.3), screenToWorldSpace(0.3, 1), "#000000"),
+                new UIRect(screenToWorldSpace(0.65, 0.4), screenToWorldSpace(0.25, 1), "#000000"),
+                new UIRect(screenToWorldSpace(0.9, 0.6), screenToWorldSpace(0.1, 1), "#000000")
+            ],
+
+
             buttons: [
                 new UIButton(
                     screenToWorldSpace(0.02, 0.02), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.11, 0.11),
@@ -364,11 +373,58 @@ const SCENES = {
                             setupScene();
                         }
                     },
-                    "pause")
+                    "pause"),
+
+                // BUILDING 1
+                new UIButton(screenToWorldSpace(0.02, 0.45), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), () => {clickWindow()}, "", "#f49d37"),
+                new UIButton(screenToWorldSpace(0.13, 0.45), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), () => {clickWindow()}, "", "#f49d37"),
+                new UIButton(screenToWorldSpace(0.02, 0.57), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), () => {clickWindow()}, "", "#f49d37"),
+                new UIButton(screenToWorldSpace(0.13, 0.57), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), () => {clickWindow()}, "", "#f49d37"),
+                new UIButton(screenToWorldSpace(0.02, 0.69), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), () => {clickWindow()}, "", "#f49d37"),
+                new UIButton(screenToWorldSpace(0.13, 0.69), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), () => {clickWindow()}, "", "#f49d37"),
+                new UIButton(screenToWorldSpace(0.02, 0.81), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), () => {clickWindow()}, "", "#f49d37"),
+                new UIButton(screenToWorldSpace(0.13, 0.81), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), () => {clickWindow()}, "", "#f49d37"),
+
+                // BUILDING 2
+                new UIButton(screenToWorldSpace(0.26, 0.65), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), () => {clickWindow()}, "", "#f49d37"),
+                new UIButton(screenToWorldSpace(0.26, 0.77), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), () => {clickWindow()}, "", "#f49d37"),
+
+                // BUILDING 3
+                new UIButton(screenToWorldSpace(0.37, 0.33), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), () => {clickWindow()}, "", "#f49d37"),
+                new UIButton(screenToWorldSpace(0.46, 0.33), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), () => {clickWindow()}, "", "#f49d37"),
+                new UIButton(screenToWorldSpace(0.55, 0.33), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), () => {clickWindow()}, "", "#f49d37"),
+                new UIButton(screenToWorldSpace(0.37, 0.45), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), () => {clickWindow()}, "", "#f49d37"),
+                new UIButton(screenToWorldSpace(0.46, 0.45), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), () => {clickWindow()}, "", "#f49d37"),
+                new UIButton(screenToWorldSpace(0.55, 0.45), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), () => {clickWindow()}, "", "#f49d37"),
+                new UIButton(screenToWorldSpace(0.37, 0.57), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), () => {clickWindow()}, "", "#f49d37"),
+                new UIButton(screenToWorldSpace(0.46, 0.57), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), () => {clickWindow()}, "", "#f49d37"),
+                new UIButton(screenToWorldSpace(0.55, 0.57), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), () => {clickWindow()}, "", "#f49d37"),
+                new UIButton(screenToWorldSpace(0.37, 0.69), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), () => {clickWindow()}, "", "#f49d37"),
+                new UIButton(screenToWorldSpace(0.46, 0.69), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), () => {clickWindow()}, "", "#f49d37"),
+                new UIButton(screenToWorldSpace(0.55, 0.69), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), () => {clickWindow()}, "", "#f49d37"),
+                new UIButton(screenToWorldSpace(0.37, 0.81), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), () => {clickWindow()}, "", "#f49d37"),
+                new UIButton(screenToWorldSpace(0.46, 0.81), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), () => {clickWindow()}, "", "#f49d37"),
+                new UIButton(screenToWorldSpace(0.55, 0.81), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), () => {clickWindow()}, "", "#f49d37"),
+
+                // BUILDING 4
+                new UIButton(screenToWorldSpace(0.66, 0.45), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), () => {clickWindow()}, "", "#f49d37"),
+                new UIButton(screenToWorldSpace(0.78, 0.45), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), () => {clickWindow()}, "", "#f49d37"),
+                new UIButton(screenToWorldSpace(0.66, 0.57), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), () => {clickWindow()}, "", "#f49d37"),
+                new UIButton(screenToWorldSpace(0.78, 0.57), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), () => {clickWindow()}, "", "#f49d37"),
+                new UIButton(screenToWorldSpace(0.66, 0.69), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), () => {clickWindow()}, "", "#f49d37"),
+                new UIButton(screenToWorldSpace(0.78, 0.69), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), () => {clickWindow()}, "", "#f49d37"),
+                new UIButton(screenToWorldSpace(0.66, 0.81), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), () => {clickWindow()}, "", "#f49d37"),
+                new UIButton(screenToWorldSpace(0.78, 0.81), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), () => {clickWindow()}, "", "#f49d37"),
+
+                // BUILDING 5
+                new UIButton(screenToWorldSpace(0.915, 0.63), screenToWorldSpace(0.07, 0.1), screenToWorldSpace(0.07, 0.1), () => {clickWindow()}, "", "#f49d37"),
+                new UIButton(screenToWorldSpace(0.915, 0.75), screenToWorldSpace(0.07, 0.1), screenToWorldSpace(0.07, 0.1), () => {clickWindow()}, "", "#f49d37"),
+                new UIButton(screenToWorldSpace(0.915, 0.87), screenToWorldSpace(0.07, 0.1), screenToWorldSpace(0.07, 0.1), () => {clickWindow()}, "", "#f49d37")
+
             ],
             text: [
                 new UIText(screenToWorldSpace(0.2, 0.03), "60", "'Courier new'",
-                    "white", "Match " + 2 + " cards", undefined, undefined, "left")
+                    "white", "turn off windows", undefined, undefined, "left")
             ],
 
             pauseMenu: {
@@ -471,6 +527,10 @@ function setupScene() {
     }
     for (let i in SCENES[currentScene].Background) {
         BACKGROUND_ELEMS.push(SCENES[currentScene].Background[i]);
+    }
+
+    for (let i in SCENES.game.UI.sprites) {
+        BACKGROUND_ELEMS.push(SCENES.game.UI.sprites[i]);
     }
 
     if (gameIsPaused) {
