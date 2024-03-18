@@ -392,12 +392,12 @@ function checkIfAtLocation() {
 
 /*
 
-options on arriving at location
+options on arriving at location (needs to link to other pages)
  - quest
  - quiz
  - game
 
-track next location, go in order
+track next location, go in order (the user's current location needs updating once the user completes a thing)
 
 add in the rest of the page
 
