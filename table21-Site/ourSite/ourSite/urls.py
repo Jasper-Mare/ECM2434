@@ -25,7 +25,11 @@ urlpatterns = [
     path("login/", include("loginPage.urls")),
     path("adminPage/", include("adminPage.urls")),
     path("leaderboard/", include("leaderboard.urls")),
-    path("quest/", include("questPage.urls")),
     path("", include("homePage.urls")),
+    path("emailLinkDB/", include("emailLinkDB.urls")),
+    path("quest/", include("questPage.urls")),
+    path("minigame/", include("minigamePage.urls")),
+    path("", include("homePage.urls"))
+    
     
 ]
