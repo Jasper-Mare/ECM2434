@@ -1,6 +1,6 @@
 # written by Jasper
 
-from .models import User
+from .models import User, PlayerTargetLocation
 from urllib.parse import unquote
 
 AccessLevels = ["USER", "GAME_KEEPER", "DEVELOPER"]
@@ -41,6 +41,26 @@ def getUserByEmail(email:str):
 
     return makeUserStruct(user.id, user.name, user.password_hash, user.access_level, user.recovery_email, user.score)
 
+def getUserTargetLocation(id:int, defaultIfNot:int):
+    try:
+        playerLocation = PlayerTargetLocation.objects.get(player=id)
+    except (PlayerTargetLocation.DoesNotExist):
+        playerLocation = PlayerTargetLocation(player=id, location=defaultIfNot)
+        playerLocation.save()
+        return {"location": defaultIfNot}
+    
+    return {"location": playerLocation.location}
+
+def updateUserLocation(id:int, location:int):
+    try:
+        playerLocation = PlayerTargetLocation.objects.get(player=id)
+        playerLocation.location = location
+        playerLocation.save()
+    except (PlayerTargetLocation.DoesNotExist):
+        playerLocation = PlayerTargetLocation(player=id, location=location)
+        playerLocation.save()
+
+    return getUserTargetLocation(id, location)
 
 def getUserByName(name:str):
     try:

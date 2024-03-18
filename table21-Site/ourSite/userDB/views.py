@@ -25,6 +25,31 @@ def getUserById(request):
     return JsonResponse(user)
 
 
+def getUserLocation(request):
+    userId:int = int(request.GET.get('id', -1))
+
+    if (userId == -1):
+        return makeError("parameter missing", "id parameter is missing!")
+    
+    location = databaseInteractions.getUserTargetLocation(userId, 10)
+
+    return JsonResponse(location)
+
+def updateUserLocation(request):
+    userId:int = int(request.GET.get('id', -1))
+    locationId:int = int(request.GET.get('location', -1))
+
+    if (userId == -1):
+        return makeError("parameter missing", "id parameter is missing!")
+    
+    if (location == -1):
+        return makeError("parameter missing", "location parameter is missing!")
+    
+    location = databaseInteractions.getUserTargetLocation(userId, 10)
+
+    return JsonResponse(location)
+
+
 def getUserByName(request):
     userName:str = request.GET.get('name', "")
 
