@@ -556,11 +556,11 @@ function setupScene() {
     }
 
     if (levelLost) {
-        for (let i in SCENES.level.UI.loss_menu.sprites) {
-            UI_FLOAT.push(SCENES.level.UI.loss_menu.sprites[i]);
+        for (let i in SCENES.game.UI.loss_menu.sprites) {
+            UI_FLOAT.push(SCENES.game.UI.loss_menu.sprites[i]);
         }
-        for (let i in SCENES.level.UI.loss_menu.buttons) {
-            var button = SCENES.level.UI.loss_menu.buttons[i];
+        for (let i in SCENES.game.UI.loss_menu.buttons) {
+            var button = SCENES.game.UI.loss_menu.buttons[i];
             button.currentDims.w = button.originalDims.w;
             button.currentDims.h = button.originalDims.h;
             button.offset.y = (button.originalDims.h - button.currentDims.h) / 2;
