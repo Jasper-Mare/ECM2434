@@ -407,7 +407,7 @@ export const SCENES = {
                     undefined, undefined, "center"
                 ),
                 new UIText(
-                    screenToWorldSpace(0.5, 0.22), "30", "'Courier new'", "white", 
+                    screenToWorldSpace(0.5, 0.3), "30", "'Courier new'", "white", 
                     "YOU are the 'Light Switch manager' for a new series of buildings... \n"+
                     "However, these buildings have been found to have a rediculous carbon footprint when the lights are left on, the people using the building have no clue as to this fact and as such leave lights on all the time. Your job, nay, your DUTY is to switch off all the lights before your carbon footprint spirals out of control!",
                     undefined, undefined, "center"
