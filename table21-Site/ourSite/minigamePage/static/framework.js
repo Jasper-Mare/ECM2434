@@ -264,6 +264,10 @@ export class UIRect {
         ctx.roundRect(this.anchor.x, this.anchor.y, this.dims.w, this.dims.h, this.radii);
         ctx.fill();
     }
+
+    resetwidth(width) {
+        this.dims.w = width;
+    }
 }
 //#endregion
 
@@ -376,7 +380,7 @@ export const SCENES = {
 
                 // ENERGY METER
                 new UIRect(screenToWorldSpace(0.3, 0.02), screenToWorldSpace(0.4, 0.05), "#eeeeee"),
-                new UIRect(screenToWorldSpace(0.29, 0.019), screenToWorldSpace(0.1, 0.052), "#bb393e"),
+                new UIRect(screenToWorldSpace(0.3, 0.019), screenToWorldSpace(0, 0.052), "#bb393e"),
 
             ],
 

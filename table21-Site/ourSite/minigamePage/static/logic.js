@@ -19,12 +19,11 @@ export function logicUpdate() {
         var index = Math.floor(Math.random() * (windowAmount+1))
         windowStates[index] = 1
         SCENES.game.UI.buttons[index].resetColor("#eebb33");
-        //SCENES[game][UI][buttons][index].color = "#eebb33"
     }
     for (let i = 0; i < windowAmount; i++) {
         if (windowStates[i] == 1) {
             energyWasted += 1
-        }
+            SCENES.game.UI.sprites[5].resetwidth(screenToWorldSpace(0.4*energyWasted/15000,0.052)[0])        }
     }
     difficulty += 0.00003
 
