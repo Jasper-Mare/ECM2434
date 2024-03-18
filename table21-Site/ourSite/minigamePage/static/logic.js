@@ -21,9 +21,9 @@ if (userID == undefined || userID == "") { // if they are not logged in redirect
  */
 export function logicUpdate() {
     if (Math.random() > (1-(difficulty/10))) {
-        var index = Math.floor(Math.random() * (windowAmount))
-        windowStates[index+1] = 1
-        SCENES.game.UI.buttons[index+1].resetColor("#eebb33");
+        var index = 1+Math.floor(Math.random() * (windowAmount-1))
+        windowStates[index] = 1
+        SCENES.game.UI.buttons[index].resetColor("#eebb33");
     }
     difficulty += 0.00003
 
@@ -51,11 +51,11 @@ export function logicUpdate() {
  */
 export function start() {
     startScene = "main_menu";
-    windowAmount = 36;
+    windowAmount = 42;
     difficulty = 0.03;
     energyWasted = 0;
     gameover = false;
-    SCENES.game.UI.sprites[5].resetwidth(screenToWorldSpace(0.4*energyWasted/15000,0.052)[0])
+    SCENES.game.UI.sprites[5].resetwidth(screenToWorldSpace(0,0.052)[0])
 
     // set all window states to 0
     for (let i = 1; i < windowAmount; i++) {
@@ -81,7 +81,7 @@ export function clickWindow(index) {
 
 // function to add the score to the user in the database
 function addScore() {
-  var score = Math.floor(12 * difficulty); // calculate the score
+  var score = Math.floor(14 * difficulty); // calculate the score
   alert(score)
   console.log("score=",score)
   // get the current score of the user
