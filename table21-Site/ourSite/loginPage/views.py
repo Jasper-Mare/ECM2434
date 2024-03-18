@@ -116,8 +116,6 @@ def emailCheck(request):
         email = data['email']
 
         user = databaseInteractions.getUserByEmail(email)
-        print("userrrr is like   ")
-        print(user['id'])
 
         #if there isn't a user with the input email, return an error
         if "error" in user: 
@@ -134,13 +132,11 @@ def createLink(userID):
     secretsGenerator = secrets.SystemRandom()
     # Generate a unique token for the user
     uniqueToken = str(secretsGenerator.randint(1000000, 9999999))
-    time = '19:20:00' #get the actual time
 
-    user = databaseInteractions.createUserLink(uniqueToken, userID, time)
-
+    user = databaseInteractions.createUserLink(uniqueToken, userID)
 
     # Construct the reset link URL with token and uid
-    resetLink = "http://127.0.0.1:8000/login/password-reset-confirm/?token="+uniqueToken
+    resetLink = "http://127.0.0.1:8000/login/password-reset-confirm/?linkID="+uniqueToken
 
     return resetLink
 
@@ -151,8 +147,6 @@ def sendEmail(request):
 
     if request.method == 'POST':
         try:
-
-
             #gets email from request
             data = json.loads(request.body.decode('ascii'))
             email = data['email']
@@ -163,7 +157,6 @@ def sendEmail(request):
             userID = user['id']
       
             uniqueLink = createLink(userID)
-            uniqueLink2 = "http://127.0.0.1:8000/login/password-reset-confirm/"
 
             print("the unique link issss "+uniqueLink)
 
@@ -190,16 +183,14 @@ def sendEmail(request):
 @csrf_exempt #This skips csrf validation
 def getToken(request):
     from emailLinkDB import databaseInteractions
-    print("in get toekn")
-    linkID:int = int(request.GET.get('token', -1))
-
-    linkID = 1550691
+    print("in get token")
+    linkID:int = int(request.GET.get('linkID', -1))
 
     print(linkID)
 
     if (linkID == -1):
-        print("token is not here")
-        return makeError("parameter missing", "token parameter is missing!")
+        print("linkID is not here")
+        return makeError("parameter missing", "linkID parameter is missing!")
 
     user = databaseInteractions.getUserByLinkID(linkID)
     print(user)

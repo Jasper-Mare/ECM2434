@@ -1,9 +1,6 @@
-// Written by Jacob
+// Written by Ruby
 // get the elements
 question = document.getElementById("question_text");
-op1 = document.getElementById("op1"); // options
-op2 = document.getElementById("op2");
-op3 = document.getElementById("op3");
 QN = document.getElementById("questionNum");
 score = document.getElementById("score");
 exit = document.getElementById("save");
@@ -12,47 +9,41 @@ title.textContent = "Sustainability quest";
 
 userID = getCookie("login"); // get the userID from the cookie
 if (userID == undefined || userID == "") { // if they are not logged in redirect them to the login page
-  alert("Please login to take the quiz");
+  alert("Please login to take the quest");
   window.location.href = "/login/";
 }
 
-try { // get the location id from the url
-  const urlParams = new URLSearchParams(window.location.search);
- //----------------change code back ----------------//
-  const locationID = urlParams.get('id');
-  //const locationID = 6
-  if (locationID == null) {
-    alert("error: no location id");
-    window.location.href = "/map/";
-  } // if there is no id in the url throw an error
-
-  // get the location name from the location id
-  request = '/contentDB/getLocationById?id=' + locationID // get the location name that is stored in the database
-  getRequest(request)
-    .then(response => {
-      place.textContent = response["name"]; // use the name variable of the returned json
-    })
-
-    DoQuiz(locationID); // start the quiz once variables are set and checks are made
-}
-
-
-catch { // if location cannot be found redirect to the map page
-  alert("error: no location id");
-  window.location.href = "/map/";
-}
-
-// function to set the quiz questions and start the quiz
-function DoQuiz(locationID) {
-  request = '/contentDB/getQuizzesByLocation?id=' + locationID // get the questions from the database based on the location id
+// function to set the quest questions and start 
+function DoQuest() {
+  questionNumber = 1;
+  scorecount = 0;
+  totalquestions = 10;
+  console.log(questionNumber);
+  if( questionNumber < totalquestions){
+  request = '/contentDB/getQuestById?id=' + questionNumber;// get the quests from the database
   getRequest(request)
   .then(response => {
-    questions = shuffle(response["quizzes"]); // the order of the questions is randomised
+    questions = shuffle(response["quests"]);
+    console.log(questions);
+    questionNumber++;
+
+    
+  
+   nextquestion();
+  });
+}
+}
+
+function DoQuest() {
+  request = '/contentDB/getAllQuests' // get the quests from the database 
+  getRequest(request)
+  .then(response => {
+    questions = shuffle(response["quests"]); // the order of the questions is randomised
     console.log(questions);
 
     questionNumber = 1;
     scorecount = 0;
-    totalquestions = 1;
+    totalquestions = 10;
 
     nextquestion();
   });
@@ -61,20 +52,11 @@ function DoQuiz(locationID) {
 // update questions and score
 function nextquestion() {
   // update the page elements
-  QN.textContent = "Q"+questionNumber;
-  score.textContent = scorecount+"/"+totalquestions;
+  score.textContent = "Points: 10";
   if (questionNumber <= totalquestions && questions.length > 0) { // check that there is still questions to be asked
-    question.textContent = questions[0]["question"];
-    correct = questions[0]["correct_answer"]; // get the index of the correct answer
-
-    order = shuffle([0,1,2]); // get a random order to ask the three options (so that the correct answer isn't always the same position)
-    choices = {0: questions[0]["answer0"], 1: questions[0]["answer1"], 2: questions[0]["answer2"]}; // get all the answers from the json
-
-    // add the option button htmls
-    op1.innerHTML = '<input type="radio" name="' + order[0] + '" onclick="choose(name)">' + choices[order[0]];
-    op2.innerHTML = '<input type="radio" name="' + order[1] + '" onclick="choose(name)">' + choices[order[1]];
-    op3.innerHTML = '<input type="radio" name="' + order[2] + '" onclick="choose(name)">' + choices[order[2]];
+    question.textContent = questions[0]["task"];
     questions.shift();
+    choose(name)
 
   } else { // if there are no more questions finish
     finish();
@@ -83,8 +65,7 @@ function nextquestion() {
 
 // on clicking an option increase score if correct then update page with next question
 function choose(name) {
-  if (name == correct) {scorecount ++;} // if they clicked the right answer increase the score
-  questionNumber ++;
+  scorecount =10; // if they clicked the right answer increase the score by 10
   nextquestion(); // call the next function even if there are no more questions
 }
 
@@ -114,15 +95,6 @@ function addScore(id, score) {
   })
 }
 
-// function to display the score when the quiz is finished
-function finish() {
-  addScore(userID, scorecount);
-  question.textContent = "You scored " + scorecount + " out of " + totalquestions;
-  op1.style.display = "none";
-  op2.style.display = "none";
-  op3.style.display = "none";
-  exit.style.display = "block";
-}
 
 // function to get the cookie of a given name
 function getCookie(cname) {
@@ -154,3 +126,5 @@ async function getRequest(request) {
     console.error(error);
   }
 }
+
+DoQuest();

@@ -18,16 +18,13 @@ def index(request):
 def createUserPassLink(request):
     linkID = request.GET.get('linkID', -1)
     userID = request.GET.get('userID', -1)
-    timeCreated = request.GET.get('timeCreated', "")
 
     if (linkID == -1):
         return makeError("parameter missing",  "linkID parameter is missing!")
     if (userID == -1):
         return makeError("parameter missing", "userID parameter is missing!")
-    if (timeCreated == ""):
-        return makeError("parameter missing", "timeCreated parameter is missing!")
     
-    user = databaseInteractions.createUserLink(linkID, userID, timeCreated)
+    user = databaseInteractions.createUserLink(linkID, userID)
 
     return JsonResponse(user)
 
