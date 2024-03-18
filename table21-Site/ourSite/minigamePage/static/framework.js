@@ -312,28 +312,6 @@ function renderFloatUI() {
     }
 }
 
-function startFrames() {
-    //reset update limit for on screen button presses.
-    updateLimiter = false;
-    setDelta();
-
-    //update game logic
-    if (currentScene === "game" && !gameIsPaused) {
-        logicUpdate();
-    }
-
-    // erase canvas
-    ctx.clearRect(0, 0, canvasDims.width, canvasDims.height);
-
-    // render entities in order
-    renderBackground();
-    renderProps();
-    renderFloatUI();
-
-    // call next frame
-    window.requestAnimationFrame(startFrames);
-}
-
 const deltaTime = new Map([
     ['now', 0],
     ['delta', 0],
@@ -359,6 +337,8 @@ import {logicUpdate, start, currentScene, clickWindow, windowAmount, windowState
 var windowCount = 0;
 
 export const SCENES = {
+
+
     game: {
         UI: {
             sprites: [
@@ -368,7 +348,6 @@ export const SCENES = {
                 new UIRect(screenToWorldSpace(0.65, 0.4), screenToWorldSpace(0.25, 1), "#000000"),
                 new UIRect(screenToWorldSpace(0.9, 0.6), screenToWorldSpace(0.1, 1), "#000000")
             ],
-
 
             buttons: [
                 new UIButton(
@@ -509,6 +488,28 @@ function init() {
 }
 var updateLimiter = false;
 var gameIsPaused = false;
+
+function startFrames() {
+    //reset update limit for on screen button presses.
+    updateLimiter = false;
+    setDelta();
+
+    //update game logic
+    if (currentScene === "game" && !gameIsPaused) {
+        logicUpdate();
+    }
+
+    // erase canvas
+    ctx.clearRect(0, 0, canvasDims.width, canvasDims.height);
+
+    // render entities in order
+    renderBackground();
+    renderProps();
+    renderFloatUI();
+
+    // call next frame
+    window.requestAnimationFrame(startFrames);
+}
 
 function setupScene() {
     console.log(UI)
