@@ -4,8 +4,8 @@ export var startScene;
 export var windowAmount;
 export var windowStates = [];
 export var difficulty;
-export var levelLost = false;
 export var energyWasted;
+var gameover;
 
 const userID = getCookie("login"); // get the userID from the cookie
 if (userID == undefined || userID == "") { // if they are not logged in redirect them to the login page
@@ -21,15 +21,18 @@ if (userID == undefined || userID == "") { // if they are not logged in redirect
  */
 export function logicUpdate() {
     if (Math.random() > (1-(difficulty/10))) {
-        var index = Math.floor(Math.random() * (windowAmount+1))
+        var index = 1+Math.floor(Math.random() * (windowAmount-1))
         windowStates[index] = 1
         SCENES.game.UI.buttons[index].resetColor("#eebb33");
     }
     difficulty += 0.00003
 
     if (energyWasted > 15000) {
+      if (!gameover) {
+        gameover = true;
         loseLevel()
-        //console.log("lost at "+difficulty)
+        addScore() // write the score to the database
+      }
     }
     else {
       for (let i = 0; i < windowAmount; i++) {
@@ -48,13 +51,16 @@ export function logicUpdate() {
  */
 export function start() {
     startScene = "main_menu";
-    windowAmount = 36;
+    windowAmount = 42;
     difficulty = 0.03;
     energyWasted = 0;
+    gameover = false;
+    SCENES.game.UI.sprites[5].resetwidth(screenToWorldSpace(0,0.052)[0])
 
     // set all window states to 0
-    for (let i = 0; i < windowAmount; i++) {
+    for (let i = 1; i < windowAmount; i++) {
         windowStates[i] = 0
+        SCENES.game.UI.buttons[i].resetColor("#666666");
     }
 }
 
@@ -74,49 +80,53 @@ export function clickWindow(index) {
 }
 
 // function to add the score to the user in the database
-function addScore(score) {
-    // get the current score of the user
-    request = 'http://127.0.0.1:8000/userDB/getUserById?id='+String(userID) // get user details from their id
+function addScore() {
+  var score = Math.floor(14 * difficulty); // calculate the score
+  alert(score)
+  console.log("score=",score)
+  // get the current score of the user
+  var request = "../userDB/getUserById?id="+String(userID) // get user details from their id
+  getRequest(request)
+  .then(response => {
+    var currentscore = parseInt(response["score"]); // get the score attribute from the json
+
+    // add the score to the current score
+    var request = '../userDB/updateUser?id='+String(userID)+'&score='+String(score+currentscore) // use updateUser in contentDB
     getRequest(request)
     .then(response => {
-      currentscore = parseInt(response["score"]); // get the score attribute from the json
-  
-      // add the score to the current score
-      request = '/userDB/updateUser?id='+String(id)+'&score='+String(score+currentscore) // use updateUser in contentDB
-      getRequest(request)
-      .then(response => {
-        console.log(response);
-      })
+      console.log(response);
     })
-  }
+  })
+}
 
 // function to make a get request and return the response
 async function getRequest(request) {
-    try {
-      const response = await fetch(request);
-      if (!response.ok) {
-        throw new Error('Request failed');
-      }
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error(error);
+  try {
+    const response = await fetch(request);
+    if (!response.ok) {
+      throw new Error('Request failed');
     }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
   }
+}
 
 function getCookie(cname) {
-  // function to get the cookie of a given name
-      let name = cname + "=";
-      let decodedCookie = decodeURIComponent(document.cookie);
-      let ca = decodedCookie.split(';');
-      for (let i = 0; i < ca.length; i++) {
-          let c = ca[i];
-          while (c.charAt(0) == ' ') {
-              c = c.substring(1);
-          }
-          if (c.indexOf(name) == 0) {
-              return c.substring(name.length, c.length);
-          }
+// function to get the cookie of a given name
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+          c = c.substring(1);
       }
-      return "";
+      if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+      }
   }
+  return "";
+}
+
