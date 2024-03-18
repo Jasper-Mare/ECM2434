@@ -211,12 +211,13 @@ async function geoError(onCampus = true) {
 
     ctx.drawImage(mapImg, maplocTL.x, maplocTL.y, mapWidth, mapHeight);
 
+    const textTL = canvasH - 50;
     const text = onCampus ? "Location is not supported or something went wrong!" : "You are not on campus!";
     ctx.fillStyle = "white";
-    ctx.fillRect(9,25, text.length * 15, 34);
+    ctx.fillRect(9,textTL-25, text.length * 15, 34);
     ctx.fillStyle = "black"
     ctx.font = "30px Arial";
-    ctx.fillText(text, 10, 50);
+    ctx.fillText(text, 10, textTL);
     
 }
 
