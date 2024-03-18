@@ -334,7 +334,7 @@ function setDelta() {
 
 import {logicUpdate, start, startScene, clickWindow, windowAmount, windowStates, difficulty, levelLost} from "./logic.js";
 
-var windowCount = 0;
+var windowCount = -1;
 var currentScene;
 
 export const SCENES = {
