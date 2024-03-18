@@ -332,12 +332,41 @@ function setDelta() {
 //====================== GAME LOGIC ======================
 //#region game logic
 
-import {logicUpdate, start, currentScene, clickWindow, windowAmount, windowStates, difficulty, levelLost} from "./logic.js";
+import {logicUpdate, start, startScene, clickWindow, windowAmount, windowStates, difficulty, levelLost} from "./logic.js";
 
 var windowCount = 0;
+var currentScene;
 
 export const SCENES = {
+    main_menu: {
+        UI:{
+            sprites: [],
+            buttons: [
+                new UIButton(
+                    screenToWorldSpace(0.3, 0.4), screenToWorldSpace(0.4, 0.2), screenToWorldSpace(0.42, 0.22),
+                    () => {
+                        currentScene = "game"
+                        setupScene();
+                        if (!GLOBALS.isMusicPlaying) {
+                            playTracks();
+                            GLOBALS.isMusicPlaying = true;
+                        }
 
+                    },
+                    "Start the game")
+            ],
+            text: [
+                new UIText(screenToWorldSpace(0.2, 0.03), "60", "'Courier new'",
+                "white", "turn off windows", undefined, undefined, "left")
+            ],
+        },
+        Background: [new UIRect([0, 0], [canvasDims.width, canvasDims.height], "#293e55ff", 0)]
+    },
+
+    settings_menu: {
+        UI:{},
+        Background: [new UIRect([0, 0], [canvasDims.width, canvasDims.height], "#293e55ff", 0)]
+    },
 
     game: {
         UI: {
@@ -456,10 +485,10 @@ export const SCENES = {
                         () => {
                             levelLost = false;
                             updateLimiter = true;
-                            currentScene = "level_select";
+                            currentScene = "game";
                             setupScene();
+                            // TODO init
                             currentScene = "level";
-                            setupLevel();
                             setupScene();
                         },
                         "Retry"),
@@ -467,7 +496,7 @@ export const SCENES = {
                         screenToWorldSpace(0.375, 0.7), screenToWorldSpace(0.25, 0.1), screenToWorldSpace(0.26, 0.11),
                         () => {
                             levelLost = false;
-                            currentScene = "level_select";
+                            currentScene = "main_menu";
                             setupScene();
                         },
                         "Return to Menu")
@@ -503,7 +532,8 @@ export const SCENES = {
 // applies initial settings
 function init() {
     resizeCanvas();
-    start()
+    start();
+    currentScene = startScene;
     setupScene();
 }
 var updateLimiter = false;
@@ -532,12 +562,17 @@ function startFrames() {
 }
 
 function setupScene() {
-    console.log(UI)
+    console.log(currentScene);
+    //--------------------------------------------------------------------------
+    // clear all rendering buffers (implemented as lists)
     BACKGROUND_ELEMS.splice(0, BACKGROUND_ELEMS.length);
     BUILDINGS.splice(0,BUILDINGS.length);
     UI.splice(0, UI.length);
     UI_FLOAT.splice(0, UI_FLOAT.length);
+    //--------------------------------------------------------------------------
+    // Add objects to each buffer
 
+    // add buttons to UI buffer
     for (let i in SCENES[currentScene].UI.buttons) {
         var button = SCENES[currentScene].UI.buttons[i];
         button.currentDims.w = button.originalDims.w;
@@ -546,19 +581,21 @@ function setupScene() {
         button.offset.x = (button.originalDims.w - button.currentDims.w) / 2;
         UI.push(button);
     }
-
-
+    // add text to UI buffer
     for (let i in SCENES[currentScene].UI.text) {
         UI.push(SCENES[currentScene].UI.text[i]);
     }
+    // add background objects to background buffer
     for (let i in SCENES[currentScene].Background) {
         BACKGROUND_ELEMS.push(SCENES[currentScene].Background[i]);
     }
-
-    for (let i in SCENES.game.UI.sprites) {
-        BACKGROUND_ELEMS.push(SCENES.game.UI.sprites[i]);
+    // push sprites onto background buffer to add ontop of background objects
+    for (let i in SCENES[currentScene].UI.sprites) {
+        BACKGROUND_ELEMS.push(SCENES[currentScene].UI.sprites[i]);
     }
 
+    //--------------------------------------------------------------------------
+    // manage float UI if game is paused
     if (gameIsPaused) {
         for (let i in SCENES.game.UI.pauseMenu.sprites) {
             UI_FLOAT.push(SCENES.game.UI.pauseMenu.sprites[i]);
@@ -575,7 +612,8 @@ function setupScene() {
             UI_FLOAT.push(SCENES.game.UI.pauseMenu.text[i]);
         }
     }
-
+    //--------------------------------------------------------------------------
+    // manage float UI if game is lost
     if (levelLost) {
         for (let i in SCENES.game.UI.loss_menu.sprites) {
             UI_FLOAT.push(SCENES.game.UI.loss_menu.sprites[i]);

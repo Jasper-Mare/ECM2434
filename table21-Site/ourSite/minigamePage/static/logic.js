@@ -1,6 +1,6 @@
 import {UIButton, screenToWorldSpace, UIRect, SCENES} from "./framework.js";
 
-export var currentScene;
+export var startScene;
 export var windowAmount;
 export var windowStates = [];
 export var difficulty;
@@ -40,7 +40,7 @@ export function logicUpdate() {
  * Preset state of windows, timer, energy meter
  */
 export function start() {
-    currentScene = "game";
+    startScene = "main_menu";
     windowAmount = 36;
     difficulty = 0.03;
 
