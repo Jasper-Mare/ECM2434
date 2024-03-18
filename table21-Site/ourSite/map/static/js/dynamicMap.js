@@ -6,7 +6,6 @@ class GPScoord {
     constructor(lat,lon) {
         this.lat = lat;
         this.lon = lon;
-        //console.log("GPSCoord: "+ this.lat +", "+ this.lon);
     }
 
     getNormalisedCoord(playerGPS, targetedLocation) {
@@ -121,7 +120,6 @@ fetch("/contentDB/getAllLocations", {method: "GET"})
         json["locations"].forEach(e => {
             locations.push(new Location(e["id"], e["name"], e["gps_lat"], e["gps_long"], e["info"], e["radius"]));
         });
-        console.log(locations);
         checkIfAtLocation();
     })
 
@@ -129,8 +127,6 @@ var targetedPosition = new GPScoord((mapTLgps.lat + mapBRgps.lat)/2, (mapTLgps.l
 var playerLastPosition = targetedPosition;
 
 var gpsError = false;
-
-//console.log(mapTLgps.lat-mapBRgps.lat, mapTLgps.lon-mapBRgps.lon);
 
 var mapImgLoaded = false;
 const mapImg = new Image();
@@ -142,11 +138,11 @@ mapImg.src = `/static/images/exeter-Map-Edited.png`;
 // ============================= main functions ============================ //
 
 function initialiseMap() {
-    console.log("running init map");
     var c = document.getElementById("map");
     ctx = c.getContext("2d");
     
     resizeMap();
+    checkIfAtLocation();
 
     // https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/watchPosition
     const gpsOptions = {
@@ -178,7 +174,6 @@ function resizeMap() {
 }
 
 async function geoSuccess(position) {
-    //console.log(position);
     playerLastPosition = new GPScoord(position.coords.latitude, position.coords.longitude);
 
     locationsWithId = locations.filter(loc => {return loc.id === targetedLocationId});
@@ -227,7 +222,6 @@ async function refreshMap() {
 }
 
 async function drawMap(playerGPS) {
-    console.log("draw map");
     
     ctx.clearRect(0, 0, canvasW, canvasH);
     ctx.rect(0, 0, canvasW, canvasH);
@@ -257,8 +251,6 @@ async function drawMap(playerGPS) {
 
 function drawPlayer(playerGPS) {
     var playerScreenCoord = playerGPS.getNormalisedCoord(playerGPS, targetedPosition).getScreenCoord();
-
-    //console.log("draw player: ", playerScreenCoord);
 
     var playerIconRaduis = canvasLongestSide/80;
     var playerBGRadius = playerIconRaduis * 1.2;
@@ -292,8 +284,6 @@ function drawLocation(playerGPS, location) {
     locationGPS = location.gps;
     var locationScreenCoord = locationGPS.getNormalisedCoord(playerGPS, targetedPosition).getScreenCoord();
     var isTargeted = (targetedLocationId === location.id);
-
-    console.log("draw location: ", location.name, locationScreenCoord);
 
     const locationIconSize = Math.abs(
         new GPScoord(
@@ -354,6 +344,13 @@ function gpsNotSupported() {
 }
 
 function checkIfAtLocation() {
+    if (locations.length === 0) {
+        // locations are not loaded yet, wait for them
+        setTimeout(checkIfAtLocation, 100);
+    }
+
+    console.log("checking if player at location:", playerLastPosition);
+
     // get the locations close enough
     var targetLocationIfInRangeArray = locations.filter(loc => {
         return loc.id === targetedLocationId;
@@ -362,6 +359,7 @@ function checkIfAtLocation() {
     });
     
     const locationOptions = document.getElementById("locationOptions");
+    console.log("checking if player at location:", targetLocationIfInRangeArray.length);
 
     // target location isn't in range
     if (targetLocationIfInRangeArray.length === 0) {
