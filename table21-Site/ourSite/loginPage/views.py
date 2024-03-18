@@ -187,7 +187,6 @@ def getToken(request):
     linkID:int = int(request.GET.get('linkID', -1))
 
     print(linkID)
-    linkID=7880513
 
     if (linkID == -1):
         print("linkID is not here")

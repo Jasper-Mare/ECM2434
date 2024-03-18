@@ -66,11 +66,28 @@ function resetUserPassInDB(inputID, inputPassHash) {
 
 }
 
+function getUrlParameter() {
+
+    // Address of the current window 
+    thisUrl = window.location.search
+
+    parameterList = new URLSearchParams(thisUrl)
+
+    // Returning the value from 'linkID'
+    return parameterList.get("linkID")
+}
+
+
+
 //async to make sure this function waits for fetch results
 async function getUserID() {
 
+    // Gets the value associated with the key "linkID" 
+    token = getUrlParameter();
+
+
     //sends POST request to passCheck function in login views
-    return await fetch('/login/getToken', {
+    return await fetch('/login/getToken?linkID=' + token, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
