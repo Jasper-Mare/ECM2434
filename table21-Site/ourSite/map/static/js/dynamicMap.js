@@ -213,11 +213,14 @@ async function geoError(onCampus = true) {
 
     const textTL = canvasH - 50;
     const text = onCampus ? "Location is not supported or something went wrong!" : "You are not on campus!";
+    // draw the text at the top and bottom of the page so it appears in either toolbar placement
     ctx.fillStyle = "white";
     ctx.fillRect(9,textTL-25, text.length * 15, 34);
+    ctx.fillRect(9, 25, text.length * 15, 34);
     ctx.fillStyle = "black"
     ctx.font = "30px Arial";
     ctx.fillText(text, 10, textTL);
+    ctx.fillText(text, 50);
     
 }
 
