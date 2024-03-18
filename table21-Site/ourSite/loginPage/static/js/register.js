@@ -151,6 +151,7 @@ async function checkIfUser(inputUsername) {
 
 }
 
+//function to check input email exists in the system
 async function checkIfEmailExists(inputEmail) {
     request = '/userDB/getUserByEmail?recovery_email=' + inputEmail;
 

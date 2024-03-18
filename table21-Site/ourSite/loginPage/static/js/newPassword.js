@@ -1,7 +1,7 @@
-//written by Hannah Jellett
+// code written by Hannah Jellett
 
+//function to save users new password in DB
 async function saveNewPass() {
-
 
     //gets values input by user in both text fields
     //trim both values to remove any whitespaces
@@ -11,8 +11,6 @@ async function saveNewPass() {
 
     //ensure no fields are left empty
     if (checkIfEmpty(password) || checkIfEmpty(repeatPassword)) {
-        //document.getElementById("loginErrorMessage").classList.remove("hidden");
-        //document.getElementById("loginErrorMessage").innerHTML = "Please fill in all fields!";
         alert("Please fill in all fields");
         //leave function if a field is empty
         return;
@@ -20,19 +18,18 @@ async function saveNewPass() {
 
     //check passwords entered match
     if (checkPasswordMatch(password, repeatPassword) == false) {
-        //document.getElementById("loginErrorMessage").classList.remove("hidden");
-        //document.getElementById("loginErrorMessage").innerHTML = "Passwords don't match";
         alert("Passwords don't match");
         //return if passwords don't match
         return;
     }
 
-    //check user input matches a valid login
+    //check user input matches a valid login (from their unique link)
     user = await getUserID();
 
+    //gets userID from above GET rquest
     userID = user['userID'];
 
-    //hash password
+    //hash new password
     hashedPassword = await hashPass(password);
 
     //store new password in DB
@@ -56,7 +53,7 @@ function resetUserPassInDB(inputID, inputPassHash) {
         if (xhr.readyState === 4 && xhr.status === 200) {
             const response = JSON.parse(xhr.responseText);
 
-            //move user to confirmation of their reset password
+            //move user to confirm their password has been reset
             window.location.replace("/login/password-reset-complete");
         }
 
@@ -66,7 +63,7 @@ function resetUserPassInDB(inputID, inputPassHash) {
 
 }
 
-function getUrlParameter() {
+function getUrlLinkID() {
 
     // Address of the current window 
     thisUrl = window.location.search
@@ -80,13 +77,14 @@ function getUrlParameter() {
 
 
 //async to make sure this function waits for fetch results
+//gets userID by using the token in the url parameter
 async function getUserID() {
 
     // Gets the value associated with the key "linkID" 
-    token = getUrlParameter();
+    token = getUrlLinkID();
 
 
-    //sends POST request to passCheck function in login views
+    //sends POST request to getToken function in login views
     return await fetch('/login/getToken?linkID=' + token, {
         method: 'GET',
         headers: {
@@ -115,7 +113,7 @@ async function getUserID() {
 
 }
 
-
+//check value sent in isn't empty
 function checkIfEmpty(value) {
     return (value == null || value == "");
 }
@@ -133,6 +131,7 @@ function checkPasswordMatch(p1, p2) {
 
 
 //use async to ensure function waits for fetch to return a value
+//function to hash user password
 async function hashPass(inputPassword) {
 
     //send POST request
