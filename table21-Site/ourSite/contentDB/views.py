@@ -36,6 +36,12 @@ def getQuestById(request):
 
     return JsonResponse(quest)
 
+def getAllQuests(request):
+
+    questsList = databaseInteractions.getAllQuests()
+
+    return JsonResponse(questsList)
+
 
 def getQuizzesByLocation(request):
     locationID:int = int(request.GET.get('id', -1))
