@@ -7,7 +7,7 @@ window.scrollTo({ top: 0, behavior: "auto" });
 document.body.style.overflow = "hidden";
 
 // internal canvas space dimenesions
-const canvasDims = { width: 1200, height: 740 };
+const canvasDims = { width: 740, height: 1200 };
 canvas.width = canvasDims.width;
 canvas.height = canvasDims.height;
 
@@ -40,7 +40,7 @@ function resizeCanvas() {
     // Account for any UI elements that reduce available space
     //let navbarHeight = document.querySelector('.navbar').offsetHeight;
     let navbarHeight = 100;
-    let topOffset = navbarHeight + 100;
+    let topOffset = navbarHeight;
     let scrollbarWidth = window.innerWidth - document.documentElement.clientWidth + 20;
 
     // Calculate available canvas dimensions
