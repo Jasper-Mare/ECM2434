@@ -16,7 +16,7 @@ class GPScoord {
         const playerTargetDist = playerGPS.getDistance(targetedLocation);
 
         // only allow the map to zoom in till a certain point
-        const viewDist = Math.max(playerTargetDist*(canvasAspectRatio+0.1), playerMinViewDist);
+        const viewDist = Math.max(playerTargetDist*(canvasAspectRatio+0.5), playerMinViewDist);
 
         // get the midpoint to centre the view
         const playerTargetMid = new GPScoord((playerGPS.lat + targetedLocation.lat)/2, (playerGPS.lon + targetedLocation.lon)/2);
@@ -85,9 +85,10 @@ function mapRange(val, oldMin, oldMax, newMin, newMax) {
 
 var playerBGColour = '#F87666';
 var playerFGColour = '#000000';
-var locationColour = 'yellow';
+var locationFGColour = playerFGColour;
+var locationBGColour = '#66F678';
 var locationRadiusColour = '#ff000055'; // RR GG BB AA
-var targetLocationColour = 'gold';
+var targetLocationBGColour = locationBGColour;
 
 var canvasW = 0;
 var canvasH = 0;
@@ -104,13 +105,19 @@ fetch("/userDB/getUserTargetLocation?id="+userID, {method: "GET"})
 .then((response) => response.json())
 .then((json) => {
     targetedLocationId = json["location"];
-    
-    locationsWithId = locations.filter(loc => {return loc.id === targetedLocationId});
-    if (locationsWithId.length == 0) {
-        targetedPosition = playerLastPosition;
-    } else {
-        targetedPosition = locationsWithId[0].gps;
+
+    function waitForLocations() {
+        locationsWithId = locations.filter(loc => {return loc.id === targetedLocationId});
+        if (locationsWithId.length == 0) {
+            // locations aren't loaded, so wait
+            setTimeout(() => {
+                waitForLocations();
+            },100);
+        } else {
+            targetedPosition = locationsWithId[0].gps;
+        }
     }
+    waitForLocations();
 })
 
 var locations = [];
@@ -134,6 +141,8 @@ mapImg.onload = () => {
     mapImgLoaded = true;
 };
 mapImg.src = `/static/images/exeter-Map-Edited.png`;
+
+window.addEventListener('resize', resizeMap, true);
 
 // ============================= main functions ============================ //
 
@@ -162,13 +171,14 @@ function initialiseMap() {
 }
 
 function resizeMap() {
-    // this code is just for now, remove once the map is in the website
-    ctx.canvas.width  = window.innerWidth - 20;
-    ctx.canvas.height = window.innerHeight - 25;
+
+    ctx.canvas.width  = window.innerWidth;
+    ctx.canvas.height = window.innerHeight;
 
     canvasW = ctx.canvas.width;
     canvasH = ctx.canvas.height;
     canvasLongestSide = Math.max(canvasH, canvasW);
+    
     // longest side divided by shortest side
     canvasAspectRatio = canvasLongestSide/Math.min(canvasH, canvasW);
 }
@@ -317,9 +327,9 @@ function drawLocation(playerGPS, location) {
     ctx.arc(locationScreenCoord.x, locationScreenCoord.y, locationIconSize/2, 0, 2 * Math.PI);
     if (isTargeted) { 
         // is the targeted location
-        ctx.fillStyle = targetLocationColour;
+        ctx.fillStyle = targetLocationBGColour;
     } else {
-        ctx.fillStyle = locationColour;
+        ctx.fillStyle = locationBGColour;
     }
     ctx.fill();
     
@@ -337,6 +347,15 @@ function drawLocation(playerGPS, location) {
 
     }
 
+    // location icon
+    var iconHeight = locationIconSize / Math.sqrt(4);
+    var iconWidth = iconHeight * 0.6;
+    var iconTL = new ScreenCoord(locationScreenCoord.x-iconWidth/2, locationScreenCoord.y-iconHeight/2);
+    var iconBR = new ScreenCoord(locationScreenCoord.x+iconWidth/2, locationScreenCoord.y+iconHeight/2);
+
+    ctx.fillStyle = locationFGColour;
+    ctx.fillRect(iconTL.x, iconTL.y, iconWidth*0.5, iconHeight);
+    ctx.fillRect(iconTL.x, iconBR.y, iconWidth, -iconHeight*0.35);
 }
 
 function gpsNotSupported() {
