@@ -7,7 +7,7 @@ window.scrollTo({ top: 0, behavior: "auto" });
 document.body.style.overflow = "hidden";
 
 // internal canvas space dimenesions
-const canvasDims = { width: 1200, height: 740 };
+const canvasDims = { width: 740, height: 1200 };
 canvas.width = canvasDims.width;
 canvas.height = canvasDims.height;
 
@@ -40,7 +40,7 @@ function resizeCanvas() {
     // Account for any UI elements that reduce available space
     //let navbarHeight = document.querySelector('.navbar').offsetHeight;
     let navbarHeight = 100;
-    let topOffset = navbarHeight + 100;
+    let topOffset = navbarHeight;
     let scrollbarWidth = window.innerWidth - document.documentElement.clientWidth + 20;
 
     // Calculate available canvas dimensions
@@ -312,28 +312,6 @@ function renderFloatUI() {
     }
 }
 
-function startFrames() {
-    //reset update limit for on screen button presses.
-    updateLimiter = false;
-    setDelta();
-
-    //update game logic
-    if (currentScene === "game" && !gameIsPaused) {
-        logicUpdate();
-    }
-
-    // erase canvas
-    ctx.clearRect(0, 0, canvasDims.width, canvasDims.height);
-
-    // render entities in order
-    renderBackground();
-    renderProps();
-    renderFloatUI();
-
-    // call next frame
-    window.requestAnimationFrame(startFrames);
-}
-
 const deltaTime = new Map([
     ['now', 0],
     ['delta', 0],
@@ -359,6 +337,8 @@ import {logicUpdate, start, currentScene, clickWindow, windowAmount, windowState
 var windowCount = 0;
 
 export const SCENES = {
+
+
     game: {
         UI: {
             sprites: [
@@ -368,7 +348,6 @@ export const SCENES = {
                 new UIRect(screenToWorldSpace(0.65, 0.4), screenToWorldSpace(0.25, 1), "#000000"),
                 new UIRect(screenToWorldSpace(0.9, 0.6), screenToWorldSpace(0.1, 1), "#000000")
             ],
-
 
             buttons: [
                 new UIButton(
@@ -524,6 +503,28 @@ function init() {
 var updateLimiter = false;
 var gameIsPaused = false;
 
+function startFrames() {
+    //reset update limit for on screen button presses.
+    updateLimiter = false;
+    setDelta();
+
+    //update game logic
+    if (currentScene === "game" && !gameIsPaused) {
+        logicUpdate();
+    }
+
+    // erase canvas
+    ctx.clearRect(0, 0, canvasDims.width, canvasDims.height);
+
+    // render entities in order
+    renderBackground();
+    renderProps();
+    renderFloatUI();
+
+    // call next frame
+    window.requestAnimationFrame(startFrames);
+}
+
 function setupScene() {
     console.log(UI)
     BACKGROUND_ELEMS.splice(0, BACKGROUND_ELEMS.length);
@@ -570,11 +571,11 @@ function setupScene() {
     }
 
     if (levelLost) {
-        for (let i in SCENES.level.UI.loss_menu.sprites) {
-            UI_FLOAT.push(SCENES.level.UI.loss_menu.sprites[i]);
+        for (let i in SCENES.game.UI.loss_menu.sprites) {
+            UI_FLOAT.push(SCENES.game.UI.loss_menu.sprites[i]);
         }
-        for (let i in SCENES.level.UI.loss_menu.buttons) {
-            var button = SCENES.level.UI.loss_menu.buttons[i];
+        for (let i in SCENES.game.UI.loss_menu.buttons) {
+            var button = SCENES.game.UI.loss_menu.buttons[i];
             button.currentDims.w = button.originalDims.w;
             button.currentDims.h = button.originalDims.h;
             button.offset.y = (button.originalDims.h - button.currentDims.h) / 2;
