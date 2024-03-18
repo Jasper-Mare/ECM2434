@@ -1,4 +1,4 @@
-<!-- Written by Jacob -->
+<!-- Written by Ruby -->
 {% load static %}
 
 <!DOCTYPE html>
@@ -16,22 +16,18 @@
 <body class ="colour">
     {% include "homePage/toolbar.html"%}
     <div class="container2">
-        <h1 id="topic"></h1> <!-- Content added by quiz.js -->
-        <h1 id="place" class="smaller tight"></h1> <!-- Content added by quiz.js -->
+        <h1 id="topic"></h1> <!-- Content added by quest.js -->
+        <h1 id="place" class="smaller tight"></h1> <!-- Content added by quest.js -->
         <div class="top">
-            <h1 id="score"></h1> <!-- Content added by quiz.js -->
-            <h1 id="questionNum"></h1> <!-- Content added by quiz.js -->
+            
+            <h1 id="questionNum"></h1> <!-- Content added by quest.js -->
+            <h1 id="score"></h1>  <!-- Content added by quest.js -->
         </div>
-        <h1 id="question_text"></h1> <!-- Content added by quiz.js -->
-        <ul class ="quizlist">
-            <li class="option quizlistitem"><label id="op1"></label></li> <!-- Content added by quiz.js -->
-            <li class="option quizlistitem"><label id="op2"></label></li> <!-- Content added by quiz.js -->
-            <li class="option quizlistitem"><label id="op3"></label></li> <!-- Content added by quiz.js -->
-        </ul>
-        <button id="save" onclick="window.location.href='/map/'">Exit</button> <!-- If you are finished with the quiz or wish to return you can go back to the map page-->
+        <h1 id="question_text"></h1> <!-- Content added by quest.js -->
+        <button id="save" onclick="window.location.href='/map/'">Completed</button> <!-- If you are finished with the quiz or wish to return you can go back to the map page-->
     </div>
 </body>
 
-<script src="{% static 'js/quiz.js' %}?{% now 'U' %}"></script>
+<script src="{% static 'js/quest.js' %}?{% now 'U' %}"></script>
 </html>
 
