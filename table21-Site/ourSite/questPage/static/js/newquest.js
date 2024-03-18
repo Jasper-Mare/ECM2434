@@ -7,7 +7,7 @@ question = document.getElementById("question");
 
 // function to check that a question is valid and then add it to the database
 function save() {
-    q = question.value
+    q = question.value;
     toSave = [q];
     console.log(toSave);
 

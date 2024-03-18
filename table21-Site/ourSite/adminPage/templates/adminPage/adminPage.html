@@ -44,7 +44,7 @@
                             <a class="nav-link" id="pill-tab-3" data-bs-toggle="pill" href="#pill-tabpanel-3" role="tab" aria-controls="pill-tabpanel-3" aria-selected="false">New Quiz</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="pill-tab-4" data-bs-toggle="pill" href="#pill-tabpanel-4" onclick="window.alert('No Link Available')" role="tab" aria-controls="pill-tabpanel-4" aria-selected="false">New Quest</a>
+                            <a class="nav-link" id="pill-tab-4" data-bs-toggle="pill" href="#pill-tabpanel-4" role="tab" aria-controls="pill-tabpanel-4" aria-selected="false">New Quest</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="pill-tab-5" data-bs-toggle="pill" href="#pill-tabpanel-5" role="tab" aria-controls="pill-tabpanel-5" aria-selected="false">Help</a>
@@ -91,7 +91,6 @@
                         </table>
                     </div>
                 </div>
-        
                 <div class="tab-pane" id="pill-tabpanel-2" role="tabpanel" aria-labelledby="pill-tab-2"> Find Location:
                     <div id ="localized"></div>
                 </div>
@@ -131,6 +130,21 @@
                         </div>
                     </div>
                     <script type="text/javascript" src="{% static 'js/newquiz.js' %}?{% now 'U' %}"></script>
+                </div>
+                <div class="tab-pane" id="pill-tabpanel-4" role="tabpanel" aria-labelledby="pill-tab-4">
+
+                    <div class ="container">
+                        <h4 id="topic">Enter a new sustainability quest:</h4>
+                    </div>
+                    <div class ="mt-2">
+                        <input type="text" class="form-control-lg" id="question" placeholder="Quest...">
+                    </div>
+                    <div class = "col-6 mx-auto" role="alert" id="errorMessage"></div>
+                    <div class ="mt-2">
+                        <input class="btn btn-outline-secondary" id="save" onclick="save()" type="submit" value="Submit">
+                        <!-- Return to the map page when you are finished adding questions-->
+                    </div>
+                    <script src="{% static 'js/newquest.js' %}?{% now 'U' %}"></script>
                 </div>
                 <div class="tab-pane" id="pill-tabpanel-5" role="tabpanel" aria-labelledby="pill-tab-5">
                     <div> To contact a developer</div>

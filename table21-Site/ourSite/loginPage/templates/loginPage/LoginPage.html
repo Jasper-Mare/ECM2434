@@ -13,31 +13,37 @@
     <script type="text/javascript" src="{% static 'js/loginPage.js' %}?{% now 'U' %}"></script>
     {% endblock%}  
 </head>
-
 <body>
     {% block body %}
-    <div>
-        <div>
+        <div class="container py-2">
             <p id="loginErrorMessage" class="hidden"></p>
-            <h1>Login</h1>
+            <div>
+                <h1>Login</h1>
+            </div>
             <!-- create form for users to login -->
             <form>
-                <label for="username">Username:</label><br>
-                <input type="text" id="username" name="username"><br> <br>
-
-                <label for="passwd">Password:</label><br>
-                <input type="password" id="passwd" name="passwd"> <br><br>
-                Forgot password? <a href="password-reset-form">Reset Password </a><br><br>
-
-                <!-- use button so input fields aren't shown in users url -->
-                <input type="button" onclick="submitLogin()" value="Submit"> <br> <br>
+                <div>
+                    <label for="username" class="form-label">Username:</label>
+                    <input class="form-control" type="text" id="username" name="username">
+                </div>
+                <div>
+                    <label for="passwd" class="form-label">Password:</label>
+                    <input class="form-control" type="password" id="passwd" name="passwd">
+                </div>
+                <div>
+                    <div class="form-text">
+                        Forgot password? <a href="password-reset-form">Reset Password </a>
+                    </div>
+                    <div class="my-2">
+                        <!-- use button so input fields aren't shown in users url -->
+                        <input class="btn btn-secondary"type="button" onclick="submitLogin()" value="Submit">
+                    </div>
+                </div>
             </form>
-            <div>
+            <div class="container form-text">
                 Haven't signed up yet? <a href="Register">Click here to sign up</a><br>
             </div>
         </div>
-    </div>
     {% endblock %}
 </body>
-
 </html>
