@@ -21,6 +21,17 @@ def register(request):
     return render(request, 'loginPage/Register.html')
 
 
+#returns forgot password page url
+def forgotPassword(request):
+    return render(request, 'registration/password_reset_form.html')
+
+#def resetPassEmailSent(request):
+    #return render(request, 'registration/password_reset_done.html')
+
+#def resetPass(request):
+    #return render(request, 'registration/password_reset_done.html')
+
+
 @csrf_exempt #This skips csrf validation
 def hashPass(request):
     #hashes password sent in by request
@@ -70,6 +81,28 @@ def passCheck(request):
         
         #return valid login (boolean) and the userId
         return JsonResponse({'validLogin': validLogin, 'userId': userId})
+
+    #else return an error if unable to fetch/return the above
+    return JsonResponse({'error': 'Method not allowed'}, status=405)
+
+
+
+@csrf_exempt #This skips csrf validation
+def emailCheck(request):
+    #function to check email exists on the system
+
+    if request.method == 'POST':
+        data = json.loads(request.body.decode('ascii'))
+        
+        #gets password and username fields from request
+        email = data['email']
+
+
+        emailExists = databaseInteractions.getUserByName(email)
+
+        #if there isn't a user with the input email, return an error
+        if "error" in emailExists: 
+            return JsonResponse({'validEmail': False, 'error': 'email not found'})
 
     #else return an error if unable to fetch/return the above
     return JsonResponse({'error': 'Method not allowed'}, status=405)

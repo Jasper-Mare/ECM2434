@@ -12,24 +12,40 @@ async function submitRegisteration() {
 
     //check no fields are empty
     if (checkIfEmpty(username) || checkIfEmpty(email) || checkIfEmpty(passwd) || checkIfEmpty(rpasswd)) {
-        alert("Please fill in all fields");
+        //show error message on screen to user
+        document.getElementById("loginErrorMessage").classList.remove("hidden");
+        document.getElementById("loginErrorMessage").innerHTML = "Please fill in all fields!";
         return;
     }
 
     //check if user already exists
     if (await checkIfUser(username) == true) {
-        alert("There's already an account with this username. Please login, or register with a different username");
+        message = "There's already an account with this username. Please login, or register with a different username";
+        document.getElementById("loginErrorMessage").classList.remove("hidden");
+        document.getElementById("loginErrorMessage").innerHTML = message;
+
         //if user exists, exit from the function
         return;
     }
 
     //check both password and repeatPassword match
     //extra security to ensure user types in the same password both times
-    if (checkPasswordMatch(passwd, rpasswd) ==false ) {
-        alert("Passwords don't match");
+    if (checkPasswordMatch(passwd, rpasswd) == false) {
+        document.getElementById("loginErrorMessage").classList.remove("hidden");
+        document.getElementById("loginErrorMessage").innerHTML = "Passwords don't match";
+        //("Passwords don't match");
         //return if passwords don't match
-        return 
+        return;
     }
+
+    //check if email is a valid format
+    if (checkValidEmail(email) == false) {
+        message = "The email is invalid! Please enter a valid email";
+        document.getElementById("loginErrorMessage").classList.remove("hidden");
+        document.getElementById("loginErrorMessage").innerHTML = message;
+        return;
+    }
+
 
     //hash password
     hashedPassword = await hashPassword(passwd);
@@ -141,4 +157,13 @@ function checkPasswordMatch(p1, p2) {
     else {
         return false
     }
+}
+
+//code from: 
+//https://www.geeksforgeeks.org/javascript-program-to-validate-an-email-address/
+//check email is in a valid format and not just a string of chars
+function checkValidEmail(email) {
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const isValid = emailPattern.test(email);
+    return isValid;
 }

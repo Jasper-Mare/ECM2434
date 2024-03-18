@@ -21,7 +21,7 @@ getLocations();
 function save() {
     // get all the information from the input fields
     correctAnswer = document.querySelector(".correct").id;
-    correctAnswer = parseInt(correctAnswer[1])-1;
+    correctAnswer = parseInt(correctAnswer[1]) - 1;
     q = question.value
     ans1 = op1.value
     ans2 = op2.value
@@ -32,36 +32,43 @@ function save() {
 
     // make sure that they have filled in all inputs
     if (isempty(q) || isempty(ans1) || isempty(ans2) || isempty(ans3)) {
-        alert("something is empty!!!!!")
+        text = "You've left a field empty, please fill out all fields";
+        document.getElementById("errorMessage").innerHTML = `
+        <div class="alert py-1 alert-danger alert-dismissible fade show" role="alert">` + text + 
+        `<button type="button" class="btn-close py-2" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>`;
+        emptyInputsFlag = true;
     }
+    else{
+         // send the information to the database
+        const xhr = new XMLHttpRequest();
+        request = '/contentDB/createQuiz?question=' + q + '&answer0=' + ans1 + '&answer1=' + ans2 + '&answer2=' + ans3 + '&correct_answer=' + correctAnswer + '&points=10&location_id=' + locationID;
+        xhr.open('GET', request, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                console.log(response);
 
-
-    // send the information to the database
-    const xhr = new XMLHttpRequest();
-    request = '/contentDB/createQuiz?question='+q+'&answer0='+ans1+'&answer1='+ans2+'&answer2='+ans3+'&correct_answer='+correctAnswer+'&points=10&location_id='+locationID;
-    xhr.open('GET', request, true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            const response = JSON.parse(xhr.responseText);
-            console.log(response);
-        }
-    };
-    xhr.send();
-
-
+            }
+        };
+        xhr.send();
+        alert("Quiz question has been submitted successfully ");
+    }
+    
     // clear input boxes
     question.value = "";
     op1.value = "";
     op2.value = "";
     op3.value = "";
+
 }
 
 // function to select the correct answer
 function select(id) {
     // resets classes of all buttons
-    b1.classList = "choose";
-    b2.classList = "choose";
-    b3.classList = "choose";
+    b1.classList = "btn choose";
+    b2.classList = "btn choose";
+    b3.classList = "btn choose";
     // adds the correct class to the selected button
     document.getElementById(id).classList.add("correct");
 }
@@ -77,7 +84,7 @@ function getLocations() {
     const xhr = new XMLHttpRequest();
     request = '/contentDB/getAllLocations';
     xhr.open('GET', request, true);
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             const response = JSON.parse(xhr.responseText);
             locations = response["locations"];
