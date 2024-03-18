@@ -33,6 +33,16 @@ def getUserTargetLocation(id:int, defaultIfNot:int):
     
     return {"location": playerLocation.location}
 
+def updateUserLocation(id:int, location:int):
+    try:
+        playerLocation = PlayerTargetLocation.objects.get(player=id)
+        playerLocation.location = location
+        playerLocation.save()
+    except (PlayerTargetLocation.DoesNotExist):
+        playerLocation = PlayerTargetLocation(player=id, location=location)
+        playerLocation.save()
+
+    return getUserTargetLocation(id, location)
 
 def getUserByName(name:str):
     try:

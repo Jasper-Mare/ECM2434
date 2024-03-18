@@ -18,6 +18,12 @@ http://127.0.0.1:8000/userDB/updateUser?id=1&name=alice&password_hash=abcd&acces
 http://127.0.0.1:8000/userDB/deleteUser?id=1
  - delete a user, returns json dictionary, where successful is true or false
 
+http://127.0.0.1:8000/userDB/getUserTargetLocation?id=1
+ - get the target location of the user
+
+http://127.0.0.1:8000/userDB/updateUserTargetLocation?id=1&location=1
+ - set the target location of the user
+
 
 Access Levels can be: USER, GAME_KEEPER or, DEVELOPER
 
