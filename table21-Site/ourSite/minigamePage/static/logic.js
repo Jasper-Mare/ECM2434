@@ -1,4 +1,4 @@
-import {UIButton, screenToWorldSpace, UIRect, SCENES} from "./framework.js";
+import {UIButton, screenToWorldSpace, UIRect, SCENES, loseLevel} from "./framework.js";
 
 export var startScene;
 export var windowAmount;
@@ -33,8 +33,8 @@ export function logicUpdate() {
     difficulty += 0.00003
 
     if (energyWasted > 15000) {
-        levelLost = true;
-        console.log("lost at "+difficulty)
+        loseLevel()
+        //console.log("lost at "+difficulty)
     }
     }
 

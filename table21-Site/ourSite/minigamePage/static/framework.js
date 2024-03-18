@@ -75,6 +75,14 @@ function lerp(startValue, endValue, t) {
     return startValue + (endValue - startValue) * t;
 }
 
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
 export function screenToWorldSpace(x, y) {
     // screen space 0 to 1 on width and height
     // world space = canvas space
@@ -336,7 +344,7 @@ function setDelta() {
 //====================== GAME LOGIC ======================
 //#region game logic
 
-import {logicUpdate, start, startScene, clickWindow, windowAmount, windowStates, difficulty, levelLost} from "./logic.js";
+import {logicUpdate, start, startScene, clickWindow, windowAmount, windowStates, difficulty} from "./logic.js";
 
 var windowCount = -1;
 var currentScene;
@@ -491,9 +499,7 @@ export const SCENES = {
                             levelLost = false;
                             updateLimiter = true;
                             currentScene = "game";
-                            setupScene();
-                            // TODO init
-                            currentScene = "level";
+                            start();
                             setupScene();
                         },
                         "Retry"),
@@ -543,6 +549,7 @@ function init() {
 }
 var updateLimiter = false;
 var gameIsPaused = false;
+var levelLost = false;
 
 function startFrames() {
     //reset update limit for on screen button presses.
@@ -632,14 +639,14 @@ function setupScene() {
             UI_FLOAT.push(button);
         }
 
-        for (let i in SCENES.level.UI.loss_menu.text) {
-            UI_FLOAT.push(SCENES.level.UI.loss_menu.text[i]);
+        for (let i in SCENES.game.UI.loss_menu.text) {
+            UI_FLOAT.push(SCENES.game.UI.loss_menu.text[i]);
         }
     }
 
 }
 
-function loseLevel() {
+export function loseLevel() {
     levelLost = true;
     setupScene();
 }
@@ -657,7 +664,7 @@ window.onload = () => {
 var currentIndex = 0;
 
 async function playTracks() {
-    var tracks = await shuffleArray(["./songs/ECOPOLY soundtrack 1.mp3", "./songs/ECOPOLY soundtrack 2.mp3"]);
+    var tracks = await shuffleArray(["../static/songs/ECOPOLY-1.mp3"]);
     // Set the duration of the break between tracks (in milliseconds)
     var breakDuration = 2000;
 
