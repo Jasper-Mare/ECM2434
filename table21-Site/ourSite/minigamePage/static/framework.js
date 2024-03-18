@@ -318,7 +318,7 @@ function startFrames() {
     setDelta();
 
     //update game logic
-    if (currentScene === "game") {
+    if (currentScene === "game" && !gameIsPaused) {
         logicUpdate();
     }
 
@@ -517,16 +517,15 @@ function setupScene() {
     UI.splice(0, UI.length);
     UI_FLOAT.splice(0, UI_FLOAT.length);
 
-    if (!gameIsPaused) {
-        for (let i in SCENES[currentScene].UI.buttons) {
-            var button = SCENES[currentScene].UI.buttons[i];
-            button.currentDims.w = button.originalDims.w;
-            button.currentDims.h = button.originalDims.h;
-            button.offset.y = (button.originalDims.h - button.currentDims.h) / 2;
-            button.offset.x = (button.originalDims.w - button.currentDims.w) / 2;
-            UI.push(button);
-        }
+    for (let i in SCENES[currentScene].UI.buttons) {
+        var button = SCENES[currentScene].UI.buttons[i];
+        button.currentDims.w = button.originalDims.w;
+        button.currentDims.h = button.originalDims.h;
+        button.offset.y = (button.originalDims.h - button.currentDims.h) / 2;
+        button.offset.x = (button.originalDims.w - button.currentDims.w) / 2;
+        UI.push(button);
     }
+
 
     for (let i in SCENES[currentScene].UI.text) {
         UI.push(SCENES[currentScene].UI.text[i]);

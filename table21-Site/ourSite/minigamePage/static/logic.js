@@ -1,7 +1,5 @@
 import {UIButton, screenToWorldSpace, UIRect, SCENES} from "./framework.js";
 
-
-
 export var currentScene;
 export var windowAmount;
 export var windowStates = [];
