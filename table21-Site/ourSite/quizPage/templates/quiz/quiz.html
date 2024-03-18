@@ -1,34 +1,55 @@
 <!-- Written by Jacob -->
+{% extends "homePage/toolbar.html"%}
 {% load static %}
 
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Quiz</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/allStyles.css' %}?{% now 'U' %}">
-    <!--<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}?{% now 'U' %}">--> <!-- Link the css -->
+    <!--Personal css-->
+    <!--<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}?{% now 'U' %}">-->
+    <!--Global css-->
+    <!--<link rel="stylesheet" type="text/css" href="{% static 'css/allStyles.css' %}?{% now 'U' %}">-->
+    {% block style %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/allStyles.css' %}?{% now 'U' %}">
+    {% endblock %}
+    
 </head>
-<body class ="colour">
-    {% include "homePage/toolbar.html"%}
-    <div class="container2">
-        <h1 id="topic"></h1> <!-- Content added by quiz.js -->
-        <h1 id="place" class="smaller tight"></h1> <!-- Content added by quiz.js -->
-        <div class="top">
-            <h1 id="score"></h1> <!-- Content added by quiz.js -->
-            <h1 id="questionNum"></h1> <!-- Content added by quiz.js -->
-        </div>
-        <h1 id="question_text"></h1> <!-- Content added by quiz.js -->
-        <ul class ="quizlist">
-            <li class="option quizlistitem"><label id="op1"></label></li> <!-- Content added by quiz.js -->
-            <li class="option quizlistitem"><label id="op2"></label></li> <!-- Content added by quiz.js -->
-            <li class="option quizlistitem"><label id="op3"></label></li> <!-- Content added by quiz.js -->
-        </ul>
-        <button id="save" onclick="window.location.href='/map/'">Exit</button> <!-- If you are finished with the quiz or wish to return you can go back to the map page-->
-    </div>
-</body>
-
-<script src="{% static 'js/quiz.js' %}?{% now 'U' %}"></script>
+    <body>
+        {% block content %}
+            <div class = "text-start">
+                <div class = "container">
+                    <h2 class = "d-flex" id="topic"></h2> <!-- Content added by quiz.js -->
+                    <h5 class = "d-flex" id="place"></h5> <!-- Content added by quiz.js -->
+                </div>
+                <div class = "col-7 mx-auto">
+                    <div class = "container text-start">
+                        <h1 class = "fw-normal display-2 d-inline" id="questionNum"><u></u></h1> <!-- Content added by quiz.js -->
+                        <h5 class = " d-inline" id="score"></h5> <!-- Content added by quiz.js -->
+                    </div>
+                    <div class = "container">
+                        <h5 class="text-start " id="question_text"></h5> <!-- Content added by quiz.js -->
+                    </div>
+                    <div class = "container">
+                        <div class="form-check ms-3">
+                            <div>
+                                <label class= "fs-5" id="op1"></label>
+                            </div>
+                            <div>
+                                <label class= "fs-5" id="op2"></label>
+                            </div>
+                            <div>
+                                <label class= "fs-5" id="op3"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container text-end me-5">
+                        <button class = "btn btn-primary " type="button" id="save" onclick="window.location.href='/map/'">Exit</button> <!-- If you are finished with the quiz or wish to return you can go back to the map page-->    
+                    </div>
+                </div>
+            </div>
+            <script src="{% static 'js/quiz.js' %}?{% now 'U' %}"></script>
+        {% endblock %}
+    </body>
 </html>
 

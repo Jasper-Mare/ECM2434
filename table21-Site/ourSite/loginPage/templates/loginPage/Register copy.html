@@ -1,0 +1,50 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login</title>
+    <script type="text/javascript" src="{% static 'js/register.js' %}?{% now 'U' %}"></script>
+    <script type="text/javascript" src="{% static 'js/cookies.js' %}?{% now 'U' %}"></script>
+    <!--Personal css-->
+    <!--<link rel="stylesheet" href="{% static 'css/LoginPage.css' %}?{% now 'U' %}">-->
+    <!--Global css-->
+    <link rel="stylesheet" href="{% static 'css/allStyles copy.css' %}?{% now 'U' %}">
+    <!--Bootstrap added in manually as page doesn't include toolbar.html-->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}?{% now 'U' %}">
+    <script type="text/javascript" src="{% static 'js/bootstrap.js' %}?{% now 'U' %}"></script>
+   
+</head>
+
+<body class = "colour">
+    <div id="content" class="loginPage">
+        <div class="centreV1">
+            <h1>Register</h1>
+            <!-- create form for users to register -->
+            <form id="loginForm">
+                <label for="username">Username:</label><br>
+                <input type="text" id="username" name="username"><br> <br>
+
+                <label for="email">Email:</label><br>
+                <input type="text" id="email" name="email"><br> <br>
+
+                <label for="passwd">Password:</label><br>
+                <input type="password" id="passwd" name="passwd"> <br> <br>
+
+                <label for="rptpasswd">Repeat password:</label><br>
+                <input type="password" id="rptpasswd" name="rptpasswd"> <br> <br>
+                <!-- use button so input fields aren't shown in users url -->
+                <input type="button" onclick="submitRegisteration()" value="Submit"> <br> <br>
+            </form>
+            <div id="options">
+                <a href="..">Already signed up? Click here to login
+                </a><br>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

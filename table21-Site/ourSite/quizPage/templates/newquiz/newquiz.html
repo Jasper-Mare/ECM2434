@@ -8,42 +8,54 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>New Quiz</title>
+    <!--Personal css-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css'%}?{% now 'U' %}">
+    <!--Global css-->
     <link rel="stylesheet" type="text/css" href="{% static 'css/allStyles.css'%}?{% now 'U' %}">
-    <!--<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css'%}?{% now 'U' %}">--> <!-- Link the css -->
+
 </head>
 
-<body class = "colour">
+<body>
     {% include "homePage/toolbar.html"%}
-    <div class="container2">
+    <div>
         <h1 id="topic">Enter a new sustainability question:</h1>
 
-        <label for="locationtable">Choose a location</label>
+        <label for="locationtable">Choose a location</label><br>
         <select id="locationtable"> <!-- Newquiz.js adds locations from database --></select>
 
-        <h1 class="smaller">
+        <br>
+        <h1>
             Question:
             <input type="text" id="question" placeholder="Question...">
         </h1>
-        <ul class ="quizlist">
-            <li class="option smaller quizlistitem">
+        <ul>
+            <li>
                 Option 1:
-                <input type="text" class="answerBox" id="op1" placeholder="Option...">
+                <input type="text" id="op1" placeholder="Option...">
                 <button class="choose correct" id="b1" onclick="select(id)">✓</button>
             </li>
-            <li class="option smaller quizlistitem">
+            <li>
                 Option 2:
-                <input type="text" class="answerBox" id="op2" placeholder="Option...">
+                <input type="text" id="op2" placeholder="Option...">
                 <button class="choose" id="b2" onclick="select(id)">✓</button>
             </li>
-            <li class="option smaller quizlistitem">
+            <li>
                 Option 3:
-                <input type="text" class="answerBox" id="op3" placeholder="Option...">
+                <input type="text" id="op3" placeholder="Option...">
                 <button class="choose" id="b3" onclick="select(id)">✓</button>
             </li>
         </ul>
-        <button id="save" onclick="save()">Save</button>
-        <a href="/map/"><button id="home_button">Home</button></a> <!-- Return to the map page when you are finished adding questions-->
+        <br>
+        <p id="errorMessage" class="hidden"></p>
+
+        <button onclick="save()">Save</button>
+        <div>
+            <a href="/map/"><button >Home</button></a> <!-- Return to the map page when you are finished adding questions-->
+            <a href="/adminPage/"><button >Admin</button></a>
+        </div>
+
     </div>
 </body>
 <script src="{% static 'js/newquiz.js' %}?{% now 'U' %}"></script>
+
 </html>

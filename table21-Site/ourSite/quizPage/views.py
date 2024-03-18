@@ -11,3 +11,4 @@ def new(request):
 def index(request):
     template = loader.get_template("quiz/quiz.html")
     return HttpResponse(template.render({}, request))
+

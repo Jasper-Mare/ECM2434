@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        {% load static %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static 'css/allStyles.css' %}?{% now 'U' %}">
+        <script type="text/javascript" src="{% static 'js/cookies.js' %}?{% now 'U' %}"></script>
+
+        <!--Load Bootstrap-->
+        <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}?{% now 'U' %}">
+        <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.js' %}?{% now 'U' %}"></script>
+        {% block css %}
+        {% endblock %}
+        {% block js %}
+        {% endblock%}
+        
+    </head>
+    <body>
+        {% block body %}
+        {% endblock %}
+    </body>
+</html>
+

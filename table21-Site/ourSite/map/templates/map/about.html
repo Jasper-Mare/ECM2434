@@ -1,0 +1,34 @@
+{% extends "homePage/toolbar.html"%}
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block style %}
+            <link rel="stylesheet" href="{% static 'css/allStyles.css' %}?{% now 'U' %}">
+        {% endblock %}
+        {% block script %}
+            <script type="text/javascript" src="{% static 'js/map.js' %}?{% now 'U' %}"></script>
+        {% endblock %}
+    </head>
+    <body>
+        {% block content %}
+            <div id="container">
+                <h1>Welcome to EcoQuest Exeter!</h1>
+            </div>
+            <div>
+                <a href="#popup1" onclick="playmusic()">Click Here</a>
+            </div>
+            <div>
+                <div>
+                    <h2>The aim of the game</h2>
+                    <a href="#">&times;</a>
+                    <div>
+                        Travel to all the locations on the map and answer the sustainable questions and quests to gain points and be top of the leaderboard.
+                    </div>
+                    <img src="{% static 'images/Goals.png' %}" height="200" width="350">
+                </div>
+            </div>
+        {% endblock %}
+
+    </body>
+</html>

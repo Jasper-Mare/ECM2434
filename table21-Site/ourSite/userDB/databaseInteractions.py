@@ -15,6 +15,14 @@ def makeUserStruct(id:int, name:str, password_hash:str, access_level:str, recove
         "score" : int(score),
     }
 
+def makeTableStruct(id:int, name:str, access_level:str, recovery_email:str):
+    return{
+        "id" : int(id), 
+        "name" : name, 
+        "access_level" : access_level, 
+        "recovery_email": recovery_email,
+    }
+
 def getUserById(id:int):
     try:
         user:User = User.objects.get(id=id)
@@ -90,3 +98,17 @@ def deleteUser(id:int):
     
     user.delete()
     return {"successful" : True}
+
+# ---- MATT ADDITIONS ----
+
+def getNumberOfUsers():
+    total = User.objects.count()
+    return {'count': total}
+
+def fillTable():
+    data = User.objects.values()
+    tableArray = []
+    for entry in data:
+        tableArray.append(makeTableStruct(entry["id"], entry["name"], entry["access_level"], entry["recovery_email"]))
+
+    return {"users": tableArray}

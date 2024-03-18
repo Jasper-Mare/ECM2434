@@ -1,4 +1,4 @@
-# written by Hannah Jellett
+# written by Hannah Jellett and Ruby Ham
 
 from django.shortcuts import render
 from django.http import JsonResponse
@@ -25,6 +25,16 @@ def getQuizById(request):
     quiz = databaseInteractions.getQuizById(quizId)
 
     return JsonResponse(quiz)
+
+def getQuestById(request):
+    questId:int = int(request.GET.get('id', -1))
+
+    if (questId == -1):
+        return makeError("parameter missing", "id parameter is missing!")
+
+    quest = databaseInteractions.getQuestById(questId)
+
+    return JsonResponse(quest)
 
 
 def getQuizzesByLocation(request):
@@ -120,6 +130,19 @@ def createQuiz(request):
 
     return JsonResponse(quiz)
 
+def createQuest(request):
+    task = request.GET.get('task', "")
+    points:int = int(request.GET.get('points', -1))
+
+    if (task == ""):
+        return makeError("parameter missing", "quest parameter is missing!")
+    if (points == -1):
+        return makeError("parameter missing", "points parameter is missing!")
+    
+    quest = databaseInteractions.createQuest(task, points)
+
+    return JsonResponse(quest)
+
 
 def updateLocation(request):
     locationId:int = request.GET.get('id', -1)
@@ -161,6 +184,22 @@ def updateQuiz(request):
 
     return JsonResponse(newQuizInfo)
 
+def updateQuest(request):
+    questId:int = request.GET.get('id', -1)
+
+    if (questId == -1):
+        return makeError("parameter missing", "id parameter is missing!")
+
+    oldQuestInfo = databaseInteractions.getQuestById(questId)
+    
+    # get parameters, with the old versions as the defaults
+    task = request.GET.get('task', oldQuestInfo["task"])
+    points:int = int(request.GET.get('points', oldQuestInfo["points"]))
+
+    newQuestInfo = databaseInteractions.updateQuest(questId, task, points)
+
+    return JsonResponse(newQuestInfo)
+
 
 def deleteLocation(request):
     locationId:int = request.GET.get('id', -1)
@@ -182,6 +221,16 @@ def deleteQuiz(request):
     successfulQuizDelete = databaseInteractions.deleteQuiz(quizId)
 
     return JsonResponse(successfulQuizDelete)
+
+def deleteQuest(request):
+    questId:int = request.GET.get('id', -1)
+
+    if (questId == -1):
+        return makeError("parameter missing", "id parameter is missing!")
+
+    successfulQuestDelete = databaseInteractions.deleteQuest(questId)
+
+    return JsonResponse(successfulQuestDelete)
 
 
 

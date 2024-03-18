@@ -108,3 +108,13 @@ def deleteUser(request):
 
 def makeError(type, errorMsg):
     return JsonResponse({"error":type,"details":errorMsg})
+
+# ---- MATT ADDITION ----
+def getNumberOfUsers(request):
+    numUsers = databaseInteractions.getNumberOfUsers()
+
+    return JsonResponse(numUsers)
+
+def fillTable(request):
+    userList = databaseInteractions.fillTable()
+    return JsonResponse(userList)
