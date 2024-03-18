@@ -131,7 +131,7 @@ function clearance(o,access){
     }
     // send original request for name
     xhr.send();
-    setTimeout(getData, 50);
+    setTimeout(getData, 250);
 }
 
 function getLocation() {
