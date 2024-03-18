@@ -109,3 +109,4 @@ function logOut() {
     document.cookie = "login=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;" // set it to an expired date so its deleted
     window.location.href = "/login/";
 }
+*/
