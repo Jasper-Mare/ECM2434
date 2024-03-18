@@ -375,7 +375,7 @@ function checkIfAtLocation() {
     document.getElementById("location info").innerText = location.info;
 
     document.getElementById("quiz button").onclick = () => {
-        alert("clicked quiz!");
+        window.location.href="/quiz/?id="+targetedLocationId;
     };
     document.getElementById("quest button").onclick = () => {
         alert("clicked quest!");
@@ -387,16 +387,3 @@ function checkIfAtLocation() {
 }
 
 // https://www.w3schools.com/html/html5_canvas.asp
-
-/*
-
-options on arriving at location (needs to link to other pages)
- - quest
- - quiz
- - game
-
-track next location, go in order (the user's current location needs updating once the user completes a thing)
-
-add in the rest of the page
-
-*/
