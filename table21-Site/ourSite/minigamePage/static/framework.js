@@ -363,9 +363,17 @@ export const SCENES = {
                             playTracks();
                             GLOBALS.isMusicPlaying = true;
                         }
-
                     },
-                    "Start the game")
+                    "Start the game"
+                ),
+                new UIButton(
+                    screenToWorldSpace(0.6, 0.7), screenToWorldSpace(0.2, 0.1), screenToWorldSpace(0.21, 0.11),
+                    () => {
+                        currentScene = "tutorial"
+                        setupScene();
+                    },
+                    "Tutorial"
+                ),
             ],
             text: [],
         },
@@ -373,8 +381,43 @@ export const SCENES = {
     },
 
     settings_menu: {
-        UI:{},
+        UI:{
+            sprites: [],
+            buttons: [],
+            text: []
+        },
         Background: [new UIRect([0, 0], [canvasDims.width, canvasDims.height], "#293e55ff", 0)]
+    },
+
+    tutorial: {
+        UI:{
+            buttons: [
+                new UIButton(
+                    screenToWorldSpace(0.4, 0.675), screenToWorldSpace(0.2, 0.1), screenToWorldSpace(0.21, 0.11),
+                    () => {
+                        currentScene = "main_menu"
+                        setupScene();
+                    },
+                    "Back"
+                ),
+            ],
+            text: [
+                new UIText(
+                    screenToWorldSpace(0.5, 0.22), "62", "'Courier new'", "white", "⊣ TUTORIAL ⊢",
+                    undefined, undefined, "center"
+                ),
+                new UIText(
+                    screenToWorldSpace(0.5, 0.3), "30", "'Courier new'", "white", 
+                    "YOU are the 'Light Switch manager' for a new series of buildings... \n"+
+                    "However, these buildings have been found to have a rediculous carbon footprint when the lights are left on, the people using the building have no clue as to this fact and as such leave lights on all the time. Your job, nay, your DUTY is to switch off all the lights before your carbon footprint spirals out of control!",
+                    undefined, undefined, "center"
+                ),
+            ],
+            sprites: [
+                new UIRect(screenToWorldSpace(0.15, 0.175), screenToWorldSpace(0.7, 0.65), "#21897e", 10)
+            ]
+        },
+        Background: [new UIRect([0,0], [canvasDims.width, canvasDims.height], "#293e55ff", 0)]
     },
 
     game: {
