@@ -363,7 +363,6 @@ export const SCENES = {
                             playTracks();
                             GLOBALS.isMusicPlaying = true;
                         }
-
                     },
                     "Start the game"
                 ),
