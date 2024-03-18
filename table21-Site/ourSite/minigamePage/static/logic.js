@@ -15,7 +15,6 @@ export var energyWasted = 0;
  * Change states of variables
  */
 export function logicUpdate() {
-    //console.log(1-(difficulty/10))
     if (Math.random() > (1-(difficulty/10))) {
         var index = Math.floor(Math.random() * (windowAmount+1))
         windowStates[index] = 1
@@ -29,7 +28,6 @@ export function logicUpdate() {
     }
     difficulty += 0.00003
 
-    console.log(energyWasted)
     if (energyWasted > 15000) {
         levelLost = true;
         console.log("lost at "+difficulty)
@@ -65,7 +63,4 @@ export function clickWindow(index) {
         windowStates[index] = 1;
         SCENES.game.UI.buttons[index].resetColor("#eebb33");
     }
-    
-    console.log(windowStates)
-
 }

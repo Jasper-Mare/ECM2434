@@ -497,7 +497,21 @@ export const SCENES = {
                 ]
             }
         },
-        Background: [new UIRect([0, 0], [canvasDims.width, canvasDims.height], "#293e55ff", 0)]
+        Background: [
+            new UIRect([0, 0], [canvasDims.width, canvasDims.height], "#293e55ff", 0),
+            new UIRect(screenToWorldSpace(0, 0.2), screenToWorldSpace(0.08, 1), "#333333"),
+            new UIRect(screenToWorldSpace(0.08, 0.17), screenToWorldSpace(0.09, 1), "#333333"),
+            new UIRect(screenToWorldSpace(0.17, 0.28), screenToWorldSpace(0.12, 1), "#333333"),
+            new UIRect(screenToWorldSpace(0.29, 0.17), screenToWorldSpace(0.08, 1), "#333333"),
+            new UIRect(screenToWorldSpace(0.37, 0.15), screenToWorldSpace(0.1, 1), "#333333"),
+            //new UIRect(screenToWorldSpace(0.47, 0.26), screenToWorldSpace(0.12, 1), "#333333"),
+            new UIRect(screenToWorldSpace(0.59, 0.13), screenToWorldSpace(0.1, 1), "#333333"),
+            new UIRect(screenToWorldSpace(0.69, 0.29), screenToWorldSpace(0.07, 1), "#333333"),
+            new UIRect(screenToWorldSpace(0.76, 0.19), screenToWorldSpace(0.11, 1), "#333333"),
+            new UIRect(screenToWorldSpace(0.87, 0.27), screenToWorldSpace(0.07, 1), "#333333"),
+            //new UIRect(screenToWorldSpace(0.93, 0.17), screenToWorldSpace(0.07, 1), "#333333"),
+            new UIRect(screenToWorldSpace(0.99, 0.28), screenToWorldSpace(0.08, 1), "#333333"),
+        ]
     }
 };
 
