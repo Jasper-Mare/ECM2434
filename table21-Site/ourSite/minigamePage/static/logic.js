@@ -30,7 +30,13 @@ export function logicUpdate() {
         }
     }
     difficulty += 0.00003
-}
+
+    console.log(energyWasted)
+    if (energyWasted > 15000) {
+        levelLost = true;
+        console.log("lost at "+difficulty)
+    }
+    }
 
 /**
  * no parameters
