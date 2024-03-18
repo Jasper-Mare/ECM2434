@@ -499,8 +499,7 @@ export const SCENES = {
                             levelLost = false;
                             updateLimiter = true;
                             currentScene = "game";
-                            start();
-                            setupScene();
+                            init();
                         },
                         "Retry"),
                     new UIButton(
