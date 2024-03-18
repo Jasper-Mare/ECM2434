@@ -25,18 +25,21 @@ export function logicUpdate() {
         windowStates[index] = 1
         SCENES.game.UI.buttons[index].resetColor("#eebb33");
     }
-    for (let i = 0; i < windowAmount; i++) {
-        if (windowStates[i] == 1) {
-            energyWasted += 1
-            SCENES.game.UI.sprites[5].resetwidth(screenToWorldSpace(0.4*energyWasted/15000,0.052)[0])        }
-    }
     difficulty += 0.00003
 
     if (energyWasted > 15000) {
         loseLevel()
         //console.log("lost at "+difficulty)
     }
+    else {
+      for (let i = 0; i < windowAmount; i++) {
+        if (windowStates[i] == 1) {
+          energyWasted += 1
+          SCENES.game.UI.sprites[5].resetwidth(screenToWorldSpace(0.4*energyWasted/15000,0.052)[0])
+        }
+      }
     }
+  }
 
 /**
  * no parameters
