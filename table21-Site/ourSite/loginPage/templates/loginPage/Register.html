@@ -1,30 +1,27 @@
+{% extends "loginPage/baseLogin.html"%}
 {% load static %}
 
 <!DOCTYPE html>
 <html>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login</title>
-    <script type="text/javascript" src="{% static 'js/register.js' %}?{% now 'U' %}"></script>
-    <script type="text/javascript" src="{% static 'js/cookies.js' %}?{% now 'U' %}"></script>
-    <!--Personal css-->
+<head>   
     <!--<link rel="stylesheet" href="{% static 'css/LoginPage.css' %}?{% now 'U' %}">-->
-    <!--Global css-->
+    {% block css %}
     <link rel="stylesheet" href="{% static 'css/allStyles.css' %}?{% now 'U' %}">
-    <!--Bootstrap added in manually as page doesn't include toolbar.html-->
-    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}?{% now 'U' %}">
-    <script type="text/javascript" src="{% static 'js/bootstrap.js' %}?{% now 'U' %}"></script>
-   
+    {% endblock %}
+    {% block js %}
+    <script type="text/javascript" src="{% static 'js/register.js' %}?{% now 'U' %}"></script>
+    {% endblock%}   
 </head>
 
-<body class = "colour">
-    <div id="content" class="loginPage">
-        <div class="centreV1">
+<body>
+    {% block body %}
+    <div>
+        <div>
+            <p id="loginErrorMessage" class="hidden"></p>
             <h1>Register</h1>
             <!-- create form for users to register -->
-            <form id="loginForm">
+            <form>
                 <label for="username">Username:</label><br>
                 <input type="text" id="username" name="username"><br> <br>
 
@@ -39,12 +36,13 @@
                 <!-- use button so input fields aren't shown in users url -->
                 <input type="button" onclick="submitRegisteration()" value="Submit"> <br> <br>
             </form>
-            <div id="options">
-                <a href="..">Already signed up? Click here to login
-                </a><br>
+            <div>
+                <a href="..">Already signed up? Click here to login</a><br>
             </div>
         </div>
     </div>
+    {% endblock %}
+   
 </body>
 
 </html>

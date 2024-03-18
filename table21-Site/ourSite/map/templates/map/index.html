@@ -1,23 +1,35 @@
+{% extends "homePage/toolbar.html"%}
 {% load static %}
 
 <!DOCTYPE html>
 <html>
-<head>
-    <!-- map.js needs to load before dynamicMap.js so the second one can use the userID from the first  -->
-    <script src="{% static 'js/map.js' %}"></script>
-    <script src="{% static 'js/dynamicMap.js' %}"></script>
-</head>
-<body onresize="resizeMap();">
-    <canvas id="map" style="border:1px solid #000000;"></canvas>
-
-    <div id="locationOptions" style="display:none"> 
-        <h4 id="location name"></h4>
-        <p id="location info"></p>
-        <button id="quiz button" type="button">Do the Quiz!</button>
-        <button id="quest button" type="button">Do the Quest!</button> 
-        <button id="game button" type="button">Play the Game!</button> 
-    </div>
-
-    <script>initialiseMap();</script>
-</body>
+    <head>
+        <!-- Global CSS Link-->
+        <!--<link rel="stylesheet" href="{% static 'css/allStyles.css' %}?{% now 'U' %}">-->
+        <!-- Personal/Local CSS Link-->
+        <!--<link rel="stylesheet" href="{% static 'css/mapStyles.css' %}?{% now 'U' %}">-->
+        {% block style %}
+            <link rel="stylesheet" href="{% static 'css/allStyles.css' %}?{% now 'U' %}">
+        {% endblock %}
+        {% block script %}
+            <script type="text/javascript" src="{% static 'js/map.js' %}?{% now 'U' %}"></script>
+            <script type="text/javascript" src="{% static 'js/dynamicMap.js' %}"></script>
+        {% endblock %}
+    </head>
+    <body>
+        {% block content %}
+            <div onresize="resizeMap();">
+                <canvas id="map" style="border:1px solid #000000;"></canvas>
+            </div>
+            <div id="locationOptions" style="display:none"> 
+                <h4 id="location name"></h4>
+                <p id="location info"></p>
+                <button id="quiz button" type="button">Do the Quiz!</button>
+                <button id="quest button" type="button">Do the Quest!</button> 
+                <button id="game button" type="button">Play the Game!</button> 
+            </div>
+            <script>initialiseMap();</script>
+        {% endblock %}
+            
+    </body>
 </html>

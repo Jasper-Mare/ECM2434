@@ -11,7 +11,9 @@ async function submitLogin() {
 
     //ensure no fields are left empty
     if (checkIfEmpty(username) || checkIfEmpty(password)) {
-        alert("Please fill in all fields");
+        document.getElementById("loginErrorMessage").classList.remove("hidden");
+        document.getElementById("loginErrorMessage").innerHTML = "Please fill in all fields!";
+        //alert("Please fill in all fields");
         //leave function if a field is empty
         return;
     }
@@ -26,7 +28,10 @@ async function submitLogin() {
     }
     else {
         //let user know that one/both of their fields don't match the DB
-        alert("Username and password don't match any user on our system: Try again, or register");
+        document.getElementById("loginErrorMessage").classList.remove("hidden");
+        error = "Username and password don't match any user on our system: <br>Try again, or register";
+        document.getElementById("loginErrorMessage").innerHTML = error;
+        //alert("Username and password don't match any user on our system: Try again, or register");
     }
 
 

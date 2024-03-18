@@ -71,9 +71,9 @@ function nextquestion() {
     choices = {0: questions[0]["answer0"], 1: questions[0]["answer1"], 2: questions[0]["answer2"]}; // get all the answers from the json
 
     // add the option button htmls
-    op1.innerHTML = '<input type="radio" name="' + order[0] + '" onclick="choose(name)">' + choices[order[0]];
-    op2.innerHTML = '<input type="radio" name="' + order[1] + '" onclick="choose(name)">' + choices[order[1]];
-    op3.innerHTML = '<input type="radio" name="' + order[2] + '" onclick="choose(name)">' + choices[order[2]];
+    op1.innerHTML = '<input class="form-check-input" type="radio" name="' + order[0] + '" onclick="choose(name)">' + choices[order[0]];
+    op2.innerHTML = '<input class="form-check-input" type="radio" name="' + order[1] + '" onclick="choose(name)">' + choices[order[1]];
+    op3.innerHTML = '<input class="form-check-input" type="radio" name="' + order[2] + '" onclick="choose(name)">' + choices[order[2]];
     questions.shift();
 
   } else { // if there are no more questions finish
@@ -121,7 +121,6 @@ function finish() {
   op1.style.display = "none";
   op2.style.display = "none";
   op3.style.display = "none";
-  exit.style.display = "block";
 }
 
 // function to get the cookie of a given name
