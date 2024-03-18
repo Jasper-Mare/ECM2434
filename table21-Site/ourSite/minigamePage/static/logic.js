@@ -26,6 +26,7 @@ export function logicUpdate() {
         SCENES.game.UI.buttons[index].resetColor("#eebb33");
     }
     difficulty += 0.00003
+    SCENES.game.UI.text[1].resetText(String(Math.floor(16 * difficulty))+" points")
 
     if (energyWasted > 15000) {
       if (!gameover) {
@@ -56,6 +57,7 @@ export function start() {
     energyWasted = 0;
     gameover = false;
     SCENES.game.UI.sprites[5].resetwidth(screenToWorldSpace(0,0.052)[0])
+    SCENES.game.UI.text[1].resetText(String(Math.floor(16 * difficulty))+" points")
 
     // set all window states to 0
     for (let i = 1; i < windowAmount; i++) {
@@ -69,13 +71,14 @@ export function start() {
  */
 export function clickWindow(index) {
     // Get which window and then reset the state to 0
-    if (windowStates[index] == 1) {
-        windowStates[index] = 0;
-        SCENES.game.UI.buttons[index].resetColor("#666666");
+    console.log(index)
+    if (windowStates[index-2] == 1) {
+        windowStates[index-2] = 0;
+        SCENES.game.UI.buttons[index-2].resetColor("#666666");
     }
     else {
-        windowStates[index] = 1;
-        SCENES.game.UI.buttons[index].resetColor("#eebb33");
+        windowStates[index-2] = 1;
+        SCENES.game.UI.buttons[index-2].resetColor("#eebb33");
     }
 }
 

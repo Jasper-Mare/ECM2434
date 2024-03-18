@@ -257,6 +257,10 @@ class UIText {
         ctx.textAlign = this.align;
         ctx.fillText(this.text, this.coords.x, this.coords.y);
     }
+
+    resetText(text) {
+        this.text = text;
+    }
 }
 
 export class UIRect {
@@ -502,7 +506,10 @@ export const SCENES = {
                 //new UIButton(screenToWorldSpace(0.915, 0.87), screenToWorldSpace(0.07, 0.1), screenToWorldSpace(0.07, 0.1), (a) => {clickWindow(a)}, "", "#666666")
 
             ],
-            text: [],
+            text: [
+                new UIText(screenToWorldSpace(0.36,0.07), "26", "'Courier new'", "white", "Energy wasted"),
+                new UIText(screenToWorldSpace(0.78,0.04), "30", "'Courier new'", "white", ""),
+            ],
 
             pauseMenu: {
                 buttons: [
