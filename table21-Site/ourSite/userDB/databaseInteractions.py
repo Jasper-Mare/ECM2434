@@ -1,6 +1,6 @@
 # written by Jasper
 
-from .models import User
+from .models import User, PlayerTargetLocation
 from urllib.parse import unquote
 
 AccessLevels = ["USER", "GAME_KEEPER", "DEVELOPER"]
@@ -22,6 +22,16 @@ def getUserById(id:int):
         return {"error":"DoesNotExist", "details":f"id: {id} does not exist"}
 
     return makeUserStruct(user.id, user.name, user.password_hash, user.access_level, user.recovery_email, user.score)
+
+def getUserTargetLocation(id:int, defaultIfNot:int):
+    try:
+        playerLocation = PlayerTargetLocation.objects.get(player=id)
+    except (PlayerTargetLocation.DoesNotExist):
+        playerLocation = PlayerTargetLocation(player=id, location=defaultIfNot)
+        playerLocation.save()
+        return {"location": defaultIfNot}
+    
+    return {"location": playerLocation.location}
 
 
 def getUserByName(name:str):

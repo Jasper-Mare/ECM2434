@@ -3,11 +3,20 @@
 <!DOCTYPE html>
 <html>
 <head>
- <script src="{% static 'js/dynamicMap.js' %}"></script>
+    <!-- map.js needs to load before dynamicMap.js so the second one can use the userID from the first  -->
+    <script src="{% static 'js/map.js' %}"></script>
+    <script src="{% static 'js/dynamicMap.js' %}"></script>
 </head>
-<body onresize="initialiseMap();">
-
+<body onresize="resizeMap();">
     <canvas id="map" style="border:1px solid #000000;"></canvas>
     <script>initialiseMap();</script>
+
+    <div id="locationOptions" style="display:none"> 
+        <h4 id="location name"></h4>
+        <p id="location info"></p>
+        <button id="quiz button" type="button">Do the Quiz!</button>
+        <button id="quest button" type="button">Do the Quest!</button> 
+        <button id="game button" type="button">Play the Game!</button> 
+    </div>
 </body>
 </html>

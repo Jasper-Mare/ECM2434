@@ -6,6 +6,7 @@ if (userID == undefined || userID == "") { // if they are not logged in redirect
     window.location.href = "/login/";
 }
 
+/*
 //Function written by MF
 document.addEventListener('DOMContentLoaded',function(){ //page loading event triggers function
     const xhr = new XMLHttpRequest(); //start http using ID retrieved from cookie
@@ -40,7 +41,7 @@ function playmusic() {
     }
     funAudio.play();
 }
-
+*/
 function getCookie(cname) {
 // function to get the cookie of a given name
     let name = cname + "=";
@@ -59,7 +60,7 @@ function getCookie(cname) {
 }
 //Function getCookie() gets code from: https://www.w3schools.com/js/js_cookies.asp
 
-
+/*
 function getLocation() {
 // function to get current user position only once
     const x = document.getElementById("myButton");
@@ -108,3 +109,4 @@ function logOut() {
     document.cookie = "login=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;" // set it to an expired date so its deleted
     window.location.href = "/login/";
 }
+*/

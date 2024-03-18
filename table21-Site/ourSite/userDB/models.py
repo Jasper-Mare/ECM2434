@@ -12,3 +12,7 @@ class User(models.Model):
 
     def __str__(self):
         return f"user {self.id} : {self.name}"
+    
+class PlayerTargetLocation(models.Model):
+    player = models.IntegerField()
+    location = models.IntegerField()
