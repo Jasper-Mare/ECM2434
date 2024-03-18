@@ -106,6 +106,14 @@ def getQuestById(id):
     
     return makeQuestStruct(id, quest.task, quest.points)
 
+def getAllQuests():
+    questQueryResults = Quest.objects.all()
+    questArray = []
+
+    for result in questQueryResults:
+        questArray.append(makeQuestStruct(result.id, result.task, result.points))
+
+    return {"quests": questArray}
 
 
 def createLocation(lat, long, name, info, radius):

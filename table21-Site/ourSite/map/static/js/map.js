@@ -1,4 +1,66 @@
 
+userID = getCookie("login"); // get the userID from the cookie
+if (userID == undefined || userID == "") { // if they are not logged in redirect them to the login page
+    alert("Please login");
+    document.cookie = "login=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;" // set it to an expired date so its deleted
+    window.location.href = "/login/";
+}
+
+/*
+//Function written by MF
+document.addEventListener('DOMContentLoaded',function(){ //page loading event triggers function
+    const xhr = new XMLHttpRequest(); //start http using ID retrieved from cookie
+    request = '/userDB/getUserById?id='+String(userID)
+    xhr.open('GET', request, true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            const response = JSON.parse(xhr.responseText);
+            //when json response comes from http request check access_level of user
+            const access = response.access_level;
+            //if user doesn't have authority hide button
+            if(access == "USER"){
+                document.getElementById("admin").classList.add("hidden");
+            }
+        }
+    };
+    //send request
+    xhr.send();
+})
+
+function playmusic() {
+// function to play Henry's music he created
+    var funAudio;
+    const container = document.getElementById("container");
+    if (funAudio == undefined) {
+        funAudio = document.createElement("audio");
+        funAudio.src = "../static/henrys jam.mp3";
+        funAudio.loop = true;
+        funAudio.autoplay = true;
+        funAudio.volume = 0.2;
+        container.appendChild(funAudio);
+    }
+    funAudio.play();
+}
+*/
+function getCookie(cname) {
+// function to get the cookie of a given name
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+//Function getCookie() gets code from: https://www.w3schools.com/js/js_cookies.asp
+
+/*
 function getLocation() {
 // function to get current user position only once
     const x = document.getElementById("myButton");
@@ -42,3 +104,9 @@ function writeLocationToSite(results){
         console.log("No locations available or results is not defined.");
     }
 }
+
+function logOut() {
+    document.cookie = "login=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;" // set it to an expired date so its deleted
+    window.location.href = "/login/";
+}
+*/
