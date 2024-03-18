@@ -1,4 +1,4 @@
-import {UIButton, screenToWorldSpace, UIRect} from "./framework.js";
+import {UIButton, screenToWorldSpace, UIRect, SCENES} from "./framework.js";
 
 
 
@@ -7,6 +7,7 @@ export var windowAmount;
 export var windowStates = [];
 export var difficulty;
 export var levelLost = false;
+export var energyWasted = 0;
 
 
 /**
@@ -16,9 +17,19 @@ export var levelLost = false;
  * Change states of variables
  */
 export function logicUpdate() {
-    if (Math.random() > 1-((difficulty/10)+1)) {
-        windowStates[Math.floor(Math.random() * windowAmount)] = 1
+    //console.log(1-(difficulty/10))
+    if (Math.random() > (1-(difficulty/10))) {
+        var index = Math.floor(Math.random() * (windowAmount+1))
+        windowStates[index] = 1
+        SCENES.game.UI.buttons[index].resetColor("#eebb33");
+        //SCENES[game][UI][buttons][index].color = "#eebb33"
     }
+    for (let i = 0; i < windowAmount; i++) {
+        if (windowStates[i] == 1) {
+            energyWasted += 1
+        }
+    }
+    difficulty += 0.00003
 }
 
 /**
@@ -28,8 +39,8 @@ export function logicUpdate() {
  */
 export function start() {
     currentScene = "game";
-    windowAmount = 5;
-    difficulty = 1;
+    windowAmount = 36;
+    difficulty = 0.03;
 
     // set all window states to 0
     for (let i = 0; i < windowAmount; i++) {
@@ -40,6 +51,17 @@ export function start() {
 /**
  * 
  */
-export function clickWindow() {
+export function clickWindow(index) {
     // Get which window and then reset the state to 0
+    if (windowStates[index] == 1) {
+        windowStates[index] = 0;
+        SCENES.game.UI.buttons[index].resetColor("#666666");
+    }
+    else {
+        windowStates[index] = 1;
+        SCENES.game.UI.buttons[index].resetColor("#eebb33");
+    }
+    
+    console.log(windowStates)
+
 }

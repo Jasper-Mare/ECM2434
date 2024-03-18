@@ -147,8 +147,12 @@ export class UIButton {
         this.AnimCounter = { zoomIn: 0, zoomOut: 0 };
 
         this.onClickFunction = onClickFunction;
-        this.extraData = 0;
+        this.extraData = windowCount++;
 
+        this.color = color;
+    }
+
+    resetColor(color = "#f49d37") {
         this.color = color;
     }
 
@@ -314,7 +318,7 @@ function startFrames() {
     setDelta();
 
     //update game logic
-    if (currentScene === "level") {
+    if (currentScene === "game") {
         logicUpdate();
     }
 
@@ -352,7 +356,9 @@ function setDelta() {
 
 import {logicUpdate, start, currentScene, clickWindow, windowAmount, windowStates, difficulty, levelLost} from "./logic.js";
 
-const SCENES = {
+var windowCount = 0;
+
+export const SCENES = {
     game: {
         UI: {
             sprites: [
@@ -376,50 +382,50 @@ const SCENES = {
                     "pause"),
 
                 // BUILDING 1
-                new UIButton(screenToWorldSpace(0.02, 0.45), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), () => {clickWindow()}, "", "#f49d37"),
-                new UIButton(screenToWorldSpace(0.13, 0.45), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), () => {clickWindow()}, "", "#f49d37"),
-                new UIButton(screenToWorldSpace(0.02, 0.57), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), () => {clickWindow()}, "", "#f49d37"),
-                new UIButton(screenToWorldSpace(0.13, 0.57), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), () => {clickWindow()}, "", "#f49d37"),
-                new UIButton(screenToWorldSpace(0.02, 0.69), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), () => {clickWindow()}, "", "#f49d37"),
-                new UIButton(screenToWorldSpace(0.13, 0.69), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), () => {clickWindow()}, "", "#f49d37"),
-                new UIButton(screenToWorldSpace(0.02, 0.81), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), () => {clickWindow()}, "", "#f49d37"),
-                new UIButton(screenToWorldSpace(0.13, 0.81), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), () => {clickWindow()}, "", "#f49d37"),
+                new UIButton(screenToWorldSpace(0.02, 0.45), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.13, 0.45), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.02, 0.57), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.13, 0.57), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.02, 0.69), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.13, 0.69), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.02, 0.81), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.13, 0.81), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
 
                 // BUILDING 2
-                new UIButton(screenToWorldSpace(0.26, 0.65), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), () => {clickWindow()}, "", "#f49d37"),
-                new UIButton(screenToWorldSpace(0.26, 0.77), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), () => {clickWindow()}, "", "#f49d37"),
+                new UIButton(screenToWorldSpace(0.26, 0.65), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.26, 0.77), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
 
                 // BUILDING 3
-                new UIButton(screenToWorldSpace(0.37, 0.33), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), () => {clickWindow()}, "", "#f49d37"),
-                new UIButton(screenToWorldSpace(0.46, 0.33), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), () => {clickWindow()}, "", "#f49d37"),
-                new UIButton(screenToWorldSpace(0.55, 0.33), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), () => {clickWindow()}, "", "#f49d37"),
-                new UIButton(screenToWorldSpace(0.37, 0.45), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), () => {clickWindow()}, "", "#f49d37"),
-                new UIButton(screenToWorldSpace(0.46, 0.45), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), () => {clickWindow()}, "", "#f49d37"),
-                new UIButton(screenToWorldSpace(0.55, 0.45), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), () => {clickWindow()}, "", "#f49d37"),
-                new UIButton(screenToWorldSpace(0.37, 0.57), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), () => {clickWindow()}, "", "#f49d37"),
-                new UIButton(screenToWorldSpace(0.46, 0.57), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), () => {clickWindow()}, "", "#f49d37"),
-                new UIButton(screenToWorldSpace(0.55, 0.57), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), () => {clickWindow()}, "", "#f49d37"),
-                new UIButton(screenToWorldSpace(0.37, 0.69), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), () => {clickWindow()}, "", "#f49d37"),
-                new UIButton(screenToWorldSpace(0.46, 0.69), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), () => {clickWindow()}, "", "#f49d37"),
-                new UIButton(screenToWorldSpace(0.55, 0.69), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), () => {clickWindow()}, "", "#f49d37"),
-                new UIButton(screenToWorldSpace(0.37, 0.81), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), () => {clickWindow()}, "", "#f49d37"),
-                new UIButton(screenToWorldSpace(0.46, 0.81), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), () => {clickWindow()}, "", "#f49d37"),
-                new UIButton(screenToWorldSpace(0.55, 0.81), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), () => {clickWindow()}, "", "#f49d37"),
+                new UIButton(screenToWorldSpace(0.37, 0.33), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.46, 0.33), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.55, 0.33), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.37, 0.45), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.46, 0.45), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.55, 0.45), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.37, 0.57), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.46, 0.57), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.55, 0.57), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.37, 0.69), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.46, 0.69), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.55, 0.69), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.37, 0.81), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.46, 0.81), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.55, 0.81), screenToWorldSpace(0.08, 0.1), screenToWorldSpace(0.08, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
 
                 // BUILDING 4
-                new UIButton(screenToWorldSpace(0.66, 0.45), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), () => {clickWindow()}, "", "#f49d37"),
-                new UIButton(screenToWorldSpace(0.78, 0.45), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), () => {clickWindow()}, "", "#f49d37"),
-                new UIButton(screenToWorldSpace(0.66, 0.57), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), () => {clickWindow()}, "", "#f49d37"),
-                new UIButton(screenToWorldSpace(0.78, 0.57), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), () => {clickWindow()}, "", "#f49d37"),
-                new UIButton(screenToWorldSpace(0.66, 0.69), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), () => {clickWindow()}, "", "#f49d37"),
-                new UIButton(screenToWorldSpace(0.78, 0.69), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), () => {clickWindow()}, "", "#f49d37"),
-                new UIButton(screenToWorldSpace(0.66, 0.81), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), () => {clickWindow()}, "", "#f49d37"),
-                new UIButton(screenToWorldSpace(0.78, 0.81), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), () => {clickWindow()}, "", "#f49d37"),
+                new UIButton(screenToWorldSpace(0.66, 0.45), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.78, 0.45), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.66, 0.57), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.78, 0.57), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.66, 0.69), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.78, 0.69), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.66, 0.81), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.78, 0.81), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.1, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
 
                 // BUILDING 5
-                new UIButton(screenToWorldSpace(0.915, 0.63), screenToWorldSpace(0.07, 0.1), screenToWorldSpace(0.07, 0.1), () => {clickWindow()}, "", "#f49d37"),
-                new UIButton(screenToWorldSpace(0.915, 0.75), screenToWorldSpace(0.07, 0.1), screenToWorldSpace(0.07, 0.1), () => {clickWindow()}, "", "#f49d37"),
-                new UIButton(screenToWorldSpace(0.915, 0.87), screenToWorldSpace(0.07, 0.1), screenToWorldSpace(0.07, 0.1), () => {clickWindow()}, "", "#f49d37")
+                new UIButton(screenToWorldSpace(0.915, 0.63), screenToWorldSpace(0.07, 0.1), screenToWorldSpace(0.07, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.915, 0.75), screenToWorldSpace(0.07, 0.1), screenToWorldSpace(0.07, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.915, 0.87), screenToWorldSpace(0.07, 0.1), screenToWorldSpace(0.07, 0.1), (a) => {clickWindow(a)}, "", "#666666")
 
             ],
             text: [
