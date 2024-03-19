@@ -6,6 +6,7 @@ export var windowStates = [];
 export var difficulty;
 export var energyWasted;
 var gameover;
+const scoreMultiplier = 60;
 
 const userID = getCookie("login"); // get the userID from the cookie
 if (userID == undefined || userID == "") { // if they are not logged in redirect them to the login page
@@ -25,17 +26,18 @@ export function logicUpdate() {
         windowStates[index] = 1
         SCENES.game.UI.buttons[index].resetColor("#eebb33");
     }
-    difficulty += 0.00003
-    SCENES.game.UI.text[1].resetText(String(Math.floor(16 * difficulty))+" points")
+    difficulty += 0.00005
 
     if (energyWasted > 15000) {
       if (!gameover) {
         gameover = true;
         loseLevel()
+        SCENES.game.UI.loss_menu.text[1].resetText("You scored "+String(Math.floor(scoreMultiplier * difficulty))+" points")
         addScore() // write the score to the database
       }
     }
     else {
+      SCENES.game.UI.text[1].resetText(String(Math.floor(scoreMultiplier * difficulty))+" points")
       for (let i = 0; i < windowAmount; i++) {
         if (windowStates[i] == 1) {
           energyWasted += 1
@@ -53,11 +55,11 @@ export function logicUpdate() {
 export function start() {
     startScene = "main_menu";
     windowAmount = 42;
-    difficulty = 0.03;
+    difficulty = 0;
     energyWasted = 0;
     gameover = false;
     SCENES.game.UI.sprites[5].resetwidth(screenToWorldSpace(0,0.052)[0])
-    SCENES.game.UI.text[1].resetText(String(Math.floor(16 * difficulty))+" points")
+    SCENES.game.UI.text[1].resetText("0 points")
 
     // set all window states to 0
     for (let i = 1; i < windowAmount; i++) {
@@ -71,7 +73,6 @@ export function start() {
  */
 export function clickWindow(index) {
     // Get which window and then reset the state to 0
-    console.log(index)
     if (windowStates[index-2] == 1) {
         windowStates[index-2] = 0;
         SCENES.game.UI.buttons[index-2].resetColor("#666666");
@@ -84,9 +85,7 @@ export function clickWindow(index) {
 
 // function to add the score to the user in the database
 function addScore() {
-  var score = Math.floor(14 * difficulty); // calculate the score
-  alert(score)
-  console.log("score=",score)
+  var score = Math.floor(scoreMultiplier * difficulty); // calculate the score
   // get the current score of the user
   var request = "../userDB/getUserById?id="+String(userID) // get user details from their id
   getRequest(request)

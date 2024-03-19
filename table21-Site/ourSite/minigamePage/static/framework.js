@@ -1,7 +1,6 @@
 //=========================================================
 //===================== CANVAS SET-UP =====================
 //#region canvas_setup
-console.log("script running");
 const canvas = document.querySelector("canvas");
 window.scrollTo({ top: 0, behavior: "auto" });
 document.body.style.overflow = "hidden";
@@ -623,19 +622,20 @@ export const SCENES = {
                         },
                         "Retry"),
                     new UIButton(
-                        screenToWorldSpace(0.35, 0.7), screenToWorldSpace(0.3, 0.1), screenToWorldSpace(0.26, 0.11),
+                        screenToWorldSpace(0.4, 0.7), screenToWorldSpace(0.2, 0.1), screenToWorldSpace(0.21, 0.11),
                         () => {
                             levelLost = false;
                             currentScene = "main_menu";
                             setupScene();
                         },
-                        "Return to Menu")
+                        "Menu")
                 ],
                 text: [
                     new UIText(
                         screenToWorldSpace(0.5, 0.22), "52", "'Courier new'", "white", "⊣ LEVEL LOST ⊢",
                         undefined, undefined, "center"
                     ),
+                    new UIText(screenToWorldSpace(0.5, 0.4), "28", "'Courier new'", "white", "", undefined, undefined, "center")
                 ],
                 sprites: [
                     new UIRect(screenToWorldSpace(0.25, 0.175), screenToWorldSpace(0.5, 0.65), "#21897e", 10)
@@ -693,7 +693,6 @@ function startFrames() {
 }
 
 function setupScene() {
-    console.log(currentScene);
     //--------------------------------------------------------------------------
     // clear all rendering buffers (implemented as lists)
     BACKGROUND_ELEMS.splice(0, BACKGROUND_ELEMS.length);
