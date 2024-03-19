@@ -19,7 +19,6 @@ function DoQuest() {
   getRequest(request)
   .then(response => {
     questions = shuffle(response["quests"]); // the order of the questions is randomised
-    console.log(questions);
 
     questionNumber = 1;
     scorecount = 0;
@@ -39,7 +38,7 @@ function nextquestion() {
     choose(name)
 
   } else { // if there are no more questions finish
-    finish();
+    //finish();
   }
 }
 
@@ -69,9 +68,6 @@ function addScore(id, score) {
     // add the score to the current score
     request = '/userDB/updateUser?id='+String(id)+'&score='+String(score+currentscore) // use updateUser in contentDB
     getRequest(request)
-    .then(response => {
-      console.log(response);
-    })
   })
 }
 
@@ -109,6 +105,66 @@ async function getRequest(request) {
 
 function finish() {
   addScore(userID, scorecount);
+  console.log("finish");
+
+  // advance the user's target location
+  // fetch the all the locations
+  var locations = [];
+  var currentLocationId = -1;
+
+  function waitForLocations() {
+    console.log("wait for locations", locations, currentLocationId);
+
+    if (locations.length == 0 || currentLocationId === -1) {
+        // locations aren't loaded, so wait
+        setTimeout(() => {
+            waitForLocations();
+        },100);
+    } else {
+      //the locations are loaded and we have the user's location
+      advanceLocation();
+    }
+  }
+
+  function advanceLocation() {
+    console.log("advance location");
+    const currentLocationIndex = locations.findIndex((e) => { return e == currentLocationId; });
+    var newLocationId;
+
+    // if it is the last one or beyond the list, wrap around
+    if (currentLocationIndex >= locations.length - 1) { newLocationId = locations[0]; }
+    else { 
+      // go to the next location
+      newLocationId = locations[currentLocationIndex+1];
+    }
+
+    console.log(currentLocationIndex, currentLocationId, newLocationId);
+    fetch("/userDB/updateUserTargetLocation?id="+userID+"&location="+newLocationId,{method: "GET"}).then((response) => {
+      // once the change has happened, redirect
+      window.location.href="/map/";
+    });
+  }
+
+  fetch("/contentDB/getAllLocations", {method: "GET"})
+  .then((response) => response.json())
+  .then((json) => {
+    console.log("locations got back", locations);
+    json["locations"].forEach(e => {
+      locations.push(e["id"]);
+    });
+  })
+
+  // fetch the location the user is at
+  fetch("/userDB/getUserTargetLocation?id="+userID, {method: "GET"})
+  .then((response) => response.json())
+  .then((json) => {
+    console.log("player location got back:", json);
+    currentLocationId = json["location"];
+  })
+
+  // wait for the fetches to ccome back
+  waitForLocations();
+
 }
 
 DoQuest();

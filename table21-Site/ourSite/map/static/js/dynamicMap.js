@@ -15,7 +15,6 @@ class GPScoord {
         // calculate the distance from the user to the centre and the location to the centre
         const playerDist = playerGPS.getDistance(mapCentre);
         const targetDist = targetedLocation.getDistance(mapCentre);
-        console.log("dist plr", playerDist, "loc",targetDist);
 
         // only allow the map to zoom in till a certain point
         const viewDist = Math.max(playerDist, targetDist, playerMinViewDist)*1.8;

@@ -42,10 +42,10 @@ def updateUserLocation(request):
     if (userId == -1):
         return makeError("parameter missing", "id parameter is missing!")
     
-    if (location == -1):
+    if (locationId == -1):
         return makeError("parameter missing", "location parameter is missing!")
     
-    location = databaseInteractions.getUserTargetLocation(userId, 10)
+    location = databaseInteractions.updateUserLocation(userId, locationId)
 
     return JsonResponse(location)
 
