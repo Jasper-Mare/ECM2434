@@ -616,7 +616,7 @@ export const SCENES = {
             loss_menu: {
                 buttons: [
                     new UIButton(
-                        screenToWorldSpace(0.4, 0.7), screenToWorldSpace(0.2, 0.1), screenToWorldSpace(0.21, 0.11),
+                        screenToWorldSpace(0.4, 0.6), screenToWorldSpace(0.2, 0.1), screenToWorldSpace(0.21, 0.11),
                         () => {
                             finish()
                         },
