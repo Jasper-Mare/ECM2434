@@ -17,50 +17,56 @@
         
     </head>
     <body >
-        <div class ="text-center">
-            <div>
-                <nav class="navbar navbar-expand-lg bg-primary border-bottom border-body border-2 " data-bs-theme="dark" id="bar">
-                    <div class="container-fluid">
-                        <a class="navbar-brand" onclick="playMusic()" data-bs-toggle="collapse" href="#collapseAbout" role="button" aria-expanded="false" aria-controls="collapseAbout">EcoQuest</a>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                          <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                          <ul class="navbar-nav ms-auto mb-lg-0">
-                            <li class="nav-item">
-                              <a class="nav-link active" aria-current="page" href="/map">Map</a>
-                            </li>
-                            <li class="nav-item">
-                              <a class="nav-link" href="/leaderboard/">Leaderboard</a>
-                            </li>
-                            <li class="nav-item" id = "admin">
-                                <a class="nav-link" href="/adminPage">Admin</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" onclick="logOut()" href="/login">Log Out</a>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                
-                </nav>
-                <div class="collapse" id="collapseAbout">
-                    <div class="card card-body">
+        <div class="text-center toolbar">
+            <nav class="navbar navbar-expand-lg border-bottom border-right border-body border-3" data-bs-theme="dark" id="bar">
+                <div class="container-fluid">
+                    <a class="navbar-brand" onclick="playMusic()" data-bs-toggle="collapse" href="#collapseAbout" role="button" aria-expanded="false" aria-controls="collapseAbout">EcoQuest</a>
+                    <button class="navbar-toggler mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/map">Map</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/leaderboard/">Leaderboard</a>
+                        </li>
+                        <li class="nav-item" id = "admin">
+                            <a class="nav-link" href="/adminPage">Admin</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" onclick="logOut()" href="/login">Log Out</a>
+                        </li>
+                        </ul>
+                    </div>
+                    </div>
+            
+            </nav>
+            <div class="collapse" id="collapseAbout">
+                <div class="card card-body">
+                    <div class="c-center">
                         <div class="container" id="sound">
-                            <h1>Welcome to EcoQuest Exeter!</h1>
+                            <h1 class="display-3">Welcome to EcoQuest Exeter!</h1>
                         </div>
-                        <div class="container">
-                            <div class="container">
-                                <h3>The aim of the game</h3>
-                            </div>
-                            <div class="container">
-                                Travel to all the locations on the map and answer the sustainable questions and quests to gain points and be top of the leaderboard.
-                            </div>
-                            <img src="{% static 'images/Goals.png' %}" height="200" width="350">
+                        <div class="container pt-3">
+                            <div class="row align-items-start">
+                                <div class="col text-lg-start ps-lg-5">
+                                    <h5>Aim of the game</h5>
+                                    <p>Travel to all the locations on the map and answer the sustainable questions and quests to gain points and be top of the leaderboard.</p>
+                                    <h5>Our Data Policy</h5>
+                                    <p>To learn how we use your data <a href="/map/about">Click Here</a></p>
+                                </div>
+                                <div class="col text-lg-start">
+                                    <img src="{% static 'images/Goals.png' %}" height="200" width="350">
+                                </div>
+                            </div>                            
                         </div>
-                   </div>
+                    </div>
                 </div>
             </div>
+        </div>
+        <div class="text-center">
             {% block content %}
             {% endblock %}
         </div>

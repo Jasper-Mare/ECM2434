@@ -8,6 +8,8 @@ div{
 */
 /*---------------------------------------------------*/
 /**/
+
+
 /* LOGIN PAGE THEMES
   ==================================================*/
 /* background image*/
@@ -23,13 +25,13 @@ body.login-bg{
 /*loginBox acts as a container for all loginPage apps*/
 .loginBox{
     /*due to error message setting minimum value so it is contained*/
-    min-width: 25em;
+    min-width: 22em;
     border-radius:15px;
     box-shadow: 1px 2px 10px 0px rgba(0,0,0,0.4);
     background: rgb(249, 242, 242);
 }
 
-.loginBox h1{
+.loginBox h2 {
     font-weight: 400;
     line-height: 1.1;
     text-transform: uppercase;  
@@ -48,8 +50,63 @@ body.login-bg{
     font-weight: 600;
 }
 
+/* Navbar THEMES
+  ==================================================*/
+.toolbar nav{
+    background-color: rgb(48, 119, 163);
+    border-bottom: 5px solid rgb(47, 110, 149);
+}
 
+.toolbar nav .navbar-brand{
+    border-right: 2px solid rgba(0,0,0,0.1);
+    padding-right: 10px;
+}
+.toolbar nav .navbar-brand:hover{
+    color: rgb(205, 205, 205);
+}
 
+.toolbar nav ul{
+    background-color: rgb(47, 110, 149);
+    border-radius: 10px;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.toolbar nav li{
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.toolbar nav li a{
+    color: rgb(208, 208, 208);
+}
+
+.toolbar nav li a:hover{
+    color: white;
+}
+
+/*--------------------------*/
+.toolbar .card{
+    border-radius: 0px;
+    background-color:darkkhaki;
+}
+
+.toolbar .card .c-center{
+    background-color: white;
+}
+
+.toolbar .card h1{
+    font-weight: 350;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.toolbar .card h5{
+    font-size: 22spx;
+}
+
+/* Website THEMES
+  ==================================================*/
 
 td button.btn{
     margin: 2px;

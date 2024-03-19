@@ -8,5 +8,6 @@ def index(request):
     return HttpResponse(template.render({},request))
 
 def about(request):
-    return render(request, 'map/about.html')
+    template = loader.get_template("map/about.html")
+    return HttpResponse(template.render({},request))
  
