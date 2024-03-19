@@ -110,13 +110,18 @@ body.login-bg{
   ==================================================*/
 
 .logo-bg{
-    background-image:url('../images/Untitled.png');
+    background:linear-gradient(rgba(255,255,255,.8), rgba(255,255,255,.8)), url('../images/Untitled.png');
+    background-size: 100vh;
+    background-repeat: no-repeat;
+    background-position: bottom 0px right 0px;
 }
 
 .image-bg{
-    background-image:url('../images/circles.jpg');
+    background-image:url('../images/bg-circle3.png');
     height: 90vh;
-    background-size: cover;
+    background-repeat: no-repeat;
+   
+    
 }
 
 
@@ -131,4 +136,19 @@ td button.btn{
 .hidden{
     display: none;
 }
+
+.exit-button{
+    margin-top: 20px;
+}
+.exit-button button{
+    font-size: 52px;
+    font-weight: 700;
+    font-family: 'consolas';
+}
+
+.exit-button button:hover{
+    text-decoration: underline;
+}
+
+
 

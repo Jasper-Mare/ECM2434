@@ -18,20 +18,24 @@
 <body>
     {% block content %}
         <div class="text-start image-bg">
-            <div class = "container">
-                <h2 class = "d-flex" id="topic"></h2> <!-- Content added by quest.js -->
-                <h5 class = "d-flex" id="place"></h5> <!-- Content added by quest.js -->
-            </div>
-            <div>
-                <div class = "container text-start">
-                    <h1 class = "fw-normal display-2 d-inline" id="score"></h1> <!-- Content added by quest.js -->
-                </div>
+            <div class="col-6 mx-auto pt-3">
                 <div class = "container">
-                    <h5 class="text-start " id="question_text"></h5> <!-- Content added by quest.js -->
-                </div>  
-            </div>
-            <div class="container">
-                <button class = "btn btn-primary " type="button" id="save" onclick="finish();">Completed</button> <!-- If you are finished with the quiz or wish to return you can go back to the map page-->    
+                    <h2 class = "d-flex" id="topic"></h2> <!-- Content added by quest.js -->
+                    <h5 class = "d-flex" id="place"></h5> <!-- Content added by quest.js -->
+                </div>
+                <div class="mt-5 pt-5">
+                    <div class="text-center">
+                        <div class = "container">
+                            <h4 class="fw-normal display-5" id="question_text"></h4> <!-- Content added by quest.js -->    
+                        </div>
+                        <div class = "container">
+                            <h5 id="score"></h5> <!-- Content added by quest.js -->
+                        </div>
+                    </div>
+                </div>
+                <div class="container text-center mt-2 exit-button">
+                    <button class ="btn" type="button" id="save" onclick="finish();">Completed</button> <!-- If you are finished with the quiz or wish to return you can go back to the map page-->    
+                </div>
             </div>
         </div>
         <script src="{% static 'js/quest.js' %}?{% now 'U' %}"></script>

@@ -25,6 +25,22 @@ document.addEventListener('DOMContentLoaded',function(){
         xhr.send();
         }  
 })
+//https://stackoverflow.com/questions/24514717/bootstrap-navbar-active-state-not-working
+document.addEventListener("DOMContentLoaded", function () {
+    // make all currently active items inactive
+    // (you can delete this block if you know that there are no active items when loading the page)
+    
+    document.querySelectorAll("a.nav-link.bar.active").forEach(li => {
+        li.classList.remove("active");
+        li.attributes.removeNamedItem("aria-current");
+    });
+
+    // find the link to the current page and make it active
+    document.querySelectorAll(`a[href="${location.pathname}"].nav-link.bar`).forEach(a => {
+        a.classList.add("active");
+        a.setAttribute("aria-current", "page");
+    });
+})
 
 function changeScreen(){
     const bar = document.getElementById("bar");
