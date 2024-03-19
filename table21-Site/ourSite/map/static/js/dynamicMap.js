@@ -12,18 +12,16 @@ class GPScoord {
         // correct scaling problem between lat and lon
         const squish = 1.7729;
 
-        // calculate the distance between the player and the location
-        const playerTargetDist = playerGPS.getDistance(targetedLocation);
+        // calculate the distance from the user to the centre and the location to the centre
+        const playerDist = playerGPS.getDistance(mapCentre);
+        const targetDist = playerGPS.getDistance(mapCentre);
 
         // only allow the map to zoom in till a certain point
-        const viewDist = Math.max(playerTargetDist*(canvasAspectRatio+0.5), playerMinViewDist);
-
-        // get the midpoint to centre the view
-        const playerTargetMid = new GPScoord((playerGPS.lat + targetedLocation.lat)/2, (playerGPS.lon + targetedLocation.lon)/2);
+        const viewDist = Math.max(playerDist, targetDist, playerMinViewDist)*canvasAspectRatio;
 
         return new NormalisedCoord(
-            mapRange(this.lon, playerTargetMid.lon-(viewDist/2)*squish, playerTargetMid.lon+(viewDist/2)*squish, -1, 1),
-            mapRange(this.lat, playerTargetMid.lat-viewDist/2, playerTargetMid.lat+viewDist/2, -1, 1),
+            mapRange(this.lon, mapCentre.lon-(viewDist/2)*squish, mapCentre.lon+(viewDist/2)*squish, -1, 1),
+            mapRange(this.lat, mapCentre.lat-viewDist/2, mapCentre.lat+viewDist/2, -1, 1),
         );
     }
 
@@ -130,7 +128,8 @@ fetch("/contentDB/getAllLocations", {method: "GET"})
         checkIfAtLocation();
     })
 
-var targetedPosition = new GPScoord((mapTLgps.lat + mapBRgps.lat)/2, (mapTLgps.lon + mapBRgps.lon)/2);
+const mapCentre = new GPScoord((mapTLgps.lat + mapBRgps.lat)/2, (mapTLgps.lon + mapBRgps.lon)/2);
+var targetedPosition = mapCentre;
 var playerLastPosition = targetedPosition;
 
 var gpsError = false;
@@ -401,10 +400,10 @@ function checkIfAtLocation() {
         window.location.href="/quiz/?id="+targetedLocationId;
     };
     document.getElementById("quest button").onclick = () => {
-        alert("clicked quest!");
+        window.location.href="/quest/";
     };
     document.getElementById("game button").onclick = () => {
-        alert("clicked game!");
+        window.location.href="/minigame/";
     };
 
 }
