@@ -14,9 +14,11 @@ div{
   ==================================================*/
 /* background image*/
 body.login-bg{
+    width: 100vw;
+    height: 100vh;
     background-image:url('../images/Gradient Wave.png');
      /*Reference to where image as taken https://makebackground.io/bk/gradient-wave/blue-gradient-wave*/
-    
+    background-size: cover;
     /*background: linear-gradient(90deg, rgba(45,138,30,1) 0%,rgba(169,255,51,1) 99%);*/
 }
 /*all themes are registered under loginBox*/
@@ -106,6 +108,10 @@ body.login-bg{
 
 /* Website THEMES
   ==================================================*/
+
+.logo-bg{
+    background-image:url('../images/Untitled.png');
+}
 
 .image-bg{
     background-image:url('../images/circles.jpg');
