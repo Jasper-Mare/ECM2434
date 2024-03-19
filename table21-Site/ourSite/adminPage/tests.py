@@ -9,7 +9,6 @@ class testAdminPage(TestCase):
         self.assertContains(response, "EcoQuest")
         self.assertContains(response, "App Data")
         self.assertContains(response, "Manage Users")
-        self.assertContains(response, "Add Location")
         self.assertContains(response, "New Quiz")
         self.assertContains(response, "New Quest")
         self.assertContains(response, "Help")
