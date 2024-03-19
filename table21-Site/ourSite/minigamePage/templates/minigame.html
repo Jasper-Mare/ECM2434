@@ -1,3 +1,4 @@
+{% extends "homePage/toolbar.html"%}
 {% load static %}
 
 <!DOCTYPE html>
@@ -8,8 +9,10 @@
     <title>Mini-Game Test</title>
 </head>
 <body>
-    <canvas id="canvas" width="400" height="300"></canvas>
-    <script src="{% static 'framework.js' %}" type="module"></script>
-    <script src="{% static 'logic.js' %}" type="module"></script>
+    {% block content %}
+        <canvas id="canvas" width="400" height="300"></canvas>
+        <script src="{% static 'framework.js' %}" type="module"></script>
+        <script src="{% static 'logic.js' %}" type="module"></script>
+    {% endblock %}
 </body>
 </html>

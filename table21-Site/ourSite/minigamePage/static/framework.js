@@ -1,3 +1,6 @@
+const GREEN = "#90d435"
+const BLUE = "#3077a3"
+
 //=========================================================
 //===================== CANVAS SET-UP =====================
 //#region canvas_setup
@@ -139,7 +142,7 @@ canvas.addEventListener("click", (e) => {
 //------------------ OBJECT SPRITES ------------------
 //#region object sprites
 export class UIButton {
-    constructor(coords, dims, zDims, onClickFunction, text = "", color = "#f49d37") {
+    constructor(coords, dims, zDims, onClickFunction, text = "", color = GREEN) {
         this.anchor = { x: coords[0], y: coords[1] };
         this.offset = { x: 0, y: 0 };
         this.originalDims = { w: dims[0], h: dims[1] };
@@ -347,7 +350,7 @@ function setDelta() {
 //====================== GAME LOGIC ======================
 //#region game logic
 
-import {logicUpdate, start, startScene, clickWindow, windowAmount, windowStates, difficulty} from "./logic.js";
+import {logicUpdate, start, startScene, clickWindow, windowAmount, windowStates, difficulty, finish} from "./logic.js";
 
 var windowCount = -1;
 var currentScene;
@@ -380,7 +383,7 @@ export const SCENES = {
             ],
             text: [],
         },
-        Background: [new UIRect([0, 0], [canvasDims.width, canvasDims.height], "#293e55ff", 0)]
+        Background: [new UIRect([0, 0], [canvasDims.width, canvasDims.height],"#293e55ff" , 0)]
     },
 
     settings_menu: {
@@ -389,7 +392,7 @@ export const SCENES = {
             buttons: [],
             text: []
         },
-        Background: [new UIRect([0, 0], [canvasDims.width, canvasDims.height], "#293e55ff", 0)]
+        Background: [new UIRect([0, 0], [canvasDims.width, canvasDims.height], BLUE, 0)]
     },
 
     tutorial: {
@@ -487,7 +490,7 @@ export const SCENES = {
                 ),
             ],
             sprites: [
-                new UIRect(screenToWorldSpace(0.15, 0.175), screenToWorldSpace(0.7, 0.65), "#21897e", 10)
+                new UIRect(screenToWorldSpace(0.15, 0.175), screenToWorldSpace(0.7, 0.65), BLUE, 10)
             ]
         },
         Background: [new UIRect([0,0], [canvasDims.width, canvasDims.height], "#293e55ff", 0)]
@@ -606,7 +609,7 @@ export const SCENES = {
                     )
                 ],
                 sprites: [
-                    new UIRect(screenToWorldSpace(0.325, 0.175), screenToWorldSpace(0.35, 0.65), "#21897e", 10)
+                    new UIRect(screenToWorldSpace(0.325, 0.175), screenToWorldSpace(0.35, 0.65), BLUE, 10)
                 ]
             },
 
@@ -624,9 +627,7 @@ export const SCENES = {
                     new UIButton(
                         screenToWorldSpace(0.4, 0.7), screenToWorldSpace(0.2, 0.1), screenToWorldSpace(0.21, 0.11),
                         () => {
-                            levelLost = false;
-                            currentScene = "main_menu";
-                            window.location.href='../../map/';
+                            finish()
                         },
                         "Menu")
                 ],
@@ -638,7 +639,7 @@ export const SCENES = {
                     new UIText(screenToWorldSpace(0.5, 0.4), "28", "'Courier new'", "white", "", undefined, undefined, "center")
                 ],
                 sprites: [
-                    new UIRect(screenToWorldSpace(0.25, 0.175), screenToWorldSpace(0.5, 0.65), "#21897e", 10)
+                    new UIRect(screenToWorldSpace(0.25, 0.175), screenToWorldSpace(0.5, 0.65), BLUE, 10)
                 ]
             }
         },

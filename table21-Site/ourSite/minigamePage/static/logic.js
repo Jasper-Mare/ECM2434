@@ -33,7 +33,6 @@ export function logicUpdate() {
         gameover = true;
         loseLevel()
         SCENES.game.UI.loss_menu.text[1].resetText("You scored "+String(Math.floor(scoreMultiplier * difficulty))+" points")
-        addScore() // write the score to the database
       }
     }
     else {
@@ -132,3 +131,64 @@ function getCookie(cname) {
   return "";
 }
 
+export function finish() {
+  addScore();
+
+  // advance the user's target location
+  // fetch the all the locations
+  var locations = [];
+  var currentLocationId = -1;
+
+  function waitForLocations() {
+    console.log("wait for locations", locations, currentLocationId);
+
+    if (locations.length == 0 || currentLocationId === -1) {
+        // locations aren't loaded, so wait
+        setTimeout(() => {
+            waitForLocations();
+        },100);
+    } else {
+      //the locations are loaded and we have the user's location
+      advanceLocation();
+    }
+  }
+
+  function advanceLocation() {
+    console.log("advance location");
+    const currentLocationIndex = locations.findIndex((e) => { return e == currentLocationId; });
+    var newLocationId;
+
+    // if it is the last one or beyond the list, wrap around
+    if (currentLocationIndex >= locations.length - 1) { newLocationId = locations[0]; }
+    else { 
+      // go to the next location
+      newLocationId = locations[currentLocationIndex+1];
+    }
+
+    console.log(currentLocationIndex, currentLocationId, newLocationId);
+    fetch("/userDB/updateUserTargetLocation?id="+userID+"&location="+newLocationId,{method: "GET"}).then((response) => {
+      // once the change has happened, redirect
+      window.location.href="/map/";
+    });
+  }
+
+  fetch("/contentDB/getAllLocations", {method: "GET"})
+  .then((response) => response.json())
+  .then((json) => {
+    console.log("locations got back", locations);
+    json["locations"].forEach(e => {
+      locations.push(e["id"]);
+    });
+  })
+
+  // fetch the location the user is at
+  fetch("/userDB/getUserTargetLocation?id="+userID, {method: "GET"})
+  .then((response) => response.json())
+  .then((json) => {
+    console.log("player location got back:", json);
+    currentLocationId = json["location"];
+  })
+
+  // wait for the fetches to ccome back
+  waitForLocations();
+}
