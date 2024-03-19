@@ -1,13 +1,15 @@
+const GREEN = "#eebb33"
+const BLUE = "#3077a3"
+
 //=========================================================
 //===================== CANVAS SET-UP =====================
 //#region canvas_setup
-console.log("script running");
 const canvas = document.querySelector("canvas");
 window.scrollTo({ top: 0, behavior: "auto" });
 document.body.style.overflow = "hidden";
 
 // internal canvas space dimenesions
-const canvasDims = { width: 1200, height: 740 };
+const canvasDims = { width: 740, height: 1200 };
 canvas.width = canvasDims.width;
 canvas.height = canvasDims.height;
 
@@ -40,7 +42,7 @@ function resizeCanvas() {
     // Account for any UI elements that reduce available space
     //let navbarHeight = document.querySelector('.navbar').offsetHeight;
     let navbarHeight = 100;
-    let topOffset = navbarHeight + 100;
+    let topOffset = navbarHeight;
     let scrollbarWidth = window.innerWidth - document.documentElement.clientWidth + 20;
 
     // Calculate available canvas dimensions
@@ -73,6 +75,14 @@ window.addEventListener("resize", debounce(resizeCanvas, 250));
 
 function lerp(startValue, endValue, t) {
     return startValue + (endValue - startValue) * t;
+}
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
 }
 
 export function screenToWorldSpace(x, y) {
@@ -132,7 +142,7 @@ canvas.addEventListener("click", (e) => {
 //------------------ OBJECT SPRITES ------------------
 //#region object sprites
 export class UIButton {
-    constructor(coords, dims, zDims, onClickFunction, text = "", color = "#f49d37") {
+    constructor(coords, dims, zDims, onClickFunction, text = "", color = GREEN) {
         this.anchor = { x: coords[0], y: coords[1] };
         this.offset = { x: 0, y: 0 };
         this.originalDims = { w: dims[0], h: dims[1] };
@@ -147,8 +157,12 @@ export class UIButton {
         this.AnimCounter = { zoomIn: 0, zoomOut: 0 };
 
         this.onClickFunction = onClickFunction;
-        this.extraData = 0;
+        this.extraData = windowCount++;
 
+        this.color = color;
+    }
+
+    resetColor(color = "#f49d37") {
         this.color = color;
     }
 
@@ -245,6 +259,10 @@ class UIText {
         ctx.textAlign = this.align;
         ctx.fillText(this.text, this.coords.x, this.coords.y);
     }
+
+    resetText(text) {
+        this.text = text;
+    }
 }
 
 export class UIRect {
@@ -259,6 +277,10 @@ export class UIRect {
         ctx.beginPath();
         ctx.roundRect(this.anchor.x, this.anchor.y, this.dims.w, this.dims.h, this.radii);
         ctx.fill();
+    }
+
+    resetwidth(width) {
+        this.dims.w = width;
     }
 }
 //#endregion
@@ -308,28 +330,6 @@ function renderFloatUI() {
     }
 }
 
-function startFrames() {
-    //reset update limit for on screen button presses.
-    updateLimiter = false;
-    setDelta();
-
-    //update game logic
-    if (currentScene === "level") {
-        logicUpdate();
-    }
-
-    // erase canvas
-    ctx.clearRect(0, 0, canvasDims.width, canvasDims.height);
-
-    // render entities in order
-    renderBackground();
-    renderProps();
-    renderFloatUI();
-
-    // call next frame
-    window.requestAnimationFrame(startFrames);
-}
-
 const deltaTime = new Map([
     ['now', 0],
     ['delta', 0],
@@ -350,25 +350,237 @@ function setDelta() {
 //====================== GAME LOGIC ======================
 //#region game logic
 
-import {logicUpdate, start, currentScene, clickWindow, windowAmount, windowStates, difficulty, levelLost} from "./logic.js";
+import {logicUpdate, start, startScene, clickWindow, windowAmount, windowStates, difficulty, finish} from "./logic.js";
 
-const SCENES = {
-    game: {
-        UI: {
+var windowCount = -1;
+var currentScene;
+
+export const SCENES = {
+    main_menu: {
+        UI:{
+            sprites: [],
             buttons: [
                 new UIButton(
-                    screenToWorldSpace(0.02, 0.02), screenToWorldSpace(0.1, 0.1), screenToWorldSpace(0.11, 0.11),
+                    screenToWorldSpace(0.3, 0.4), screenToWorldSpace(0.4, 0.2), screenToWorldSpace(0.42, 0.22),
+                    () => {
+                        currentScene = "game"
+                        setupScene();
+                        if (!GLOBALS.isMusicPlaying) {
+                            playTracks();
+                            GLOBALS.isMusicPlaying = true;
+                        }
+                    },
+                    "Start the game"
+                ),
+                new UIButton(
+                    screenToWorldSpace(0.345, 0.7), screenToWorldSpace(0.31, 0.1), screenToWorldSpace(0.32, 0.11),
+                    () => {
+                        currentScene = "tutorial"
+                        setupScene();
+                    },
+                    "INSTRUCTIONS"
+                ),
+            ],
+            text: [],
+        },
+        Background: [new UIRect([0, 0], [canvasDims.width, canvasDims.height],"#293e55ff" , 0)]
+    },
+
+    settings_menu: {
+        UI:{
+            sprites: [],
+            buttons: [],
+            text: []
+        },
+        Background: [new UIRect([0, 0], [canvasDims.width, canvasDims.height], BLUE, 0)]
+    },
+
+    tutorial: {
+        UI:{
+            buttons: [
+                new UIButton(
+                    screenToWorldSpace(0.4, 0.71), screenToWorldSpace(0.2, 0.1), screenToWorldSpace(0.21, 0.11),
+                    () => {
+                        currentScene = "main_menu"
+                        setupScene();
+                    },
+                    "Back"
+                ),
+            ],
+            text: [
+                new UIText(
+                    screenToWorldSpace(0.5, 0.22), "62", "'Courier new'", "white", "⊣ INSTRUCTIONS ⊢",
+                    undefined, undefined, "center"
+                ),
+                // tutorial text
+                new UIText(
+                    screenToWorldSpace(0.17, 0.3), "30", "'Courier new'", "white", 
+                    "YOU are the new 'Light", undefined, undefined, "left"
+                ),
+                new UIText(
+                    screenToWorldSpace(0.17, 0.325), "30", "'Courier new'", "white", 
+                    "Switch Manager' for a", undefined, undefined, "left"
+                ),
+                new UIText(
+                    screenToWorldSpace(0.17, 0.35), "30", "'Courier new'", "white", 
+                    "series of buildings...", undefined, undefined, "left"
+                ),
+                new UIText(
+                    screenToWorldSpace(0.17, 0.4), "30", "'Courier new'", "white", 
+                    "However, these buildings", undefined, undefined, "left"
+                ),
+                new UIText(
+                    screenToWorldSpace(0.17, 0.425), "30", "'Courier new'", "white", 
+                    "have been found to have a", undefined, undefined, "left"
+                ),
+                new UIText(
+                    screenToWorldSpace(0.17, 0.45), "30", "'Courier new'", "white", 
+                    "rediculous carbon footprint",
+                    undefined, undefined, "left"
+                ),
+                new UIText(
+                    screenToWorldSpace(0.17, 0.475), "30", "'Courier new'", "white", 
+                    "when the lights are left ",
+                    undefined, undefined, "left"
+                ),
+                new UIText(
+                    screenToWorldSpace(0.17, 0.5), "30", "'Courier new'", "white", 
+                    "on, the people using the",
+                    undefined, undefined, "left"
+                ),
+                new UIText(
+                    screenToWorldSpace(0.17, 0.525), "30", "'Courier new'", "white", 
+                    "building have no clue as to",
+                    undefined, undefined, "left"
+                ),
+                new UIText(
+                    screenToWorldSpace(0.17, 0.55), "30", "'Courier new'", "white", 
+                    "this fact and as such leave",
+                    undefined, undefined, "left"
+                ),
+                new UIText(
+                    screenToWorldSpace(0.17, 0.575), "30", "'Courier new'", "white", 
+                    "lights on all the time.",
+                    undefined, undefined, "left"
+                ),
+                new UIText(
+                    screenToWorldSpace(0.17, 0.6), "30", "'Courier new'", "white", 
+                    "Your job, nay, your DUTY is",
+                    undefined, undefined, "left"
+                ),
+                new UIText(
+                    screenToWorldSpace(0.17, 0.625), "30", "'Courier new'", "white", 
+                    "to switch off all the",
+                    undefined, undefined, "left"
+                ),
+                new UIText(
+                    screenToWorldSpace(0.17, 0.65), "30", "'Courier new'", "white", 
+                    "lights before your carbon",
+                    undefined, undefined, "left"
+                ),
+                new UIText(
+                    screenToWorldSpace(0.17, 0.675), "30", "'Courier new'", "white", 
+                    "footprint spirals out of",
+                    undefined, undefined, "left"
+                ),
+                new UIText(
+                    screenToWorldSpace(0.17, 0.7), "30", "'Courier new'", "white", 
+                    "control!",
+                    undefined, undefined, "left"
+                ),
+            ],
+            sprites: [
+                new UIRect(screenToWorldSpace(0.15, 0.175), screenToWorldSpace(0.7, 0.65), BLUE, 10)
+            ]
+        },
+        Background: [new UIRect([0,0], [canvasDims.width, canvasDims.height], "#293e55ff", 0)]
+    },
+
+    game: {
+        UI: {
+            sprites: [
+                // BUILDINGS
+                new UIRect(screenToWorldSpace(0, 0.43), screenToWorldSpace(0.26, 1), "#000000"),
+                new UIRect(screenToWorldSpace(0.26, 0.63), screenToWorldSpace(0.11, 1), "#000000"),
+                new UIRect(screenToWorldSpace(0.37, 0.33), screenToWorldSpace(0.37, 1), "#000000"),
+                new UIRect(screenToWorldSpace(0.74, 0.43), screenToWorldSpace(0.27, 1), "#000000"),
+
+                // ENERGY METER
+                new UIRect(screenToWorldSpace(0.3, 0.02), screenToWorldSpace(0.4, 0.05), "#eeeeee"),
+                new UIRect(screenToWorldSpace(0.3, 0.019), screenToWorldSpace(0, 0.052), "#bb393e"),
+
+            ],
+
+            buttons: [
+                new UIButton(
+                    screenToWorldSpace(0.02, 0.02), screenToWorldSpace(0.18, 0.08), screenToWorldSpace(0.19, 0.09),
                     () => {
                         if (!gameIsPaused) {
                             gameIsPaused = true;
                             setupScene();
                         }
                     },
-                    "pause")
+                    "pause"),
+
+                // BUILDING 1
+                new UIButton(screenToWorldSpace(0.02, 0.48), screenToWorldSpace(0.1, 0.07), screenToWorldSpace(0.1, 0.07), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.14, 0.48), screenToWorldSpace(0.1, 0.07), screenToWorldSpace(0.1, 0.07), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.02, 0.575), screenToWorldSpace(0.1, 0.07), screenToWorldSpace(0.1, 0.07), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.14, 0.575), screenToWorldSpace(0.1, 0.07), screenToWorldSpace(0.1, 0.07), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.02, 0.67), screenToWorldSpace(0.1, 0.07), screenToWorldSpace(0.1, 0.07), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.14, 0.67), screenToWorldSpace(0.1, 0.07), screenToWorldSpace(0.1, 0.07), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.02, 0.765), screenToWorldSpace(0.1, 0.07), screenToWorldSpace(0.1, 0.07), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.14, 0.765), screenToWorldSpace(0.1, 0.07), screenToWorldSpace(0.1, 0.07), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.02, 0.86), screenToWorldSpace(0.1, 0.07), screenToWorldSpace(0.1, 0.07), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.14, 0.86), screenToWorldSpace(0.1, 0.07), screenToWorldSpace(0.1, 0.07), (a) => {clickWindow(a)}, "", "#666666"),
+                
+
+                // BUILDING 2
+                new UIButton(screenToWorldSpace(0.27, 0.68), screenToWorldSpace(0.09, 0.07), screenToWorldSpace(0.09, 0.07), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.27, 0.77), screenToWorldSpace(0.09, 0.07), screenToWorldSpace(0.09, 0.07), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.27, 0.86), screenToWorldSpace(0.09, 0.07), screenToWorldSpace(0.09, 0.07), (a) => {clickWindow(a)}, "", "#666666"),
+
+                // BUILDING 3
+                new UIButton(screenToWorldSpace(0.4, 0.36), screenToWorldSpace(0.09, 0.08), screenToWorldSpace(0.09, 0.08), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.51, 0.36), screenToWorldSpace(0.09, 0.08), screenToWorldSpace(0.09, 0.08), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.62, 0.36), screenToWorldSpace(0.09, 0.08), screenToWorldSpace(0.09, 0.08), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.4, 0.46), screenToWorldSpace(0.09, 0.08), screenToWorldSpace(0.09, 0.08), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.51, 0.46), screenToWorldSpace(0.09, 0.08), screenToWorldSpace(0.09, 0.08), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.62, 0.46), screenToWorldSpace(0.09, 0.08), screenToWorldSpace(0.09, 0.08), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.4, 0.56), screenToWorldSpace(0.09, 0.08), screenToWorldSpace(0.09, 0.08), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.51, 0.56), screenToWorldSpace(0.09, 0.08), screenToWorldSpace(0.09, 0.08), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.62, 0.56), screenToWorldSpace(0.09, 0.08), screenToWorldSpace(0.09, 0.08), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.4, 0.66), screenToWorldSpace(0.09, 0.08), screenToWorldSpace(0.09, 0.08), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.51, 0.66), screenToWorldSpace(0.09, 0.08), screenToWorldSpace(0.09, 0.08), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.62, 0.66), screenToWorldSpace(0.09, 0.08), screenToWorldSpace(0.09, 0.08), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.4, 0.76), screenToWorldSpace(0.09, 0.08), screenToWorldSpace(0.09, 0.08), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.51, 0.76), screenToWorldSpace(0.09, 0.08), screenToWorldSpace(0.09, 0.08), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.62, 0.76), screenToWorldSpace(0.09, 0.08), screenToWorldSpace(0.09, 0.08), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.4, 0.86), screenToWorldSpace(0.09, 0.08), screenToWorldSpace(0.09, 0.08), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.51, 0.86), screenToWorldSpace(0.09, 0.08), screenToWorldSpace(0.09, 0.08), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.62, 0.86), screenToWorldSpace(0.09, 0.08), screenToWorldSpace(0.09, 0.08), (a) => {clickWindow(a)}, "", "#666666"),
+
+                // BUILDING 4
+                new UIButton(screenToWorldSpace(0.755, 0.48), screenToWorldSpace(0.1, 0.08), screenToWorldSpace(0.1, 0.08), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.875, 0.48), screenToWorldSpace(0.1, 0.08), screenToWorldSpace(0.1, 0.08), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.755, 0.58), screenToWorldSpace(0.1, 0.08), screenToWorldSpace(0.1, 0.08), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.875, 0.58), screenToWorldSpace(0.1, 0.08), screenToWorldSpace(0.1, 0.08), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.755, 0.68), screenToWorldSpace(0.1, 0.08), screenToWorldSpace(0.1, 0.08), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.875, 0.68), screenToWorldSpace(0.1, 0.08), screenToWorldSpace(0.1, 0.08), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.755, 0.78), screenToWorldSpace(0.1, 0.08), screenToWorldSpace(0.1, 0.08), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.875, 0.78), screenToWorldSpace(0.1, 0.08), screenToWorldSpace(0.1, 0.08), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.755, 0.88), screenToWorldSpace(0.1, 0.08), screenToWorldSpace(0.1, 0.08), (a) => {clickWindow(a)}, "", "#666666"),
+                new UIButton(screenToWorldSpace(0.875, 0.88), screenToWorldSpace(0.1, 0.08), screenToWorldSpace(0.1, 0.08), (a) => {clickWindow(a)}, "", "#666666"),
+
+                // BUILDING 5
+                //new UIButton(screenToWorldSpace(0.915, 0.63), screenToWorldSpace(0.07, 0.1), screenToWorldSpace(0.07, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
+                //new UIButton(screenToWorldSpace(0.915, 0.75), screenToWorldSpace(0.07, 0.1), screenToWorldSpace(0.07, 0.1), (a) => {clickWindow(a)}, "", "#666666"),
+                //new UIButton(screenToWorldSpace(0.915, 0.87), screenToWorldSpace(0.07, 0.1), screenToWorldSpace(0.07, 0.1), (a) => {clickWindow(a)}, "", "#666666")
+
             ],
             text: [
-                new UIText(screenToWorldSpace(0.2, 0.03), "60", "'Courier new'",
-                    "white", "Match " + 2 + " cards", undefined, undefined, "left")
+                new UIText(screenToWorldSpace(0.36,0.07), "26", "'Courier new'", "white", "Energy wasted"),
+                new UIText(screenToWorldSpace(0.78,0.04), "30", "'Courier new'", "white", ""),
             ],
 
             pauseMenu: {
@@ -386,7 +598,7 @@ const SCENES = {
                         () => {
                             gameIsPaused = false;
                             currentScene = "level_select";
-                            setupScene();
+                            init();
                         },
                         "exit")
                 ],
@@ -397,82 +609,115 @@ const SCENES = {
                     )
                 ],
                 sprites: [
-                    new UIRect(screenToWorldSpace(0.325, 0.175), screenToWorldSpace(0.35, 0.65), "#21897e", 10)
+                    new UIRect(screenToWorldSpace(0.325, 0.175), screenToWorldSpace(0.35, 0.65), BLUE, 10)
                 ]
             },
 
             loss_menu: {
                 buttons: [
                     new UIButton(
-                        screenToWorldSpace(0.4, 0.55), screenToWorldSpace(0.2, 0.1), screenToWorldSpace(0.21, 0.11),
+                        screenToWorldSpace(0.4, 0.6), screenToWorldSpace(0.2, 0.1), screenToWorldSpace(0.21, 0.11),
                         () => {
-                            levelLost = false;
-                            updateLimiter = true;
-                            currentScene = "level_select";
-                            setupScene();
-                            currentScene = "level";
-                            setupLevel();
-                            setupScene();
+                            finish()
                         },
-                        "Retry"),
-                    new UIButton(
-                        screenToWorldSpace(0.375, 0.7), screenToWorldSpace(0.25, 0.1), screenToWorldSpace(0.26, 0.11),
-                        () => {
-                            levelLost = false;
-                            currentScene = "level_select";
-                            setupScene();
-                        },
-                        "Return to Menu")
+                        "Exit")
                 ],
                 text: [
                     new UIText(
                         screenToWorldSpace(0.5, 0.22), "52", "'Courier new'", "white", "⊣ LEVEL LOST ⊢",
                         undefined, undefined, "center"
                     ),
+                    new UIText(screenToWorldSpace(0.5, 0.4), "28", "'Courier new'", "white", "", undefined, undefined, "center")
                 ],
                 sprites: [
-                    new UIRect(screenToWorldSpace(0.25, 0.175), screenToWorldSpace(0.5, 0.65), "#21897e", 10)
+                    new UIRect(screenToWorldSpace(0.25, 0.175), screenToWorldSpace(0.5, 0.65), BLUE, 10)
                 ]
             }
         },
-        Background: [new UIRect([0, 0], [canvasDims.width, canvasDims.height], "#293e55ff", 0)]
+        Background: [
+            new UIRect([0, 0], [canvasDims.width, canvasDims.height], "#293e55ff", 0),
+            new UIRect(screenToWorldSpace(0, 0.2), screenToWorldSpace(0.08, 1), "#333333"),
+            new UIRect(screenToWorldSpace(0.08, 0.17), screenToWorldSpace(0.09, 1), "#333333"),
+            new UIRect(screenToWorldSpace(0.17, 0.28), screenToWorldSpace(0.12, 1), "#333333"),
+            new UIRect(screenToWorldSpace(0.29, 0.17), screenToWorldSpace(0.08, 1), "#333333"),
+            new UIRect(screenToWorldSpace(0.37, 0.15), screenToWorldSpace(0.1, 1), "#333333"),
+            //new UIRect(screenToWorldSpace(0.47, 0.26), screenToWorldSpace(0.12, 1), "#333333"),
+            new UIRect(screenToWorldSpace(0.59, 0.13), screenToWorldSpace(0.1, 1), "#333333"),
+            new UIRect(screenToWorldSpace(0.69, 0.29), screenToWorldSpace(0.07, 1), "#333333"),
+            new UIRect(screenToWorldSpace(0.76, 0.19), screenToWorldSpace(0.11, 1), "#333333"),
+            new UIRect(screenToWorldSpace(0.87, 0.27), screenToWorldSpace(0.07, 1), "#333333"),
+            new UIRect(screenToWorldSpace(0.93, 0.5), screenToWorldSpace(1, 1), "#333333"),
+        ]
     }
 };
 
 // applies initial settings
 function init() {
     resizeCanvas();
-    start()
+    start();
+    currentScene = startScene;
     setupScene();
 }
 var updateLimiter = false;
 var gameIsPaused = false;
+var levelLost = false;
+
+function startFrames() {
+    //reset update limit for on screen button presses.
+    updateLimiter = false;
+    setDelta();
+
+    //update game logic
+    if (currentScene === "game" && !gameIsPaused) {
+        logicUpdate();
+    }
+
+    // erase canvas
+    ctx.clearRect(0, 0, canvasDims.width, canvasDims.height);
+
+    // render entities in order
+    renderBackground();
+    renderProps();
+    renderFloatUI();
+
+    // call next frame
+    window.requestAnimationFrame(startFrames);
+}
 
 function setupScene() {
-    console.log(UI)
+    //--------------------------------------------------------------------------
+    // clear all rendering buffers (implemented as lists)
     BACKGROUND_ELEMS.splice(0, BACKGROUND_ELEMS.length);
     BUILDINGS.splice(0,BUILDINGS.length);
     UI.splice(0, UI.length);
     UI_FLOAT.splice(0, UI_FLOAT.length);
+    //--------------------------------------------------------------------------
+    // Add objects to each buffer
 
-    if (!gameIsPaused) {
-        for (let i in SCENES[currentScene].UI.buttons) {
-            var button = SCENES[currentScene].UI.buttons[i];
-            button.currentDims.w = button.originalDims.w;
-            button.currentDims.h = button.originalDims.h;
-            button.offset.y = (button.originalDims.h - button.currentDims.h) / 2;
-            button.offset.x = (button.originalDims.w - button.currentDims.w) / 2;
-            UI.push(button);
-        }
+    // add buttons to UI buffer
+    for (let i in SCENES[currentScene].UI.buttons) {
+        var button = SCENES[currentScene].UI.buttons[i];
+        button.currentDims.w = button.originalDims.w;
+        button.currentDims.h = button.originalDims.h;
+        button.offset.y = (button.originalDims.h - button.currentDims.h) / 2;
+        button.offset.x = (button.originalDims.w - button.currentDims.w) / 2;
+        UI.push(button);
     }
-
+    // add text to UI buffer
     for (let i in SCENES[currentScene].UI.text) {
         UI.push(SCENES[currentScene].UI.text[i]);
     }
+    // add background objects to background buffer
     for (let i in SCENES[currentScene].Background) {
         BACKGROUND_ELEMS.push(SCENES[currentScene].Background[i]);
     }
+    // push sprites onto background buffer to add ontop of background objects
+    for (let i in SCENES[currentScene].UI.sprites) {
+        BACKGROUND_ELEMS.push(SCENES[currentScene].UI.sprites[i]);
+    }
 
+    //--------------------------------------------------------------------------
+    // manage float UI if game is paused
     if (gameIsPaused) {
         for (let i in SCENES.game.UI.pauseMenu.sprites) {
             UI_FLOAT.push(SCENES.game.UI.pauseMenu.sprites[i]);
@@ -489,13 +734,14 @@ function setupScene() {
             UI_FLOAT.push(SCENES.game.UI.pauseMenu.text[i]);
         }
     }
-
+    //--------------------------------------------------------------------------
+    // manage float UI if game is lost
     if (levelLost) {
-        for (let i in SCENES.level.UI.loss_menu.sprites) {
-            UI_FLOAT.push(SCENES.level.UI.loss_menu.sprites[i]);
+        for (let i in SCENES.game.UI.loss_menu.sprites) {
+            UI_FLOAT.push(SCENES.game.UI.loss_menu.sprites[i]);
         }
-        for (let i in SCENES.level.UI.loss_menu.buttons) {
-            var button = SCENES.level.UI.loss_menu.buttons[i];
+        for (let i in SCENES.game.UI.loss_menu.buttons) {
+            var button = SCENES.game.UI.loss_menu.buttons[i];
             button.currentDims.w = button.originalDims.w;
             button.currentDims.h = button.originalDims.h;
             button.offset.y = (button.originalDims.h - button.currentDims.h) / 2;
@@ -503,14 +749,14 @@ function setupScene() {
             UI_FLOAT.push(button);
         }
 
-        for (let i in SCENES.level.UI.loss_menu.text) {
-            UI_FLOAT.push(SCENES.level.UI.loss_menu.text[i]);
+        for (let i in SCENES.game.UI.loss_menu.text) {
+            UI_FLOAT.push(SCENES.game.UI.loss_menu.text[i]);
         }
     }
 
 }
 
-function loseLevel() {
+export function loseLevel() {
     levelLost = true;
     setupScene();
 }
@@ -528,7 +774,7 @@ window.onload = () => {
 var currentIndex = 0;
 
 async function playTracks() {
-    var tracks = await shuffleArray(["./songs/ECOPOLY soundtrack 1.mp3", "./songs/ECOPOLY soundtrack 2.mp3"]);
+    var tracks = await shuffleArray(["../static/songs/ECOPOLY-1.mp3"]);
     // Set the duration of the break between tracks (in milliseconds)
     var breakDuration = 2000;
 
