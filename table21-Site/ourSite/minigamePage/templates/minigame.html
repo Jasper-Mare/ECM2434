@@ -1,3 +1,6 @@
+<!--Page written by Jacob Ferris-->
+
+<!--Add the navbar-->
 {% extends "homePage/toolbar.html"%}
 {% load static %}
 
@@ -9,6 +12,7 @@
     <title>Mini-Game Test</title>
 </head>
 <body>
+    <!-- Block with the canvas element set to portrait and using the javascript for the game functions -->
     {% block content %}
         <canvas id="canvas" width="400" height="300"></canvas>
         <script src="{% static 'framework.js' %}" type="module"></script>

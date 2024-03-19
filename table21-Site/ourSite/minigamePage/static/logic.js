@@ -1,12 +1,16 @@
+// Written by Jacob Ferris
+
+// Import the functions used by logic.js within framework.js
 import {UIButton, screenToWorldSpace, UIRect, SCENES, loseLevel} from "./framework.js";
 
+// Define and export the variables from logic.js for framework.js
 export var startScene;
 export var windowAmount;
 export var windowStates = [];
 export var difficulty;
 export var energyWasted;
 var gameover;
-const scoreMultiplier = 60;
+const scoreMultiplier = 60; // what difficulty should be multiplied by to calculate points
 
 const userID = getCookie("login"); // get the userID from the cookie
 if (userID == undefined || userID == "") { // if they are not logged in redirect them to the login page
@@ -14,19 +18,14 @@ if (userID == undefined || userID == "") { // if they are not logged in redirect
   window.location.href = "/login/";
 }
 
-/**
- * no parameters
- * Returns: nothing
- * 
- * Change states of variables
- */
+// function to change the state of the variables used by the game each frame
 export function logicUpdate() {
     if (Math.random() > (1-(difficulty/10))) {
         var index = 1+Math.floor(Math.random() * (windowAmount-1))
         windowStates[index] = 1
         SCENES.game.UI.buttons[index].resetColor("#eebb33");
     }
-    difficulty += 0.00005
+    difficulty += 0.00006
 
     if (energyWasted > 15000) {
       if (!gameover) {
@@ -46,39 +45,33 @@ export function logicUpdate() {
     }
   }
 
-/**
- * no parameters
- * Returns: nothing
- * Preset state of windows, timer, energy meter
- */
+
+// function to initialise the value of the variables used by the game
 export function start() {
     startScene = "main_menu";
     windowAmount = 42;
-    difficulty = 0;
+    difficulty = 0; // difficulty starts at 0
     energyWasted = 0;
     gameover = false;
-    SCENES.game.UI.sprites[5].resetwidth(screenToWorldSpace(0,0.052)[0])
-    SCENES.game.UI.text[1].resetText("0 points")
+    SCENES.game.UI.sprites[5].resetwidth(screenToWorldSpace(0,0.052)[0]) // set the width of the energy bar to 0
+    SCENES.game.UI.text[1].resetText("0 points") // set the score displayed to 0
 
     // set all window states to 0
     for (let i = 1; i < windowAmount; i++) {
         windowStates[i] = 0
-        SCENES.game.UI.buttons[i].resetColor("#666666");
+        SCENES.game.UI.buttons[i].resetColor("#666666"); // set the color of the window to grey
     }
 }
 
-/**
- * 
- */
+// function to change the state of a window upon it being clicked
 export function clickWindow(index) {
-    // Get which window and then reset the state to 0
-    if (windowStates[index-2] == 1) {
-        windowStates[index-2] = 0;
-        SCENES.game.UI.buttons[index-2].resetColor("#666666");
+    if (windowStates[index-2] == 1) { // if the window is on
+        windowStates[index-2] = 0; // turn it off
+        SCENES.game.UI.buttons[index-2].resetColor("#666666"); // set the color of the window to grey
     }
-    else {
-        windowStates[index-2] = 1;
-        SCENES.game.UI.buttons[index-2].resetColor("#eebb33");
+    else { // if the window is off
+        windowStates[index-2] = 1; // turn it on
+        SCENES.game.UI.buttons[index-2].resetColor("#eebb33"); // set the color of the window to yellow
     }
 }
 
@@ -114,8 +107,8 @@ async function getRequest(request) {
   }
 }
 
-function getCookie(cname) {
 // function to get the cookie of a given name
+function getCookie(cname) {
   let name = cname + "=";
   let decodedCookie = decodeURIComponent(document.cookie);
   let ca = decodedCookie.split(';');
@@ -131,6 +124,7 @@ function getCookie(cname) {
   return "";
 }
 
+// function at the end of the game to update the score, location of a user and redirect them to the map
 export function finish() {
   addScore();
 
