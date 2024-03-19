@@ -371,12 +371,12 @@ export const SCENES = {
                     "Start the game"
                 ),
                 new UIButton(
-                    screenToWorldSpace(0.6, 0.7), screenToWorldSpace(0.2, 0.1), screenToWorldSpace(0.21, 0.11),
+                    screenToWorldSpace(0.6, 0.7), screenToWorldSpace(0.31, 0.1), screenToWorldSpace(0.32, 0.11),
                     () => {
                         currentScene = "tutorial"
                         setupScene();
                     },
-                    "Tutorial"
+                    "INSTRUCTIONS"
                 ),
             ],
             text: [],
@@ -407,14 +407,84 @@ export const SCENES = {
             ],
             text: [
                 new UIText(
-                    screenToWorldSpace(0.5, 0.22), "62", "'Courier new'", "white", "⊣ TUTORIAL ⊢",
+                    screenToWorldSpace(0.5, 0.22), "62", "'Courier new'", "white", "⊣ INSTRUCTIONS ⊢",
                     undefined, undefined, "center"
                 ),
+                // tutorial text
                 new UIText(
-                    screenToWorldSpace(0.5, 0.3), "30", "'Courier new'", "white", 
-                    "YOU are the 'Light Switch manager' for a new series of buildings... \n"+
-                    "However, these buildings have been found to have a rediculous carbon footprint when the lights are left on, the people using the building have no clue as to this fact and as such leave lights on all the time. Your job, nay, your DUTY is to switch off all the lights before your carbon footprint spirals out of control!",
-                    undefined, undefined, "center"
+                    screenToWorldSpace(0.17, 0.3), "30", "'Courier new'", "white", 
+                    "YOU are the new 'Light", undefined, undefined, "left"
+                ),
+                new UIText(
+                    screenToWorldSpace(0.17, 0.325), "30", "'Courier new'", "white", 
+                    "Switch Manager' for a", undefined, undefined, "left"
+                ),
+                new UIText(
+                    screenToWorldSpace(0.17, 0.35), "30", "'Courier new'", "white", 
+                    "series of buildings...", undefined, undefined, "left"
+                ),
+                new UIText(
+                    screenToWorldSpace(0.17, 0.4), "30", "'Courier new'", "white", 
+                    "However, these buildings", undefined, undefined, "left"
+                ),
+                new UIText(
+                    screenToWorldSpace(0.17, 0.425), "30", "'Courier new'", "white", 
+                    "have been found to have a", undefined, undefined, "left"
+                ),
+                new UIText(
+                    screenToWorldSpace(0.17, 0.45), "30", "'Courier new'", "white", 
+                    "rediculous carbon footprint",
+                    undefined, undefined, "left"
+                ),
+                new UIText(
+                    screenToWorldSpace(0.17, 0.475), "30", "'Courier new'", "white", 
+                    "when the lights are left ",
+                    undefined, undefined, "left"
+                ),
+                new UIText(
+                    screenToWorldSpace(0.17, 0.5), "30", "'Courier new'", "white", 
+                    "on, the people using the",
+                    undefined, undefined, "left"
+                ),
+                new UIText(
+                    screenToWorldSpace(0.17, 0.525), "30", "'Courier new'", "white", 
+                    "building have no clue as to",
+                    undefined, undefined, "left"
+                ),
+                new UIText(
+                    screenToWorldSpace(0.17, 0.55), "30", "'Courier new'", "white", 
+                    "this fact and as such leave",
+                    undefined, undefined, "left"
+                ),
+                new UIText(
+                    screenToWorldSpace(0.17, 0.575), "30", "'Courier new'", "white", 
+                    "lights on all the time.",
+                    undefined, undefined, "left"
+                ),
+                new UIText(
+                    screenToWorldSpace(0.17, 0.6), "30", "'Courier new'", "white", 
+                    "Your job, nay, your DUTY is",
+                    undefined, undefined, "left"
+                ),
+                new UIText(
+                    screenToWorldSpace(0.17, 0.625), "30", "'Courier new'", "white", 
+                    "to switch off all the",
+                    undefined, undefined, "left"
+                ),
+                new UIText(
+                    screenToWorldSpace(0.17, 0.65), "30", "'Courier new'", "white", 
+                    "lights before your carbon",
+                    undefined, undefined, "left"
+                ),
+                new UIText(
+                    screenToWorldSpace(0.17, 0.675), "30", "'Courier new'", "white", 
+                    "footprint spirals out of",
+                    undefined, undefined, "left"
+                ),
+                new UIText(
+                    screenToWorldSpace(0.17, 0.7), "30", "'Courier new'", "white", 
+                    "control!",
+                    undefined, undefined, "left"
                 ),
             ],
             sprites: [
