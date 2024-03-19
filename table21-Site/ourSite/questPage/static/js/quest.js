@@ -13,26 +13,6 @@ if (userID == undefined || userID == "") { // if they are not logged in redirect
   window.location.href = "/login/";
 }
 
-// function to set the quest questions and start 
-function DoQuest() {
-  questionNumber = 1;
-  scorecount = 0;
-  totalquestions = 10;
-  console.log(questionNumber);
-  if( questionNumber < totalquestions){
-  request = '/contentDB/getQuestById?id=' + questionNumber;// get the quests from the database
-  getRequest(request)
-  .then(response => {
-    questions = shuffle(response["quests"]);
-    console.log(questions);
-    questionNumber++;
-
-    
-  
-   nextquestion();
-  });
-}
-}
 
 function DoQuest() {
   request = '/contentDB/getAllQuests' // get the quests from the database 
@@ -125,6 +105,10 @@ async function getRequest(request) {
   } catch (error) {
     console.error(error);
   }
+}
+
+function finish() {
+  addScore(userID, scorecount);
 }
 
 DoQuest();

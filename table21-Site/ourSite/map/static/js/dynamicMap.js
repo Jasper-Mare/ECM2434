@@ -141,6 +141,13 @@ mapImg.onload = () => {
 };
 mapImg.src = `/static/images/exeter-Map-Edited.png`;
 
+var bgImgLoaded = false;
+const bgImg = new Image();
+bgImg.onload = () => {
+    bgImgLoaded = true;
+};
+bgImg.src = `/static/images/Exeter.jpeg`;
+
 window.addEventListener('resize', resizeMap, true);
 
 // ============================= main functions ============================ //
@@ -196,6 +203,10 @@ async function geoSuccess(position) {
 }
 
 async function geoError(onCampus = true) {
+    ctx.rect(0, 0, canvasW, canvasH);
+    ctx.fillStyle = "whitesmoke";
+    ctx.fill();
+    
     if (!mapImgLoaded) {
         await mapImg.decode();
     }
@@ -235,8 +246,11 @@ async function refreshMap() {
 async function drawMap(playerGPS) {
     
     ctx.clearRect(0, 0, canvasW, canvasH);
+    //if (bgImgLoaded) { 
+    //    ctx.drawImage(bgImg, 0, 0, canvasW, canvasH);
+    //}
     ctx.rect(0, 0, canvasW, canvasH);
-    ctx.fillStyle = "#c4bcb1";
+    ctx.fillStyle = "whitesmoke";
     ctx.fill();
 
     var maplocTL = mapTLgps.getNormalisedCoord(playerGPS, targetedPosition).getScreenCoord();
