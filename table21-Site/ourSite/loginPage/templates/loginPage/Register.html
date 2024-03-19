@@ -16,31 +16,38 @@
 
 <body>
     {% block body %}
-    <div>
-        <div>
+        <div class="container py-2">
             <p id="loginErrorMessage" class="hidden"></p>
-            <h1>Register</h1>
+            <div>
+                <h1>Register</h1>
+            </div>
             <!-- create form for users to register -->
             <form>
-                <label for="username">Username:</label><br>
-                <input type="text" id="username" name="username"><br> <br>
-
-                <label for="email">Email:</label><br>
-                <input type="text" id="email" name="email"><br> <br>
-
-                <label for="passwd">Password:</label><br>
-                <input type="password" id="passwd" name="passwd"> <br> <br>
-
-                <label for="rptpasswd">Repeat password:</label><br>
-                <input type="password" id="rptpasswd" name="rptpasswd"> <br> <br>
-                <!-- use button so input fields aren't shown in users url -->
-                <input type="button" onclick="submitRegisteration()" value="Submit"> <br> <br>
+                <div>
+                    <label for="username" class="form-label">Username:</label><br>
+                    <input class="form-control" type="text" id="username" name="username">
+                </div>
+                <div>
+                    <label for="email" class="form-label">Email:</label>
+                    <input class="form-control" type="text" id="email" name="email">
+                </div>
+                <div>
+                    <label for="passwd" class="form-label">Password:</label>
+                    <input class="form-control" type="password" id="passwd" name="passwd"> 
+                </div>
+                <div>
+                    <label for="rptpasswd" class="form-label">Repeat password:</label>
+                    <input class="form-control" type="password" id="rptpasswd" name="rptpasswd"> 
+                </div>
+                <div class="my-2">
+                     <!-- use button so input fields aren't shown in users url -->
+                    <input class="btn btn-secondary" type="button" onclick="submitRegisteration()" value="Submit">
+                </div>            
             </form>
-            <div>
+            <div class="container form-text">
                 <a href="..">Already signed up? Click here to login</a><br>
             </div>
         </div>
-    </div>
     {% endblock %}
    
 </body>

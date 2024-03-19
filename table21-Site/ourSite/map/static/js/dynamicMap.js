@@ -12,18 +12,17 @@ class GPScoord {
         // correct scaling problem between lat and lon
         const squish = 1.7729;
 
-        // calculate the distance between the player and the location
-        const playerTargetDist = playerGPS.getDistance(targetedLocation);
+        // calculate the distance from the user to the centre and the location to the centre
+        const playerDist = playerGPS.getDistance(mapCentre);
+        const targetDist = targetedLocation.getDistance(mapCentre);
+        console.log("dist plr", playerDist, "loc",targetDist);
 
         // only allow the map to zoom in till a certain point
-        const viewDist = Math.max(playerTargetDist*(canvasAspectRatio+0.1), playerMinViewDist);
-
-        // get the midpoint to centre the view
-        const playerTargetMid = new GPScoord((playerGPS.lat + targetedLocation.lat)/2, (playerGPS.lon + targetedLocation.lon)/2);
+        const viewDist = Math.max(playerDist, targetDist, playerMinViewDist)*1.8;
 
         return new NormalisedCoord(
-            mapRange(this.lon, playerTargetMid.lon-(viewDist/2)*squish, playerTargetMid.lon+(viewDist/2)*squish, -1, 1),
-            mapRange(this.lat, playerTargetMid.lat-viewDist/2, playerTargetMid.lat+viewDist/2, -1, 1),
+            mapRange(this.lon, mapCentre.lon-(viewDist/2)*squish, mapCentre.lon+(viewDist/2)*squish, -1, 1),
+            mapRange(this.lat, mapCentre.lat-viewDist/2, mapCentre.lat+viewDist/2, -1, 1),
         );
     }
 
@@ -44,12 +43,12 @@ class NormalisedCoord {
     }
 
     getScreenCoord() {
-        const wMarg = (canvasLongestSide - canvasW)*0.5;
-        const hMarg = (canvasLongestSide - canvasH)*0.5;
+        const wMarg = (canvasShortestSide - canvasW)*0.5;
+        const hMarg = (canvasShortestSide - canvasH)*0.5;
         
         return new ScreenCoord(
-            mapRange(this.x, -1, 1, 0, canvasLongestSide)-wMarg,
-            mapRange(this.y, -1, 1, canvasLongestSide, 0)-hMarg
+            mapRange(this.x, -1, 1, 0, canvasShortestSide)-wMarg,
+            mapRange(this.y, -1, 1, canvasShortestSide, 0)-hMarg
         );
     }
 }
@@ -85,14 +84,14 @@ function mapRange(val, oldMin, oldMax, newMin, newMax) {
 
 var playerBGColour = '#F87666';
 var playerFGColour = '#000000';
-var locationColour = 'yellow';
+var locationFGColour = playerFGColour;
+var locationBGColour = '#66F678';
 var locationRadiusColour = '#ff000055'; // RR GG BB AA
-var targetLocationColour = 'gold';
+var targetLocationBGColour = locationBGColour;
 
 var canvasW = 0;
 var canvasH = 0;
-var canvasLongestSide = 0;
-var canvasAspectRatio = 1;
+var canvasShortestSide = 0;
 var ctx;
 var playerMinViewDist = 0.004;
 
@@ -104,13 +103,19 @@ fetch("/userDB/getUserTargetLocation?id="+userID, {method: "GET"})
 .then((response) => response.json())
 .then((json) => {
     targetedLocationId = json["location"];
-    
-    locationsWithId = locations.filter(loc => {return loc.id === targetedLocationId});
-    if (locationsWithId.length == 0) {
-        targetedPosition = playerLastPosition;
-    } else {
-        targetedPosition = locationsWithId[0].gps;
+
+    function waitForLocations() {
+        locationsWithId = locations.filter(loc => {return loc.id === targetedLocationId});
+        if (locationsWithId.length == 0) {
+            // locations aren't loaded, so wait
+            setTimeout(() => {
+                waitForLocations();
+            },100);
+        } else {
+            targetedPosition = locationsWithId[0].gps;
+        }
     }
+    waitForLocations();
 })
 
 var locations = [];
@@ -123,7 +128,8 @@ fetch("/contentDB/getAllLocations", {method: "GET"})
         checkIfAtLocation();
     })
 
-var targetedPosition = new GPScoord((mapTLgps.lat + mapBRgps.lat)/2, (mapTLgps.lon + mapBRgps.lon)/2);
+const mapCentre = new GPScoord((mapTLgps.lat + mapBRgps.lat)/2, (mapTLgps.lon + mapBRgps.lon)/2);
+var targetedPosition = mapCentre;
 var playerLastPosition = targetedPosition;
 
 var gpsError = false;
@@ -134,6 +140,15 @@ mapImg.onload = () => {
     mapImgLoaded = true;
 };
 mapImg.src = `/static/images/exeter-Map-Edited.png`;
+
+var bgImgLoaded = false;
+const bgImg = new Image();
+bgImg.onload = () => {
+    bgImgLoaded = true;
+};
+bgImg.src = `/static/images/Exeter.jpeg`;
+
+window.addEventListener('resize', resizeMap, true);
 
 // ============================= main functions ============================ //
 
@@ -162,15 +177,14 @@ function initialiseMap() {
 }
 
 function resizeMap() {
-    // this code is just for now, remove once the map is in the website
-    ctx.canvas.width  = window.innerWidth - 20;
-    ctx.canvas.height = window.innerHeight - 25;
+
+    ctx.canvas.width  = window.innerWidth;
+    ctx.canvas.height = window.innerHeight;
 
     canvasW = ctx.canvas.width;
     canvasH = ctx.canvas.height;
-    canvasLongestSide = Math.max(canvasH, canvasW);
-    // longest side divided by shortest side
-    canvasAspectRatio = canvasLongestSide/Math.min(canvasH, canvasW);
+    canvasShortestSide = Math.min(canvasH, canvasW);
+    
 }
 
 async function geoSuccess(position) {
@@ -189,6 +203,10 @@ async function geoSuccess(position) {
 }
 
 async function geoError(onCampus = true) {
+    ctx.rect(0, 0, canvasW, canvasH);
+    ctx.fillStyle = "whitesmoke";
+    ctx.fill();
+    
     if (!mapImgLoaded) {
         await mapImg.decode();
     }
@@ -201,11 +219,15 @@ async function geoError(onCampus = true) {
 
     ctx.drawImage(mapImg, maplocTL.x, maplocTL.y, mapWidth, mapHeight);
 
+    const textTL = canvasH - 50;
     const text = onCampus ? "Location is not supported or something went wrong!" : "You are not on campus!";
+    // draw the text at the top and bottom of the page so it appears in either toolbar placement
     ctx.fillStyle = "white";
-    ctx.fillRect(9,25, text.length * 15, 34);
+    ctx.fillRect(9,textTL-25, text.length * 15, 34);
+    ctx.fillRect(9, 25, text.length * 15, 34);
     ctx.fillStyle = "black"
     ctx.font = "30px Arial";
+    ctx.fillText(text, 10, textTL);
     ctx.fillText(text, 10, 50);
     
 }
@@ -224,8 +246,11 @@ async function refreshMap() {
 async function drawMap(playerGPS) {
     
     ctx.clearRect(0, 0, canvasW, canvasH);
+    //if (bgImgLoaded) { 
+    //    ctx.drawImage(bgImg, 0, 0, canvasW, canvasH);
+    //}
     ctx.rect(0, 0, canvasW, canvasH);
-    ctx.fillStyle = "#c4bcb1";
+    ctx.fillStyle = "whitesmoke";
     ctx.fill();
 
     var maplocTL = mapTLgps.getNormalisedCoord(playerGPS, targetedPosition).getScreenCoord();
@@ -252,7 +277,7 @@ async function drawMap(playerGPS) {
 function drawPlayer(playerGPS) {
     var playerScreenCoord = playerGPS.getNormalisedCoord(playerGPS, targetedPosition).getScreenCoord();
 
-    var playerIconRaduis = canvasLongestSide/80;
+    var playerIconRaduis = canvasShortestSide/80;
     var playerBGRadius = playerIconRaduis * 1.2;
 
     // player circle
@@ -265,7 +290,7 @@ function drawPlayer(playerGPS) {
     var playerHeadRadius = playerIconRaduis/2.5;
     var playerBodyWidth = playerIconRaduis;
     var playerBodyHeight = playerIconRaduis/2;
-    var playerNeckY = playerScreenCoord.y - canvasLongestSide/500;
+    var playerNeckY = playerScreenCoord.y - canvasShortestSide/500;
 
     ctx.beginPath();
     ctx.fillStyle = playerFGColour;
@@ -317,12 +342,22 @@ function drawLocation(playerGPS, location) {
     ctx.arc(locationScreenCoord.x, locationScreenCoord.y, locationIconSize/2, 0, 2 * Math.PI);
     if (isTargeted) { 
         // is the targeted location
-        ctx.fillStyle = targetLocationColour;
+        ctx.fillStyle = targetLocationBGColour;
     } else {
-        ctx.fillStyle = locationColour;
+        ctx.fillStyle = locationBGColour;
     }
     ctx.fill();
     
+    // location icon
+    var iconHeight = locationIconSize / Math.sqrt(4);
+    var iconWidth = iconHeight * 0.6;
+    var iconTL = new ScreenCoord(locationScreenCoord.x-iconWidth/2, locationScreenCoord.y-iconHeight/2);
+    var iconBR = new ScreenCoord(locationScreenCoord.x+iconWidth/2, locationScreenCoord.y+iconHeight/2);
+
+    ctx.fillStyle = locationFGColour;
+    ctx.fillRect(iconTL.x, iconTL.y, iconWidth*0.5, iconHeight);
+    ctx.fillRect(iconTL.x, iconBR.y, iconWidth, -iconHeight*0.35);
+
     if (isTargeted) {
         ctx.font = "12px Arial";
         
@@ -378,10 +413,10 @@ function checkIfAtLocation() {
         window.location.href="/quiz/?id="+targetedLocationId;
     };
     document.getElementById("quest button").onclick = () => {
-        alert("clicked quest!");
+        window.location.href="/quest/";
     };
     document.getElementById("game button").onclick = () => {
-        alert("clicked game!");
+        window.location.href="/minigame/";
     };
 
 }
