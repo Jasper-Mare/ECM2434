@@ -1,4 +1,4 @@
-# from Jasper
+# from Jasper and Hannah
 
 from django.shortcuts import render
 from django.http import JsonResponse
@@ -25,6 +25,31 @@ def getUserById(request):
     return JsonResponse(user)
 
 
+def getUserLocation(request):
+    userId:int = int(request.GET.get('id', -1))
+
+    if (userId == -1):
+        return makeError("parameter missing", "id parameter is missing!")
+    
+    location = databaseInteractions.getUserTargetLocation(userId, 10)
+
+    return JsonResponse(location)
+
+def updateUserLocation(request):
+    userId:int = int(request.GET.get('id', -1))
+    locationId:int = int(request.GET.get('location', -1))
+
+    if (userId == -1):
+        return makeError("parameter missing", "id parameter is missing!")
+    
+    if (locationId == -1):
+        return makeError("parameter missing", "location parameter is missing!")
+    
+    location = databaseInteractions.updateUserLocation(userId, locationId)
+
+    return JsonResponse(location)
+
+
 def getUserByName(request):
     userName:str = request.GET.get('name', "")
 
@@ -32,6 +57,16 @@ def getUserByName(request):
         return makeError("parameter missing", "name parameter is missing!")
 
     user = databaseInteractions.getUserByName(userName)
+
+    return JsonResponse(user)
+
+def getUserByEmail(request):
+    email:str = str(request.GET.get('recovery_email', ""))
+
+    if (email == ""):
+        return makeError("parameter missing", "email parameter is missing!")
+
+    user = databaseInteractions.getUserByEmail(email)
 
     return JsonResponse(user)
 
@@ -68,6 +103,8 @@ def createUser(request):
 def updateUser(request):
     userId:int = request.GET.get('id', -1)
 
+    print("inside update user")
+
     if (userId == -1):
         return makeError("parameter missing", "id parameter is missing!")
 
@@ -96,3 +133,13 @@ def deleteUser(request):
 
 def makeError(type, errorMsg):
     return JsonResponse({"error":type,"details":errorMsg})
+
+# ---- MATT ADDITION ----
+def getNumberOfUsers(request):
+    numUsers = databaseInteractions.getNumberOfUsers()
+
+    return JsonResponse(numUsers)
+
+def fillTable(request):
+    userList = databaseInteractions.fillTable()
+    return JsonResponse(userList)

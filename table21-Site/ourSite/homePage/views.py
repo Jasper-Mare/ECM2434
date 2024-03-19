@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
+
 # Create your views here.
 
 def index(request):
@@ -20,3 +21,14 @@ def index(request):
         target_url = '/login'
 
     return render(request, 'homePage/redirectPage.html', {'target_url': target_url})
+
+# invalid function
+def getCookie(request):
+    from userDB.databaseInteractions import getUserById
+    userID = request.COOKIES.get('login')
+    user = getUserById(userID)
+    if(user['access_level']== "GAME_KEEPER"):
+        access = "GAME_KEEPER"
+    else:
+        access = "USER"
+    

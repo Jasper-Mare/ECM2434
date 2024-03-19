@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +26,7 @@ SECRET_KEY = 'django-insecure-14!46l(0j1hl1o$v8dw+4g-gxvaf%67tja=o-4yv%ig=4#ded%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['10.0.2.2', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['10.0.2.2', 'localhost', '127.0.0.1', 'ecoquestexeter.eu.pythonanywhere.com']
 
 
 # Application definition
@@ -36,6 +37,7 @@ INSTALLED_APPS = [
     'homePage.apps.HomeConfig',
     'map.apps.MapConfig',
     'userDB.apps.userDBConfig',
+    'emailLinkDB.apps.EmaillinkdbConfig',
     'contentDB.apps.contentDBConfig',
     'quizPage.apps.QuizPageConfig',
     'questPage.apps.QuestsConfig',
@@ -130,10 +132,22 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    BASE_DIR / "homePage/static"
-]
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+STATICFILES_DIRS = (os.path.join(BASE_DIR,"homePage/static"),)
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+#SMTP config
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "ecoquestexeter@gmail.com"
+EMAIL_HOST_PASSWORD = "ucja qvuo cexf ient"

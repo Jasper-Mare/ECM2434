@@ -10,6 +10,7 @@ urlpatterns = [
     path("getLocationById", views.getLocationById, name="getLocationById"),
     path("getQuestById", views.getQuestById, name="getQuestById"),
     path("getAllLocations", views.getAllLocations, name="getAllLocations"),
+    path("getAllQuests", views.getAllQuests, name="getAllQuests"),
     path("getNearbyLocations", views.getNearbyLocations, name="getNearbyLocations"),
     path("getQuizzesByLocation", views.getQuizzesByLocation, name="getQuizzesByLocation"),
     path("createLocation", views.createLocation, name="createLocation"),

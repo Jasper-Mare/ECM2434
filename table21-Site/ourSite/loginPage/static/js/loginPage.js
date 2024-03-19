@@ -11,11 +11,14 @@ async function submitLogin() {
 
     //ensure no fields are left empty
     if (checkIfEmpty(username) || checkIfEmpty(password)) {
-        alert("Please fill in all fields");
+        text = "Please fill in all fields!";
+        document.getElementById("loginErrorMessage").innerHTML = `
+        <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">` + text + 
+        `<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>`;
         //leave function if a field is empty
         return;
     }
-
     //check user input matches a valid login
     validData = await checkValidLogin(password, username);
 
@@ -26,19 +29,19 @@ async function submitLogin() {
     }
     else {
         //let user know that one/both of their fields don't match the DB
-        alert("Username and password don't match any user on our system: Try again, or register");
+        error = "Username and password don't match any user on our system: <br>Try again, or register";
+        document.getElementById("loginErrorMessage").innerHTML = `
+        <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">` + error + 
+        `<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>`;
+        //alert("Username and password don't match any user on our system: Try again, or register");
     }
-
-
 }
-
-
 
 function checkIfEmpty(value) {
     //check values aren't null or an empty string
     return (value == null || value == '');
 }
-
 
 //check user login attempt is valid
 //async to make sure thie function waits for fetch results
@@ -52,7 +55,6 @@ async function checkValidLogin(inputPassword, inputUsername) {
         },
         //sends user input of password and username as the body of request
         body: JSON.stringify({ 'password': inputPassword, 'username': inputUsername })
-
     })
         //once a response, check there's no errors
         .then(response => {
@@ -61,8 +63,6 @@ async function checkValidLogin(inputPassword, inputUsername) {
             }
             //send response to function below 
             return response.json();
-
-
         })
         .then(data => {
             //return data from fetch 
@@ -72,10 +72,5 @@ async function checkValidLogin(inputPassword, inputUsername) {
         .catch(error => {
             alert("server side error: ", error);
             hashedPW = "";
-
         });
-
-
 }
-
-

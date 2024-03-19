@@ -370,7 +370,7 @@ export const SCENES = {
                     "Start the game"
                 ),
                 new UIButton(
-                    screenToWorldSpace(0.6, 0.7), screenToWorldSpace(0.31, 0.1), screenToWorldSpace(0.32, 0.11),
+                    screenToWorldSpace(0.345, 0.7), screenToWorldSpace(0.31, 0.1), screenToWorldSpace(0.32, 0.11),
                     () => {
                         currentScene = "tutorial"
                         setupScene();
@@ -396,7 +396,7 @@ export const SCENES = {
         UI:{
             buttons: [
                 new UIButton(
-                    screenToWorldSpace(0.4, 0.675), screenToWorldSpace(0.2, 0.1), screenToWorldSpace(0.21, 0.11),
+                    screenToWorldSpace(0.4, 0.71), screenToWorldSpace(0.2, 0.1), screenToWorldSpace(0.21, 0.11),
                     () => {
                         currentScene = "main_menu"
                         setupScene();
@@ -595,7 +595,7 @@ export const SCENES = {
                         () => {
                             gameIsPaused = false;
                             currentScene = "level_select";
-                            setupScene();
+                            init();
                         },
                         "exit")
                 ],
@@ -626,7 +626,7 @@ export const SCENES = {
                         () => {
                             levelLost = false;
                             currentScene = "main_menu";
-                            setupScene();
+                            window.location.href='../../map/';
                         },
                         "Menu")
                 ],

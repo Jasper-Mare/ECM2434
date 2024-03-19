@@ -1,6 +1,6 @@
 # written by Jasper
 
-from .models import User
+from .models import User, PlayerTargetLocation
 from urllib.parse import unquote
 
 AccessLevels = ["USER", "GAME_KEEPER", "DEVELOPER"]
@@ -15,14 +15,52 @@ def makeUserStruct(id:int, name:str, password_hash:str, access_level:str, recove
         "score" : int(score),
     }
 
+def makeTableStruct(id:int, name:str, access_level:str, recovery_email:str):
+    return{
+        "id" : int(id), 
+        "name" : name, 
+        "access_level" : access_level, 
+        "recovery_email": recovery_email,
+    }
+
 def getUserById(id:int):
     try:
         user:User = User.objects.get(id=id)
     except (User.DoesNotExist):
         return {"error":"DoesNotExist", "details":f"id: {id} does not exist"}
+    
+    return makeUserStruct(user.id, user.name, user.password_hash, user.access_level, user.recovery_email, user.score)
+
+
+def getUserByEmail(email:str):
+    try:
+        user:User = User.objects.get(recovery_email=email)
+    except (User.DoesNotExist):
+        print("email doesn't exist yetttt")
+        return {"error":"DoesNotExist", "details":f"email: {email} does not exist"}
 
     return makeUserStruct(user.id, user.name, user.password_hash, user.access_level, user.recovery_email, user.score)
 
+def getUserTargetLocation(id:int, defaultIfNot:int):
+    try:
+        playerLocation = PlayerTargetLocation.objects.get(player=id)
+    except (PlayerTargetLocation.DoesNotExist):
+        playerLocation = PlayerTargetLocation(player=id, location=defaultIfNot)
+        playerLocation.save()
+        return {"location": defaultIfNot}
+    
+    return {"location": playerLocation.location}
+
+def updateUserLocation(id:int, location:int):
+    try:
+        playerLocation = PlayerTargetLocation.objects.get(player=id)
+        playerLocation.location = location
+        playerLocation.save()
+    except (PlayerTargetLocation.DoesNotExist):
+        playerLocation = PlayerTargetLocation(player=id, location=location)
+        playerLocation.save()
+
+    return getUserTargetLocation(id, location)
 
 def getUserByName(name:str):
     try:
@@ -80,3 +118,17 @@ def deleteUser(id:int):
     
     user.delete()
     return {"successful" : True}
+
+# ---- MATT ADDITIONS ----
+
+def getNumberOfUsers():
+    total = User.objects.count()
+    return {'count': total}
+
+def fillTable():
+    data = User.objects.values()
+    tableArray = []
+    for entry in data:
+        tableArray.append(makeTableStruct(entry["id"], entry["name"], entry["access_level"], entry["recovery_email"]))
+
+    return {"users": tableArray}

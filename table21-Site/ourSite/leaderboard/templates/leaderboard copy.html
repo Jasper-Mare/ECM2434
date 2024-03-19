@@ -1,0 +1,33 @@
+<!-- Written by Jacob -->
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Leaderboard</title>
+    <!--Personal css-->
+    <!--<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}?{% now 'U' %}">-->
+    <!--Global css-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/allStyles copy.css' %}?{% now 'U' %}">
+</head>
+<body class = "colour">
+    {% include "homePage/toolbar.html"%}
+    <div class="container2">
+        <h1 class="group2" id="topic">Leaderboard</h1>
+        <table id="table">
+            <tr>
+                <!-- Start with just the headers for the columns -->
+                <th>Position</th>
+                <th>Name</th>
+                <th>Score</th>
+            </tr>
+        </table>
+        <a href="/map/"><button id="home_button">Home</button></a>   
+    </div>
+    
+</body>
+
+<script src="{% static 'js/leaderboard.js' %}?{% now 'U' %}"></script>
+</html>
