@@ -15,10 +15,10 @@
 </head>
 <body>
     {% block body %}
-        <div class="container py-2">
-            <p id="loginErrorMessage" class="hidden"></p>
+        <div class="container py-2 mx-auto loginBox">
+            <span id="loginErrorMessage"></span>
             <div>
-                <h1>Login</h1>
+                <h2>Login</h2>
             </div>
             <!-- create form for users to login -->
             <form>
@@ -32,16 +32,16 @@
                 </div>
                 <div>
                     <div class="form-text">
-                        Forgot password? <a href="password-reset-form">Reset Password </a>
+                        Forgot password? <a href="password-reset-form">Reset Password</a>
                     </div>
-                    <div class="my-2">
+                    <div class="my-2 text-center">
                         <!-- use button so input fields aren't shown in users url -->
-                        <input class="btn btn-secondary"type="button" onclick="submitLogin()" value="Submit">
+                        <input class="btn btn-secondary" type="button" onclick="submitLogin()" value="Submit">
                     </div>
                 </div>
             </form>
-            <div class="container form-text">
-                Haven't signed up yet? <a href="Register">Click here to sign up</a><br>
+            <div class="container form-text text-center">
+                Haven't signed up yet? <a href="Register"> Click Here</a>
             </div>
         </div>
     {% endblock %}
