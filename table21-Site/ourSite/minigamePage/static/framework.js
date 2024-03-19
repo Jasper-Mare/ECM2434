@@ -553,7 +553,7 @@ export const SCENES = {
                         },
                         "Retry"),
                     new UIButton(
-                        screenToWorldSpace(0.375, 0.7), screenToWorldSpace(0.25, 0.1), screenToWorldSpace(0.26, 0.11),
+                        screenToWorldSpace(0.35, 0.7), screenToWorldSpace(0.3, 0.1), screenToWorldSpace(0.26, 0.11),
                         () => {
                             levelLost = false;
                             currentScene = "main_menu";
