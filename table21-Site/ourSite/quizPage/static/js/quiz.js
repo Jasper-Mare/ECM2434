@@ -62,7 +62,7 @@ function DoQuiz(locationID) {
 function nextquestion() {
   // update the page elements
   QN.textContent = "Q"+questionNumber;
-  score.textContent = scorecount+"/"+totalquestions;
+  score.textContent = scorecount+"/"+(totalquestions*10);
   if (questionNumber <= totalquestions && questions.length > 0) { // check that there is still questions to be asked
     question.textContent = questions[0]["question"];
     correct = questions[0]["correct_answer"]; // get the index of the correct answer
@@ -117,7 +117,7 @@ function addScore(id, score) {
 // function to display the score when the quiz is finished
 function finish() {
   addScore(userID, scorecount);
-  question.textContent = "You scored " + scorecount + " out of " + totalquestions;
+  question.textContent = "You scored " + scorecount + " out of " + (totalquestions*10);
   op1.style.display = "none";
   op2.style.display = "none";
   op3.style.display = "none";

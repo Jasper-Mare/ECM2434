@@ -17,6 +17,7 @@
         
     </head>
     <body >
+        <!--Navbar for pages-->
         <div class="text-center toolbar">
             <nav class="navbar navbar-expand-lg fixed-top" data-bs-theme="dark" id="bar">
                 <div class="container-fluid">
@@ -35,6 +36,7 @@
                             <li class="nav-item" id = "admin">
                                 <a class="nav-link bar" href="/adminPage/">Admin</a>
                             </li>
+                            <!-- Dropdown item in navbar-->
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#dropCard" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                   Account
@@ -49,6 +51,7 @@
                     </div>
                 </div>
             </nav>
+            <!--Additional information when logo clicked-->
             <div class="collapse" id="collapseAbout">
                 <div class="card card-body">
                     <div class="c-center logo-bg space-gap">
@@ -71,6 +74,7 @@
                 </div>
             </div>
         </div>
+        <!--Other pages have content put here-->
         <div class="text-center">
             {% block content %}
             {% endblock %}
