@@ -46,9 +46,11 @@ function changeScreen(){
     const bar = document.getElementById("bar");
     width = window.innerWidth;
     if(width<550){
+        bar.classList.remove("fixed-top");
         bar.classList.add("fixed-bottom");
     }
     else{
+        bar.classList.add("fixed-top");
         bar.classList.remove("fixed-bottom");
     }
    

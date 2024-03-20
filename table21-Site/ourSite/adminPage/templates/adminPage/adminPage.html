@@ -25,7 +25,7 @@
     </head>
     <body>
         {% block content %}
-            <div class="d-flex align-items-start" style ="height:85vh">
+            <div class="d-flex align-items-start space-gap" style ="height:85vh">
                 <div class="sidebar">
                     <div class="nav flex-column nav-pills options" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                         <button class="nav-link text-end active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">App Data</button>
@@ -56,16 +56,16 @@
                             <br>
                             <div class = "container col-6 mx-auto" role="alert" id = "results">
                             </div>
-                            <div class="col-11 mx-auto">
+                            <div class="col-lg-11 mx-auto">
                                 <div class = "table-responsive">
                                     <table class="table table-sm table-hover border" id = "database" >
                                         <thead>
                                             <tr class="table-secondary">
-                                                <th scope="col-5">ID</th>
-                                                <th scope="col-5">Name</th>
-                                                <th scope="col-5">Email</th>
-                                                <th scope="col-5">Type</th>
-                                                <th scope="col-5">Actions</th>
+                                                <th scope="col">ID</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Type</th>
+                                                <th scope="col">Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody></tbody> 

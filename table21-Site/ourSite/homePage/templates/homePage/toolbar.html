@@ -18,7 +18,7 @@
     </head>
     <body >
         <div class="text-center toolbar">
-            <nav class="navbar navbar-expand-lg" data-bs-theme="dark" id="bar">
+            <nav class="navbar navbar-expand-lg fixed-top" data-bs-theme="dark" id="bar">
                 <div class="container-fluid">
                     <a class="navbar-brand" onclick="playMusic()" data-bs-toggle="collapse" href="#collapseAbout" role="button" aria-expanded="false" aria-controls="collapseAbout">EcoQuest</a>
                     <button class="navbar-toggler mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,7 +51,7 @@
             </nav>
             <div class="collapse" id="collapseAbout">
                 <div class="card card-body">
-                    <div class="c-center logo-bg">
+                    <div class="c-center logo-bg space-gap">
                         <div class="container" id="sound">
                             <h1 class="display-3">Welcome to EcoQuest Exeter!</h1>
                         </div>
@@ -65,7 +65,7 @@
                                     <p>To learn how we use your data <a href="/map/about/#GDPR">Click Here</a></p>
                                 </div>
                                 <div class="col text-lg-start">
-                                    <img src="{% static 'images/Goals.png' %}" height="200" width="350">
+                                    <img src="{% static 'images/Goals.png' %}" height='auto' width='300'>
                                 </div>
                             </div>                            
                         </div>

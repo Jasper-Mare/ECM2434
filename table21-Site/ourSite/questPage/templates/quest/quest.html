@@ -17,8 +17,8 @@
 </head>
 <body>
     {% block content %}
-        <div class="text-start image-bg">
-            <div class="col-6 mx-auto pt-3">
+        <div class="text-start image-bg space-gap">
+            <div class="col-lg-6 mx-auto pt-4">
                 <div class = "container">
                     <h2 class = "d-flex" id="topic"></h2> <!-- Content added by quest.js -->
                     <h5 class = "d-flex" id="place"></h5> <!-- Content added by quest.js -->
@@ -37,7 +37,7 @@
                     <button class ="btn" type="button" id="save" onclick="finish();">Completed</button> <!-- If you are finished with the quiz or wish to return you can go back to the map page-->    
                 </div>
             </div>
-        </div>
+        </div>            
         <script src="{% static 'js/quest.js' %}?{% now 'U' %}"></script>
     {% endblock %}
 </body>
