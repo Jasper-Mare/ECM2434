@@ -1,30 +1,35 @@
 //Written by MF
+
+//On loading the page get how many user are in the database and display it
 document.addEventListener('DOMContentLoaded',function(){
     const box = document.getElementById("numUser")
     const xhr = new XMLHttpRequest();
-    // retrieve current username
+    //request number of users username
     request = '/userDB/getNumberOfUsers';
     xhr.open('GET', request, true);
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             const response = JSON.parse(xhr.responseText);
+            //update box
             box.innerHTML = response.count;
         }
     }
     xhr.send();
 })
 
+// Get all users in the database and display them in the table
 function getData(){
     const table = document.getElementById("database").getElementsByTagName('tbody')[0];
     table.innerHTML= "";
     const xhr = new XMLHttpRequest();
-    // retrieve current username
+    //request users in table
     request = '/userDB/fillTable';
     xhr.open('GET', request, true);
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             const response = JSON.parse(xhr.responseText);
             for(let user of response["users"]){
+                // add row to table with information from request
                 addRow(table, user["id"], user["name"], user["recovery_email"], user["access_level"]);
             }
         }
@@ -68,8 +73,9 @@ function findUser(){
     //send request
     xhr.send();
 }
+
+// add row to table and depending on access level change button
 function addRow(table, id, name, email, access){
-    
     let button = "";
     //depending upon current access_level change buttons to either promote or demote
     if(access == "USER"){
@@ -77,7 +83,7 @@ function addRow(table, id, name, email, access){
     }else if(access == "GAME_KEEPER"){
         button = `<button class='btn btn-primary btn-sm' type='button' onclick = 'clearance(this,2)'>Demote</button>`;
     }
-    //option to remove user from database
+    //insert parameters as row entries
     var newRow = table.insertRow();
     newRow.insertCell().appendChild(document.createTextNode(id));
     var cell = newRow.insertCell();
@@ -85,7 +91,8 @@ function addRow(table, id, name, email, access){
     cell.appendChild(document.createTextNode(name));
     newRow.insertCell().appendChild(document.createTextNode(email));
     newRow.insertCell().appendChild(document.createTextNode(access));
-    var cell_5 = newRow.insertCell();      
+    var cell_5 = newRow.insertCell();   
+    //option to remove user from database   
     cell_5.innerHTML = button + `<button class='btn btn-danger btn-sm' type='button' onclick = 'clearance(this,3)'>Remove</button>`;
 }
 
@@ -134,6 +141,8 @@ function clearance(o,access){
     setTimeout(getData, 250);
 }
 
+
+// when form is filled in send feedback to developer email
 async function sendFeedbackRequest() {
     subject = (document.getElementById("subject").value).trim();
     message = (document.getElementById("message").value).trim();
@@ -156,7 +165,7 @@ async function sendFeedbackRequest() {
             return response.json();
         })
         .then(data => {
-            //return true that the email has sent 
+           //if email has been sent clear form and redirect to admin page
            subject.innerHTML="";
            message.innerHTML="";
            window.location.href='/adminPage/'

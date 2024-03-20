@@ -1,21 +1,13 @@
-<!--Page written by MF & section written by JF-->
+<!--Page written by MF & section written by Jacob Ferris or Ruby Ham-->
 {% extends "homePage/toolbar.html"%}
 {% load static %}
-<!---->
-<!-- https://getbootstrap.com/-->
-<!-- https://fastbootstrap.com/components/pills/-->
 
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Admin</title>
-        <!--Personal css-->
-        <!--<link rel="stylesheet" href="{% static 'css/adminStyles.css' %}?{% now 'U' %}">-->
-        <!--Global css-->
-        <!--<link rel="stylesheet" href="{% static 'css/allStyles.css' %}?{% now 'U' %}"> -->     
+        <title>Admin</title>   
         {% block style %}
             <link rel="stylesheet" href="{% static 'css/adminStyles.css' %}?{% now 'U' %}">
-            <!--<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css'%}?{% now 'U' %}">-->
         {% endblock %}
         {% block script %}
             <script type="text/javascript" src="{% static 'js\adminPage.js' %}?{% now 'U' %}"></script>         
@@ -25,8 +17,32 @@
     </head>
     <body>
         {% block content %}
+            <!-- Navbar for Mobile (Corresponds to tabed sections)-->
+            <div class = "container topbar pt-4 d-md-none">
+                <ul class="nav nav-pills justify-content-center" role="tablist">
+                    <li class="nav-item">
+                    <a class="nav-link active" id="pill-tab-default" data-bs-toggle="pill" href="#v-pills-home-tab" role="tab" aria-controls="v-pills-home-tab" aria-selected="true">App Data</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" id="pill-tab-1" data-bs-toggle="pill" href="#v-pills-1" onclick="getData()" role="tab" aria-controls="v-pills-1" aria-selected="false">Manage Users</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" id="pill-tab-2" data-bs-toggle="pill" href="#v-pills-2" role="tab" aria-controls="v-pills-2" aria-selected="false">New Quiz</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pill-tab-3" data-bs-toggle="pill" href="#v-pills-3" role="tab" aria-controls="v-pills-3" aria-selected="false">New Quest</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pill-tab-4" data-bs-toggle="pill" href="#v-pills-4" role="tab" aria-controls="v-pills-4" aria-selected="false">Help</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pill-tab-5" data-bs-toggle="pill" href="#v-pills-5" onclick="window.location.href='../../map/'" role="tab" aria-controls="v-pills-5" aria-selected="false">Exit</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- Navbar for Desktop-->
             <div class="d-flex align-items-start space-gap" style ="height:100vh">
-                <div class="sidebar">
+                <div class="sidebar d-none d-md-block">
                     <div class="nav flex-column nav-pills options" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                         <button class="nav-link text-end active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">App Data</button>
                         <button class="nav-link text-end" id="v-pills-1-tab" data-bs-toggle="pill" data-bs-target="#v-pills-1" type="button" onclick="getData()" role="tab" aria-controls="v-pills-1" aria-selected="false">Manage Users</button>
@@ -37,8 +53,10 @@
                     </div>
                 </div>
                 <div class="container-fluid mt-3 pt-4">
+                <!--Content of admin Page hidden in tabs-->
                     <div class="tab-content" id="v-pills-tabContent">
                         <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" tabindex="0">
+                           <!--Data for Admin: prints number of users in database-->
                             <div class = "container text-start">
                                 <h2>Number of Users</h2>
                                 <div class = "container text-center display-1" id="numUser" style="background-color: whitesmoke;"> 
@@ -46,7 +64,9 @@
                             </div>
                         </div>
                         <div class="tab-pane fade" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-1-tab" tabindex="1">
+                            <!--Manage the users using table: can promote/demote or delete users-->
                             <div class ="text-end me-5 pe-2">
+                                <!--Search bar-->
                                 <fieldset > 
                                     <label for="username"> Search:</label>
                                     <input type="text" id="username" name="username" placeholder="Enter Username">
@@ -54,8 +74,10 @@
                                 </fieldset>                
                             </div>
                             <br>
+                            <!-- Error Message-->
                             <div class = "container col-6 mx-auto" role="alert" id = "results">
                             </div>
+                            <!-- Table of all users-->
                             <div class="col-lg-11 mx-auto">
                                 <div class = "table-responsive">
                                     <table class="table table-sm table-hover border" id = "database" >
@@ -74,7 +96,7 @@
                             </div>
                         </div>
                         <div class="tab-pane fade" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-2-tab" tabindex="2">
-                            <!-- Written by Jacob -->
+                            <!-- Written by Jacob Ferris copied from newquiz.html -->
                             <div class ="container">
                                 <h4 id="topic">Enter a new sustainability question:</h4>
                             </div>
@@ -84,9 +106,11 @@
                                         <option class="selected hidden">Choose a location</option> <!-- Newquiz.js adds locations from database -->
                                     </select>
                                 </div>
+                                <!-- Enter Question-->
                                 <div class ="mt-2">
                                     <input type="text" class="form-control-lg" id="question" placeholder="Question...">
                                 </div>
+                                <!-- Potential Answers-->
                                 <div class ="mt-2" >
                                     <label for="op1" class="form-label">Option 1:</label>
                                     <input type="text" id="op1" placeholder="Option...">
@@ -102,6 +126,7 @@
                                     <input type="text" id="op3" placeholder="Option...">
                                     <button class="btn choose" id="b3" onclick="select(id)">✓</button>
                                 </div>
+                                <!-- Error Message-->
                                 <div class = "col-6 mx-auto" role="alert" id="messageError"></div>
                                 <div class ="mt-2">
                                     <input class="btn btn-outline-secondary"onclick="save()" type="submit" value="Submit">
@@ -111,12 +136,15 @@
                             <script type="text/javascript" src="{% static 'js/newquiz.js' %}?{% now 'U' %}"></script>
                         </div>
                         <div class="tab-pane fade" id="v-pills-3" role="tabpanel" aria-labelledby="v-pills-3-tab" tabindex="3">
+                            <!-- Written by JRuby Ham copied from newquest.html -->
                             <div class ="container">
                                 <h4 id="topicQuest">Enter a new sustainability quest:</h4>
                             </div>
+                            <!-- Enter Question-->
                             <div class ="mt-2">
                                 <input type="text" class="form-control-lg" id="questionQuest" placeholder="Quest...">
                             </div>
+                            <!-- Error Message-->
                             <div class = "col-6 mx-auto mt-2" role="alert" id="errorMessageQuest"></div>
                             <div class ="mt-2">
                                 <input class="btn btn-outline-secondary" id="saveQuest" onclick="saveQuest()" type="submit" value="Submit">
@@ -124,12 +152,15 @@
                             <script src="{% static 'js/newquest.js' %}?{% now 'U' %}"></script>
                         </div>
                         <div class="tab-pane fade" id="v-pills-4" role="tabpanel" aria-labelledby="v-pills-4-tab" tabindex="4">
+                            <!--Form that gets sent to developers-->
                             <div class="container text-start"> 
                                 <form>
+                                    <!--Email subject-->
                                     <div>
                                         <label for="subject" class="form-label">Subject:</label>
                                         <input class="form-control" type="text" id="subject" name="subject">
                                     </div>
+                                    <!--Email contents-->
                                     <div>
                                         <label for="message" class="form-label">Message:</label>
                                         <textarea class="form-control" type="text" id="message" name="message" rows="3"></textarea>

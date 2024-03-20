@@ -1,14 +1,15 @@
-/*
-.container{
-    border:2px solid black;
-}
-
-div{
-    border:2px solid red;
-}
-
-/*---------------------------------------------------*/
-/**/
+/*====================================================================================================
+Order of file: 
+    * ------------
+    * Login Page Themes
+    * Website Themes
+    *   All styles
+    *   Navbar Styles
+    *   Background Styles
+    *   Quiz & Quest Styles
+    *   Leaderboard Styles
+    *   Admin Styles
+  ====================================================================================================*/
 
 
 /* LOGIN PAGE THEMES
@@ -51,6 +52,14 @@ body.login-bg{
 }
 /* WEBSITE THEMES
   ==================================================*/
+/** ALL STYLES =================**/
+.hidden{
+    display: none;
+}
+
+.space-gap{
+    padding-top: 3.5em;
+}
 /** NAVBAR STYLES =================**/
 .toolbar nav{
     background: linear-gradient(0deg, rgb(39, 89, 121) 0%,rgba(48, 119, 163,1) 99%);
@@ -122,7 +131,6 @@ ul.dropdown-menu li a.dropdown-item:hover{
     background-position: bottom 0px right 0px;
 }
 
-
 .image-bg {
     background-image:url('../images/bg-circle5.png');
     height: 100vh;
@@ -178,6 +186,7 @@ ul.dropdown-menu li a.dropdown-item:hover{
 }
 
 /** ADMIN STYLES =================**/
+
 .sidebar{
     background-color:rgb(48, 119, 163);
     padding-top: 10px;
@@ -208,6 +217,31 @@ ul.dropdown-menu li a.dropdown-item:hover{
     background-color: rgb(47, 97, 128);
 }
 
+.topbar{
+    background-color: rgb(48, 119, 163) ;
+    border-bottom:1px solid rgb(0,0,0,0.8);
+}
+
+.topbar ul{
+    background-color:rgb(47, 110, 149);
+    border-radius: 10px;
+    margin-bottom:10px;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.topbar .nav-item a{
+    color:rgb(194, 194, 194);
+}
+
+.topbar .nav-item a:hover{
+    color:white;
+}
+
+.topbar .nav-item a.active{
+    background-color: rgb(47, 97, 128);
+    font-weight: 600;
+}
+
 td button.btn{
     margin: 2px;
 }
@@ -221,10 +255,4 @@ td button.btn{
     background-color: lawngreen;
 }
 
-.hidden{
-    display: none;
-}
 
-.space-gap{
-    padding-top: 3.5em;
-}
