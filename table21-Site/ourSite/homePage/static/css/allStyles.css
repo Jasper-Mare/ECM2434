@@ -95,7 +95,7 @@ ul.dropdown-menu li a.dropdown-item:hover{
 /*--- Navbar Card styles ---*/
 .toolbar .card{
     border-radius: 0px;
-    background-color:darkkhaki;
+    background-color:rgb(39, 89, 121);
     padding:10px;
     position: absolute;
     width:100vw;
@@ -122,15 +122,28 @@ ul.dropdown-menu li a.dropdown-item:hover{
     background-position: bottom 0px right 0px;
 }
 
-.image-bg{
-    background-image:url('../images/bg-circle3.png');
-    height: 90vh;
+
+.image-bg {
+    background-image:url('../images/bg-circle5.png');
+    height: 100vh;
     background-repeat: no-repeat;
-}
+    background-size: cover;
+    padding-top: 30px;
+} 
+
+ @media screen and (min-width: 990px) {
+    .image-bg{
+        background-image:url('../images/bg-circle3.png');
+        height: 100vh;
+        background-repeat: no-repeat;
+        background-size: cover;
+        padding-top: 30px;
+    }
+ }
 
 .board-bg{
     background-image:url('../images/exeter-Map-Edited.png');
-    height: 89vh;
+    height: 100vh;
     background-repeat: no-repeat;
     background-size: cover;
     padding-top: 30px;
@@ -205,3 +218,6 @@ td button.btn{
     display: none;
 }
 
+.space-gap{
+    padding-top: 3.5em;
+}

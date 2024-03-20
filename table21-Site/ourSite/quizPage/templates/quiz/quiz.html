@@ -17,8 +17,8 @@
     </head>
     <body>
         {% block content %}
-            <div class = "text-start image-bg">
-                <div class="col-6 mx-auto pt-3">
+            <div class = "text-start image-bg space-gap">
+                <div class="col-lg-6 mx-auto pt-3">
                     <div class = "container">
                         <h2 class = "d-flex" id="topic"></h2> <!-- Content added by quiz.js -->
                         <h5 class = "d-flex" id="place"></h5> <!-- Content added by quiz.js -->
@@ -47,7 +47,6 @@
                 <div class="container text-center exit-button">
                     <button class = "btn" type="button" id="save" onclick="window.location.href='/map/'">Exit</button> <!-- If you are finished with the quiz or wish to return you can go back to the map page-->    
                 </div>
-                
             </div>
             <script src="{% static 'js/quiz.js' %}?{% now 'U' %}"></script>
         {% endblock %}
