@@ -361,7 +361,7 @@ export const SCENES = {
             sprites: [],
             buttons: [
                 new UIButton(
-                    screenToWorldSpace(0.3, 0.4), screenToWorldSpace(0.4, 0.2), screenToWorldSpace(0.42, 0.22),
+                    screenToWorldSpace(0.3, 0.2), screenToWorldSpace(0.4, 0.2), screenToWorldSpace(0.42, 0.22),
                     () => {
                         currentScene = "game"
                         setupScene();
@@ -373,7 +373,7 @@ export const SCENES = {
                     "Start the game"
                 ),
                 new UIButton(
-                    screenToWorldSpace(0.345, 0.7), screenToWorldSpace(0.31, 0.1), screenToWorldSpace(0.32, 0.11),
+                    screenToWorldSpace(0.345, 0.5), screenToWorldSpace(0.31, 0.1), screenToWorldSpace(0.32, 0.11),
                     () => {
                         currentScene = "tutorial"
                         setupScene();
