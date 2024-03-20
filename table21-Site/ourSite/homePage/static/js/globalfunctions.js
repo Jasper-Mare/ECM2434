@@ -57,19 +57,19 @@ function changeScreen(){
 function playMusic() {
     // function to play Henry's music he created
     const item = document.getElementById("play");
-        if (null == item) {
-            const container = document.getElementById("sound");
-            const funAudio = document.createElement("audio");
-            funAudio.id = "play";
-            funAudio.src = "../static/henrys jam.mp3";
-            funAudio.loop = true;
-            funAudio.autoplay = true;
-            funAudio.volume = 0.2;
-            container.appendChild(funAudio);
-            funAudio.play();
-        }
-        
+    if (null == item) {
+        const container = document.getElementById("sound");
+        const funAudio = document.createElement("audio");
+        funAudio.id = "play";
+        funAudio.src = "../static/henrys jam.mp3";
+        funAudio.loop = true;
+        funAudio.autoplay = true;
+        funAudio.volume = 0.2;
+        container.appendChild(funAudio);
+        funAudio.play();
     }
+        
+}
     
 
 function getCookie(cname) {
