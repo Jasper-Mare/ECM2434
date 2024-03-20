@@ -12,20 +12,42 @@
     </head>
     <body>
         {% block content %}
-            <div id="container">
-                <h1>Welcome to EcoQuest Exeter!</h1>
-            </div>
-            <div>
-                <a href="#popup1" onclick="playmusic()">Click Here</a>
-            </div>
-            <div>
-                <div>
-                    <h2>The aim of the game</h2>
-                    <a href="#">&times;</a>
-                    <div>
-                        Travel to all the locations on the map and answer the sustainable questions and quests to gain points and be top of the leaderboard.
-                    </div>
-                    <img src="{% static 'images/Goals.png' %}" height="200" width="350">
+            <div class="container">
+                <div class="container">
+                    <h1>About</h1>
+                </div>
+                <div class="container text-start">
+                    <h3>Goals</h3>
+                    <p>This app was created by University of Exeter Students in order to promote sustainability on campus.</p>
+                </div>
+                <div class="container text-start" id="GDPR">
+                    <h3>GDPR</h3>
+                    <p>This GDPR Compliance Policy outlines how EcoQuest Exeter collects, processes, and protects personal data in compliance with the General Data Protection Regulation (GDPR). The purpose of this policy is to ensure transparency and accountability regarding the handling of user data within our game.</p>
+                    <p>EcoQuest Exeter collects and processes the following types of personal data:</p>
+                    <ul>
+                        <li>User-provided information such as email addresses during registration.</li>
+                        <li>User credentials, including hashed passwords for authentication purposes.</li>
+                    </ul>
+                    <p>Passwords are securely hashed using industry-standard encryption algorithms to prevent unauthorized access.</p>
+                    <p>Email addresses are stored in plain text for user identification purposes.</p>
+                    <p>Personal data collected by EcoQuestExeter is used for the following purposes only:</p>
+                    <ul> 
+                        <li>User account management and authentication.</li>
+                    </ul>
+                    <p>Personal data is retained only for as long as necessary to fulfil the purposes outlined in this policy or as required by applicable law.</p>
+                    <p>Users have the right to request the deletion of their personal data, subject to any legal obligations or legitimate interests that may require its retention.</p>
+                    <p>Users have the right to access, rectify, or erase their personal data stored by EcoQuest Exeter.</p>
+                    <p>Requests to exercise these rights can be submitted through the game's settings or by contacting us using our email: ecoquestexeter@gmail.com.</p>
+                    <p>EcoQuestExeter will not store personal data with any third-party service providers.</p>
+                    <p>In the event of a data breach involving personal data, EcoQuest Exeter will promptly notify affected users and relevant supervisory authorities in accordance with GDPR requirements.</p>
+                    <p>This GDPR Compliance Policy may be updated periodically to reflect changes in data processing practices or regulatory requirements.</p>
+                    <p>Users are encouraged to review this policy regularly for any updates.</p>
+                    <p>For inquiries or concerns regarding the processing of personal data byEcoQuest Exeter, please contact us at: ecoquestexeter@gmail.com</p>
+                    <p>By using EcoQuest Exeter, users acknowledge and agree to the terms outlined in this GDPR Compliance Policy. We are committed to protecting the privacy and security of user data and will continue to uphold GDPR principles in our data processing activities.</p>
+                    <p>Last Updated: 19/03/2024</p>
+                </div>
+                <div class="container">
+
                 </div>
             </div>
         {% endblock %}
