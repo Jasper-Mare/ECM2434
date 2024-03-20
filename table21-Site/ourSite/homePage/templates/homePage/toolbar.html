@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Bootstrap links-->
         <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}?{% now 'U' %}">
-        <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.js' %}?{% now 'U' %}"></script>
+        <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}?{% now 'U' %}"></script>
 
         <link rel="stylesheet" href="{% static 'css/allStyles.css' %}?{% now 'U' %}">
         <script type="text/javascript" src="{% static 'js/globalfunctions.js' %}?{% now 'U' %}"></script>        
@@ -40,7 +40,7 @@
                                   Account
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" id="dropCard">
-                                  <li><a class="dropdown-item">Delete Account</a></li>
+                                  <li><a class="dropdown-item"  onclick="deleteUser()">Delete Account</a></li>
                                   <li><hr class="dropdown-divider"></li>
                                   <li><a class="dropdown-item" onclick="logOut()" href="/login/">Log Out</a></li>
                                 </ul>
