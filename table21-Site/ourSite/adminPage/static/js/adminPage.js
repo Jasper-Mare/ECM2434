@@ -134,19 +134,35 @@ function clearance(o,access){
     setTimeout(getData, 250);
 }
 
-function getLocation() {
-    const x = document.getElementById("localized");
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(showPosition);
-    } else {
-      x.innerHTML = "Geolocation is not supported by this browser.";
-    }
-  }
-  
-  function showPosition(position) {
-    const x = document.getElementById("localized");
-    x.innerHTML = "Latitude: " + position.coords.latitude +
-    "<br>Longitude: " + position.coords.longitude;
-  }
-
-//Function getLocation() & showPosition() gets code from: https://www.w3schools.com/html/html5_geolocation.asp
+async function sendFeedbackRequest() {
+    subject = (document.getElementById("subject").value).trim();
+    message = (document.getElementById("message").value).trim();
+    body = subject + ':    ' + message;
+    //sends POST request to sendEmail function in login views
+    return await fetch('/login/sendFeedback', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        //sends user input of email as the body of request
+        body: JSON.stringify({ 'head': 'Admin-Help Request', 'body': body })
+    })
+        //once a response, check there's no errors
+        .then(response => {
+            if (response.ok == false) {
+                alert("error getting response");
+            }
+            //send response to function below 
+            return response.json();
+        })
+        .then(data => {
+            //return true that the email has sent 
+           subject.innerHTML="";
+           message.innerHTML="";
+           window.location.href='/adminPage/'
+        })
+        //catch any errors
+        .catch(error => {
+            alert("server side error: " + error);
+        });
+}
