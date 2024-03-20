@@ -14,7 +14,7 @@ const scoreMultiplier = 60; // what difficulty should be multiplied by to calcul
 
 const userID = getCookie("login"); // get the userID from the cookie
 if (userID == undefined || userID == "") { // if they are not logged in redirect them to the login page
-  alert("Please login to take the quiz");
+  alert("Please login to play the game!");
   window.location.href = "/login/";
 }
 
