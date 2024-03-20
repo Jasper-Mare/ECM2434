@@ -100,7 +100,7 @@ function shuffle(list) {
 // function to add the score to the user in the database
 function addScore(id, score) {
   // get the current score of the user
-  request = 'http://127.0.0.1:8000/userDB/getUserById?id='+String(id) // get user details from their id
+  request = '/userDB/getUserById?id='+String(id) // get user details from their id
   getRequest(request)
   .then(response => {
     currentscore = parseInt(response["score"]); // get the score attribute from the json
