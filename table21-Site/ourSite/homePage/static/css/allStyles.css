@@ -136,7 +136,7 @@ ul.dropdown-menu li a.dropdown-item:hover{
     height: 100vh;
     background-repeat: no-repeat;
     background-size: cover;
-    padding-top: 30px;
+    padding-top: 40px;
 } 
 
  @media screen and (min-width: 990px) {
@@ -145,7 +145,7 @@ ul.dropdown-menu li a.dropdown-item:hover{
         height: 100vh;
         background-repeat: no-repeat;
         background-size: cover;
-        padding-top: 30px;
+        padding-top: 40px;
     }
  }
 
