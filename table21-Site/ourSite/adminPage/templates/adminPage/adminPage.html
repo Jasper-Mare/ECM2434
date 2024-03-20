@@ -101,8 +101,8 @@
                                     <input type="text" id="op3" placeholder="Option...">
                                     <button class="btn choose" id="b3" onclick="select(id)">✓</button>
                                 </div>
-                                <div class = "col-6 mx-auto" role="alert" id="errorMessage"></div>
-                                <div>
+                                <div class = "col-6 mx-auto" role="alert" id="messageError"></div>
+                                <div class ="mt-2">
                                     <input class="btn btn-outline-secondary"onclick="save()" type="submit" value="Submit">
                                     <!-- Return to the map page when you are finished adding questions-->
                                 </div>
@@ -116,13 +116,12 @@
                             <div class ="mt-2">
                                 <input type="text" class="form-control-lg" id="questionQuest" placeholder="Quest...">
                             </div>
-                            <div class = "col-6 mx-auto" role="alert" id="errorMessageQuest"></div>
+                            <div class = "col-6 mx-auto mt-2" role="alert" id="errorMessageQuest"></div>
                             <div class ="mt-2">
-                                <input class="btn btn-outline-secondary" id="saveQuest" onclick="save()" type="submit" value="Submit">
+                                <input class="btn btn-outline-secondary" id="saveQuest" onclick="saveQuest()" type="submit" value="Submit">
                             </div>
                             <script src="{% static 'js/newquest.js' %}?{% now 'U' %}"></script>
                         </div>
-                        
                     </div>
                 </div>
             </div>

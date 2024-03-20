@@ -6,7 +6,7 @@ question = document.getElementById("questionQuest");
 
 
 // function to check that a question is valid and then add it to the database
-function save() {
+function saveQuest() {
     q = question.value
     toSave = [q];
     console.log(toSave);
@@ -16,7 +16,7 @@ function save() {
         const text = "Field is empty" ;
         document.getElementById("errorMessageQuest").innerHTML = `
         <div class="alert py-1 alert-danger alert-dismissible fade show" role="alert">` + text + 
-        `<button type="button" class="btn-close py-1" data-bs-dismiss="alert" aria-label="Close"></button>
+        `<button type="button" class="btn-close py-2" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>`;
     }
 
