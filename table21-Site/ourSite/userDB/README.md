@@ -16,9 +16,6 @@ I ran through each of the urls with valid and invalid data in the parameters,
 when a bug was found I searched for the problem in my scripts and fixed each bug at the 
 point the problem was discovered.
 
-
-
-
 ## Welcome to the User Database API
 
 http://127.0.0.1:8000/userDB/getUserById?id=1
@@ -31,13 +28,24 @@ http://127.0.0.1:8000/userDB/getUsersByScore?number_of_players=1
  - get the top n users by score
 
 http://127.0.0.1:8000/userDB/createUser?name=alice&password_hash=abcd&access_level=USER&recovery_email=alice@exeter.ac.uk
- - create a user and get the json of their info, all parameters are nessesary!
+ - create a user and get the json of their info, all parameters are necessary!
 
 http://127.0.0.1:8000/userDB/updateUser?id=1&name=alice&password_hash=abcd&access_level=USER&recovery_email=alice@exeter.ac.uk&score=10
- - update a user's info and return the updated json, id is nessesary, all other parameters are optional
+ - update a user's info and return the updated json, id is necessary, all other parameters are optional
 
 http://127.0.0.1:8000/userDB/deleteUser?id=1
  - delete a user, returns json dictionary, where successful is true or false
 
+http://127.0.0.1:8000/userDB/getUserTargetLocation?id=1
+ - get the target location of the user
+
+http://127.0.0.1:8000/userDB/updateUserTargetLocation?id=1&location=1
+ - set the target location of the user
+
+http://127.0.0.1:8000/userDB/getNumberOfUsers
+ - get total number of users in database
+
+http://127.0.0.1:8000/userDB/fillTable
+ - get all users in format of table structure used in admin page
 
 Access Levels can be: USER, GAME_KEEPER or, DEVELOPER

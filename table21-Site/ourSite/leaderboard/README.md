@@ -2,6 +2,7 @@
 Jacob Ferris
 
  - Jacob Ferris
+ - Mathew Fifield ( bootstrap styling )
 
 # Testing
 
