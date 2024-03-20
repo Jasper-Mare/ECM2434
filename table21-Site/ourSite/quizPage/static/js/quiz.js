@@ -83,7 +83,7 @@ function nextquestion() {
 
 // on clicking an option increase score if correct then update page with next question
 function choose(name) {
-  if (name == correct) {scorecount ++;} // if they clicked the right answer increase the score
+  if (name == correct) {scorecount += 10;} // if they clicked the right answer increase the score
   questionNumber ++;
   nextquestion(); // call the next function even if there are no more questions
 }
