@@ -33,7 +33,7 @@ function save() {
     // make sure that they have filled in all inputs
     if (isempty(q) || isempty(ans1) || isempty(ans2) || isempty(ans3)) {
         text = "You've left a field empty, please fill out all fields";
-        document.getElementById("errorMessage").innerHTML = `
+        document.getElementById("messageError").innerHTML = `
         <div class="alert py-1 alert-danger alert-dismissible fade show" role="alert">` + text + 
         `<button type="button" class="btn-close py-2" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>`;

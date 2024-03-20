@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Bootstrap links-->
         <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}?{% now 'U' %}">
-        <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.js' %}?{% now 'U' %}"></script>
+        <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}?{% now 'U' %}"></script>
 
         <link rel="stylesheet" href="{% static 'css/allStyles.css' %}?{% now 'U' %}">
         <script type="text/javascript" src="{% static 'js/globalfunctions.js' %}?{% now 'U' %}"></script>        
@@ -18,7 +18,7 @@
     </head>
     <body >
         <div class="text-center toolbar">
-            <nav class="navbar navbar-expand-lg" data-bs-theme="dark" id="bar">
+            <nav class="navbar navbar-expand-lg fixed-top" data-bs-theme="dark" id="bar">
                 <div class="container-fluid">
                     <a class="navbar-brand" onclick="playMusic()" data-bs-toggle="collapse" href="#collapseAbout" role="button" aria-expanded="false" aria-controls="collapseAbout">EcoQuest</a>
                     <button class="navbar-toggler mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,7 +40,7 @@
                                   Account
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" id="dropCard">
-                                  <li><a class="dropdown-item">Delete Account</a></li>
+                                  <li><a class="dropdown-item"  onclick="deleteUser()">Delete Account</a></li>
                                   <li><hr class="dropdown-divider"></li>
                                   <li><a class="dropdown-item" onclick="logOut()" href="/login/">Log Out</a></li>
                                 </ul>
@@ -51,7 +51,7 @@
             </nav>
             <div class="collapse" id="collapseAbout">
                 <div class="card card-body">
-                    <div class="c-center logo-bg">
+                    <div class="c-center logo-bg space-gap">
                         <div class="container" id="sound">
                             <h1 class="display-3">Welcome to EcoQuest Exeter!</h1>
                         </div>
@@ -60,12 +60,12 @@
                                 <div class="col text-lg-start ps-lg-5">
                                     <h5>Aim of the game</h5>
                                     <p>Travel to all the locations on the map and answer the sustainable questions and quests to gain points and be top of the leaderboard.</p>
-                                    <p>To out more about us <a href="/map/about/">Click Here</a></p>
+                                    <p>To find out more about us <a href="/map/about/">Click Here</a></p>
                                     <h5>Our Data Policy</h5>
                                     <p>To learn how we use your data <a href="/map/about/#GDPR">Click Here</a></p>
                                 </div>
                                 <div class="col text-lg-start">
-                                    <img src="{% static 'images/Goals.png' %}" height="200" width="350">
+                                    <img src="{% static 'images/Goals.png' %}" height='auto' width='300'>
                                 </div>
                             </div>                            
                         </div>

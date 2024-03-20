@@ -183,6 +183,25 @@ def sendEmail(request):
     #else return an error if unable to fetch/return the above
     return JsonResponse({'error': 'Method not allowed'}, status=405)
 
+@csrf_exempt #This skips csrf validation
+def sendFeedback(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body.decode('ascii'))
+            subject = data['head']
+            message = data['body']
+            email = 'ecoquestexeter@gmail.com'
+            send_mail(subject, message, email, [email])
+            print("Email was sent!")
+            return JsonResponse({'success': True})
+        
+        except Exception as e:
+            print("Error sending email:", str(e))
+            return JsonResponse({'error': 'An error occurred while sending the email.'}, status=500)
+
+        
+    #else return an error if unable to fetch/return the above
+    return JsonResponse({'error': 'Method not allowed'}, status=405)
 
 @csrf_exempt #This skips csrf validation
 def getToken(request):

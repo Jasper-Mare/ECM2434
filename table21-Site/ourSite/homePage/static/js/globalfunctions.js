@@ -46,9 +46,11 @@ function changeScreen(){
     const bar = document.getElementById("bar");
     width = window.innerWidth;
     if(width<550){
+        bar.classList.remove("fixed-top");
         bar.classList.add("fixed-bottom");
     }
     else{
+        bar.classList.add("fixed-top");
         bar.classList.remove("fixed-bottom");
     }
    
@@ -70,7 +72,16 @@ function playMusic() {
     }
         
 }
-    
+
+function deleteUser(){
+    const id = getCookie("login");
+    //delete user from database through new request
+    const xml = new XMLHttpRequest();
+    const request = '/userDB/deleteUser?id='+id;
+    xml.open('GET', request, true);
+    xml.send();
+    logOut();
+}
 
 function getCookie(cname) {
     // function to get the cookie of a given name

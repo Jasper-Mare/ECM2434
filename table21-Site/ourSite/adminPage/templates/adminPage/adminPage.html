@@ -25,13 +25,14 @@
     </head>
     <body>
         {% block content %}
-            <div class="d-flex align-items-start" style ="height:85vh">
+            <div class="d-flex align-items-start space-gap" style ="height:85vh">
                 <div class="sidebar">
                     <div class="nav flex-column nav-pills options" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                         <button class="nav-link text-end active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">App Data</button>
                         <button class="nav-link text-end" id="v-pills-1-tab" data-bs-toggle="pill" data-bs-target="#v-pills-1" type="button" onclick="getData()" role="tab" aria-controls="v-pills-1" aria-selected="false">Manage Users</button>
                         <button class="nav-link text-end" id="v-pills-2-tab" data-bs-toggle="pill" data-bs-target="#v-pills-2" type="button" role="tab" aria-controls="v-pills-2" aria-selected="false">New Quiz</button>
                         <button class="nav-link text-end" id="v-pills-3-tab" data-bs-toggle="pill" data-bs-target="#v-pills-3" type="button" role="tab" aria-controls="v-pills-3" aria-selected="false">New Quest</button>
+                        <button class="nav-link text-end" id="v-pills-4-tab" data-bs-toggle="pill" data-bs-target="#v-pills-4" type="button" role="tab" aria-controls="v-pills-4" aria-selected="false">Help</button>
                         <button class="nav-link text-end" id="v-pills-5-tab" data-bs-toggle="pill" data-bs-target="#v-pills-5" type="button" onclick="window.location.href='../../map/'" role="tab" aria-controls="v-pills-5" aria-selected="false">Exit</button>
                     </div>
                 </div>
@@ -55,16 +56,16 @@
                             <br>
                             <div class = "container col-6 mx-auto" role="alert" id = "results">
                             </div>
-                            <div class="col-11 mx-auto">
+                            <div class="col-lg-11 mx-auto">
                                 <div class = "table-responsive">
                                     <table class="table table-sm table-hover border" id = "database" >
                                         <thead>
                                             <tr class="table-secondary">
-                                                <th scope="col-5">ID</th>
-                                                <th scope="col-5">Name</th>
-                                                <th scope="col-5">Email</th>
-                                                <th scope="col-5">Type</th>
-                                                <th scope="col-5">Actions</th>
+                                                <th scope="col">ID</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Type</th>
+                                                <th scope="col">Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody></tbody> 
@@ -101,8 +102,8 @@
                                     <input type="text" id="op3" placeholder="Option...">
                                     <button class="btn choose" id="b3" onclick="select(id)">✓</button>
                                 </div>
-                                <div class = "col-6 mx-auto" role="alert" id="errorMessage"></div>
-                                <div>
+                                <div class = "col-6 mx-auto" role="alert" id="messageError"></div>
+                                <div class ="mt-2">
                                     <input class="btn btn-outline-secondary"onclick="save()" type="submit" value="Submit">
                                     <!-- Return to the map page when you are finished adding questions-->
                                 </div>
@@ -116,13 +117,29 @@
                             <div class ="mt-2">
                                 <input type="text" class="form-control-lg" id="questionQuest" placeholder="Quest...">
                             </div>
-                            <div class = "col-6 mx-auto" role="alert" id="errorMessageQuest"></div>
+                            <div class = "col-6 mx-auto mt-2" role="alert" id="errorMessageQuest"></div>
                             <div class ="mt-2">
-                                <input class="btn btn-outline-secondary" id="saveQuest" onclick="save()" type="submit" value="Submit">
+                                <input class="btn btn-outline-secondary" id="saveQuest" onclick="saveQuest()" type="submit" value="Submit">
                             </div>
                             <script src="{% static 'js/newquest.js' %}?{% now 'U' %}"></script>
                         </div>
-                        
+                        <div class="tab-pane fade" id="v-pills-4" role="tabpanel" aria-labelledby="v-pills-4-tab" tabindex="4">
+                            <div class="container text-start"> 
+                                <form>
+                                    <div>
+                                        <label for="subject" class="form-label">Subject:</label>
+                                        <input class="form-control" type="text" id="subject" name="subject">
+                                    </div>
+                                    <div>
+                                        <label for="message" class="form-label">Message:</label>
+                                        <textarea class="form-control" type="text" id="message" name="message" rows="3"></textarea>
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-outline-secondary mt-2" type="button" onclick="sendFeedbackRequest()" value="Submit">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
