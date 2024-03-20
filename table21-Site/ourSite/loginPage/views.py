@@ -126,7 +126,7 @@ def emailCheck(request):
     return JsonResponse({'error': 'Method not allowed'}, status=405)
     
 
-def createLink(userID):
+def createLink(userID, request):
     from emailLinkDB import databaseInteractions
 
     secretsGenerator = secrets.SystemRandom()
@@ -135,8 +135,12 @@ def createLink(userID):
 
     user = databaseInteractions.createUserLink(uniqueToken, userID)
 
+    #get current url path
+    path = request.get_host()
+
+
     # Construct the reset link URL with token and uid
-    resetLink = "http://127.0.0.1:8000/login/password-reset-confirm/?linkID="+uniqueToken
+    resetLink = path+"/login/password-reset-confirm/?linkID="+uniqueToken
 
     return resetLink
 
@@ -156,7 +160,7 @@ def sendEmail(request):
             user = databaseInteractions.getUserByEmail(email)
             userID = user['id']
       
-            uniqueLink = createLink(userID)
+            uniqueLink = createLink(userID,request)
 
             print("the unique link issss "+uniqueLink)
 
