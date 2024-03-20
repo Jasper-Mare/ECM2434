@@ -63,7 +63,7 @@ function playMusic() {
         const container = document.getElementById("sound");
         const funAudio = document.createElement("audio");
         funAudio.id = "play";
-        funAudio.src = "../static/henrys jam.mp3";
+        funAudio.src = "/static/henrys jam.mp3";
         funAudio.loop = true;
         funAudio.autoplay = true;
         funAudio.volume = 0.2;
