@@ -2,7 +2,7 @@
 
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.shortcuts import redirect, render
+from django.template import loader
 
 
 # Create your views here.
@@ -24,11 +24,14 @@ def index(request):
 
 # invalid function
 def getCookie(request):
+    template = loader.get_template('toolbar.html')
     from userDB.databaseInteractions import getUserById
     userID = request.COOKIES.get('login')
     user = getUserById(userID)
     if(user['access_level']== "GAME_KEEPER"):
-        access = "GAME_KEEPER"
+        access = {"permission":userID}
     else:
-        access = "USER"
+        access = {"permission":userID}
+    
+    return HttpResponse(template.render(access, request))
     

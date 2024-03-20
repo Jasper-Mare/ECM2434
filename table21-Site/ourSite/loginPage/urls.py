@@ -33,6 +33,7 @@ urlpatterns = [
     path("password-reset-complete/", views.PasswordBeenReset, name="password_reset_complete"),
 
     path("sendEmail", views.sendEmail, name="sendEmail"),
+    path("sendFeedback", views.sendFeedback, name="sendFeedback"),
     path("getToken", views.getToken, name="getToken"),
 
 ]

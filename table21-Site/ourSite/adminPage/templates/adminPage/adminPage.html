@@ -32,6 +32,7 @@
                         <button class="nav-link text-end" id="v-pills-1-tab" data-bs-toggle="pill" data-bs-target="#v-pills-1" type="button" onclick="getData()" role="tab" aria-controls="v-pills-1" aria-selected="false">Manage Users</button>
                         <button class="nav-link text-end" id="v-pills-2-tab" data-bs-toggle="pill" data-bs-target="#v-pills-2" type="button" role="tab" aria-controls="v-pills-2" aria-selected="false">New Quiz</button>
                         <button class="nav-link text-end" id="v-pills-3-tab" data-bs-toggle="pill" data-bs-target="#v-pills-3" type="button" role="tab" aria-controls="v-pills-3" aria-selected="false">New Quest</button>
+                        <button class="nav-link text-end" id="v-pills-4-tab" data-bs-toggle="pill" data-bs-target="#v-pills-4" type="button" role="tab" aria-controls="v-pills-4" aria-selected="false">Help</button>
                         <button class="nav-link text-end" id="v-pills-5-tab" data-bs-toggle="pill" data-bs-target="#v-pills-5" type="button" onclick="window.location.href='../../map/'" role="tab" aria-controls="v-pills-5" aria-selected="false">Exit</button>
                     </div>
                 </div>
@@ -121,6 +122,23 @@
                                 <input class="btn btn-outline-secondary" id="saveQuest" onclick="saveQuest()" type="submit" value="Submit">
                             </div>
                             <script src="{% static 'js/newquest.js' %}?{% now 'U' %}"></script>
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-4" role="tabpanel" aria-labelledby="v-pills-4-tab" tabindex="4">
+                            <div class="container text-start"> 
+                                <form>
+                                    <div>
+                                        <label for="subject" class="form-label">Subject:</label>
+                                        <input class="form-control" type="text" id="subject" name="subject">
+                                    </div>
+                                    <div>
+                                        <label for="message" class="form-label">Message:</label>
+                                        <textarea class="form-control" type="text" id="message" name="message" rows="3"></textarea>
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-outline-secondary mt-2" type="button" onclick="sendFeedbackRequest()" value="Submit">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
